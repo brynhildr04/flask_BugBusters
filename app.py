@@ -16,8 +16,17 @@ def view_profile():
     return render_template("profile.html")
 @application.route("/submit_item_post", methods=['POST'])
 def reg_item_submit_post():
-    data=request.form
-    return render_template("cart.html", data=data)
+    name=request.args.get("name")
+    seller=request.args.get("seller")
+    addr=request.args.get("addr")
+    email=request.args.get("email")
+    category=request.args.get("category")
+    card=request.args.get("card")
+    status=request.args.get("status")
+    phone=request.args.get("phone")
+
+    print(name,seller,addr,email,category,card,status,phone)
+    return render_template("cart.html")
 
 if __name__=="__main__":
     application.run(host='0.0.0.0', debug=True)
