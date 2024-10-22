@@ -1,0 +1,61 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+}
+
+.navbar a {
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar__menu a {
+    float: right;
+}
+
+.navbar__logo a {
+    float: left;
+}
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+.card {
+    background-color: white;
+    display:flex;
+}
+.fakeimg {
+    padding: 14px 16px;
+    background-color: #858a80;
+    width: 100%;
+    text-align: center;
+}
+.product{
+    margin: 10px;
+}
+
+h2{
+    padding: 20px;
+}
+
+/*리스트로 속성 바꾸고 이렇게 사용하면 가운데로 모이게 해서 정렬 가능
+li{
+    display: inline-block;
+}
+li a{
+    display: block;
+}
+ul{
+    text-align: auto;
+}
+*/

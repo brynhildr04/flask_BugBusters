@@ -1,0 +1,24 @@
+{% extends "index.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>결과 페이지</title>
+</head>
+{% block section %}
+<body>
+    <h1>상품 등록 결과</h1>
+    <img src="{{img_path}}"/>
+    <p>이름: {{ data.name }}</p>
+    <p>판매자 ID: {{ data.seller }}</p>
+    <p>주소: {{ data.addr }}</p>
+    <p>이메일: {{ data.email }}</p>
+    <p>카테고리: {{ data.category }}</p>
+    <p>신용카드 사용 여부: {{ data.card }}</p>
+    <p>상품 상태: {{ data.status }}</p>
+    <p>전화번호: {{ data.phone }}</p>
+</body>
+{% endblock section %}
+</html>
