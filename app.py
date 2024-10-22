@@ -14,20 +14,14 @@ def view_cart():
 @application.route("/profile.html")
 def view_profile():
     return render_template("profile.html")
-@application.route("/submit_item")
-def reg_item_submit():
-    name=request.args.get("name")
-    seller=request.args.get("seller")
-    addr=request.args.get("addr")
-    email=request.args.get("email")
-    category=request.args.get("category")
-    card=request.args.get("card")
-    status=request.args.get("status")
-    phone=request.args.get("phone")
+@application.route("/submit_item_post", methods=['POST'])
+def reg_item_submit_post():
 
-    print(name,seller,addr,email,category,card,status,phone)
-    return render_template("cart.html")
+    image_url = "https://search.pstatic.net/common/?src=https%3A%2F%2Fshop-phinf.pstatic.net%2F20240925_172%2F1727257588232P8xXD_JPEG%2F42154487053458405_564187763.jpg&type=sc960_832"
 
+    data = request.form
+    return render_template("cart.html", data=data, img_path=image_url)
+                
 if __name__=="__main__":
     application.run(host='0.0.0.0', debug=True)
 
