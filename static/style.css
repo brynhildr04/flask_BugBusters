@@ -87,6 +87,7 @@ table{
     text-align: left;
 }
 
+
 /*회원가입/로그인 시 받아야 할 정보 이름에 대한 스타일 정의*/
 .data_name{
     height: 40px;
@@ -148,10 +149,11 @@ label .data_name{
     width: auto;
     text-align: right;
 }
-#findId_btn, #findPW_btn{
+#findId_btn, #findPW_btn, #check_btn{
     width: auto;
     font-size: 12px;
     border-radius: 5px;
+    text-align: right;
 }
 
 /*다른 파일로 옮겨가는 링크/버튼에 대한 스타일 정의*/
