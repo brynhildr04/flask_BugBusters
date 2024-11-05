@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KakaoTalk Style Chat Interface</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .chat-container {
+            width: 700px;
+            height: 800px;
+            max-width: 90%;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background-color: #00462A;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .chat-messages {
+            padding: 10px;
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .message {
+            display: flex;
+            flex-direction: column;
+            max-width: 70%;
+            padding: 8px 12px;
+            font-size: 14px;
+            line-height: 1.5;
+            border-radius: 15px;
+            position: relative;
+            word-wrap: break-word;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background-color: #CDECDB;
+            color: #000;
+        }
+
+        .message.bot {
+            align-self: flex-start;
+            background-color: #ffffff;
+            color: #000;
+            border: 1px solid #e5e5e5;
+        }
+
+        .timestamp {
+            font-size: 10px;
+            color: #888;
+            margin-top: 5px;
+            align-self: flex-end;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 8px;
+            border-top: 1px solid #ddd;
+            background-color: #f7f7f7;
+        }
+
+        .chat-input input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .chat-input button {
+            padding: 0 15px;
+            margin-left: 8px;
+            background-color: #00462A;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .chat-input button:hover {
+            background-color: #CDECDB;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="chat-header">판매자 문의 채팅</div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-input">
+        <input type="text" id="userInput" placeholder="메시지를 입력하세요">
+        <button onclick="sendMessage()">보내기</button>
+    </div>
+</div>
+
+<script>
+    function sendMessage() {
+        const input = document.getElementById("userInput");
+        const message = input.value.trim();
+        
+        if (message === "") return;
+
+        const chatMessages = document.getElementById("chatMessages");
+
+        // 사용자 메시지 추가
+        addMessage(message, "user");
+
+        // 예제 봇 응답
+        setTimeout(() => {
+            addMessage("안녕하세요! 판매자입니다! 무엇을 도와드릴까요?", "bot");
+        }, 500);
+
+        // 입력 필드 초기화
+        input.value = "";
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function addMessage(text, sender) {
+        const chatMessages = document.getElementById("chatMessages");
+
+        const messageDiv = document.createElement("div");
+        messageDiv.classList.add("message", sender);
+        messageDiv.textContent = text;
+
+        const timestamp = document.createElement("div");
+        timestamp.classList.add("timestamp");
+        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        timestamp.textContent = time;
+
+        messageDiv.appendChild(timestamp);
+        chatMessages.appendChild(messageDiv);
+        
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+</script>
+
+</body>
+</html>
