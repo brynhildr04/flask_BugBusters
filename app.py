@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from flask import Flask, render_template, request
 import sys
 application = Flask(__name__)
@@ -25,4 +26,6 @@ def reg_item_submit_post():
 if __name__=="__main__":
     application.run(host='0.0.0.0', debug=True)
 
+=======
+>>>>>>> 1dd9642c9c601b2c6032145de6db3bf52364e21a
 
