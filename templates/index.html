@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='main.js') }}" defer></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar__logo">
+            <a href="home.html">소소한 이화</a>
+        </div>
+        <div class="navbar__menu">
+            <a href="">SIDE_BAR</a>
+            <a href="cart.html">Register Items</a>
+            <a href="profile.html">PROFILE</a>
+            <a href="http://127.0.0.1:5000">HOME</a>
+            <a href="" class="navbar__toogleBtn">
+                <i class="fas fa-bars"></i>
+            </a>
+    </nav>
+    <section>
+        {% block section %}
+        <div class="card">
+            <div class="fakeimg" style="height:800px">넘어가는 이미지들</div>
+        </div>
+        <h2>오늘의 인기 상품</h2>
+        <dl class="card">
+            <dt class="fakeimg product" style="height: 300px">구간은 이정도?</dt>
+            <dt class="fakeimg product" style="height: 300px">구간은 이정도?</dt>
+            <dt class="fakeimg product" style="height: 300px">구간은 이정도?</dt>
+        </dl>
+        <h2>최신 등록 상품</h2>
+        <dl class="card">
+            <dt class="fakeimg product" style="height: 300px">구간은 이정도?</dt>
+            <dt class="fakeimg product" style="height: 300px">구간은 이정도?</dt>
+            <dt class="fakeimg product" style="height: 300px">구간은 이정도?</dt>
+        </dl>
+        <br>
+        <nav class="navbar">
+            <table style="width: 100%">
+                <tr class="navbar__category">
+                    <th><a href="">식품</a></th>
+                    <th><a href="">공예</a></th>
+                    <th><a href="">뷰티</a></th>
+                    <th><a href="">패션</a></th>
+                    <th><a href="">기타 제품</a></th>
+                    <th><a href="">물품 제작 의뢰</a></th>
+                </tr>
+            </table>
+        </nav>
+        <div class="card">
+            <div class="fakeimg" style="height:400px">이 구간은 등록된 제품이 늘어날 때마다 길어질 예정</div>
+        </div>
+        {% endblock section %}
+    </section>
+
+</body>
+
+</html>
+

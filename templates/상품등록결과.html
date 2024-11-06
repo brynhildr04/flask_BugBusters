@@ -15,9 +15,9 @@
         <p><strong>내용:</strong> {{ description }}</p>
 
         {% if img_path %}
-            <p><strong>첨부된 이미지:</strong></p>
-            <img src="{{ url_for('static', filename='images/' + img_path.split('/')[-1]) }}" alt="상품 이미지">
-        {% endif %}
+        <p><strong>첨부된 이미지:</strong></p>
+        <img src="{{ img_path }}" alt="상품 이미지">
+    {% endif %}
     </div>
 </body>
 </html>

@@ -5,28 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>상품 등록</title>
     <link rel="stylesheet" href="상품등록하기.css">
+    <script>
+        function updateCategoryOptions() {
+            const productType = document.getElementById("product_type").value;
+            const categorySelect = document.getElementById("category");
+
+            // 기존 옵션을 모두 삭제
+            categorySelect.innerHTML = "";
+
+            let options = [];
+
+            if (productType === "product") {
+                options = ["식품", "공예", "뷰티", "패션", "기타 제품", "제품 제작 의뢰"];
+            } else if (productType === "service") {
+                options = ["어학", "IT", "취미", "디자인", "첨삭", "생활", "기타"];
+            }
+
+            // 새로운 옵션 추가
+            options.forEach(optionText => {
+                const option = document.createElement("option");
+                option.value = optionText;
+                option.textContent = optionText;
+                categorySelect.appendChild(option);
+            });
+        }
+    </script>
 </head>
 <body>
     <div class="container">
         <h2>상품 등록</h2>
-        <form action="/submit_item_post" method="post" enctype="multipart/form-data">
+        <hr class="title-line">
+        <form action="/submit_item_post" method="POST" enctype="multipart/form-data">
             <label for="title">제목 (20자 이내)</label>
             <input type="text" id="title" name="title" maxlength="20" required>
 
             <div class="dropdowns">
                 <div class="dropdown">
-                    <label for="product_type">제품</label>
-                    <select id="product_type" name="product_type">
+                        <select id="product_type" name="product_type" onchange="updateCategoryOptions()">
                         <option value="product">제품</option>
                         <option value="service">서비스</option>
                     </select>
                 </div>
 
                 <div class="dropdown">
-                    <label for="category">카테고리 (드롭다운)</label>
-                    <select id="category" name="category">
-                        <option value="category1">카테고리 1</option>
-                        <option value="category2">카테고리 2</option>
+                        <select id="category" name="category">
+                        <!-- JavaScript로 옵션이 업데이트될 예정 -->
                     </select>
                 </div>
             </div>
@@ -35,10 +58,9 @@
                 <div class="image-preview">
                     <img id="preview" src="" alt="이미지 미리보기" style="display: none;">
                 </div>
-               <label for="image" class="upload-label">사진 첨부</label>
-               <input type="file" id="image" name="image" accept="image/*" style="display: none;">
-            </div>
-
+                <label for="image" class="upload-label">사진 첨부</label>
+                <input type="file" id="image" name="image" accept="image/*"><br><br>
+                </div>
             <label for="description">내용 (500자 이내)</label>
             <textarea id="description" name="description" maxlength="500" required></textarea>
 
@@ -47,5 +69,11 @@
             </div>
         </form>
     </div>
+
+    <script>
+        // 페이지 로드 시 기본 옵션 설정
+        document.addEventListener("DOMContentLoaded", updateCategoryOptions);
+    </script>
 </body>
 </html>
+
