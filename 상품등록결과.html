@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 등록 결과</title>
+    <link rel="stylesheet" href="상품등록결과.css">
+</head>
+<body>
+    <h1>상품 등록 완료</h1>
+    <div class="product-info">
+        <p><strong>제목:</strong> {{ title }}</p>
+        <p><strong>제품 유형:</strong> {{ product_type }}</p>
+        <p><strong>카테고리:</strong> {{ category }}</p>
+        <p><strong>내용:</strong> {{ description }}</p>
+
+        {% if img_path %}
+        <p><strong>첨부된 이미지:</strong></p>
+        <img src="{{ img_path }}" alt="상품 이미지">
+    {% endif %}
+    </div>
+</body>
+</html>
