@@ -1,0 +1,215 @@
+<!DOCTYPE html>        
+<html lang="ko">
+<head>
+    <style>
+    * {
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        max-width: 1158px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0 auto;
+        background-color: #f4f4f9;
+    }
+
+    .container {
+        width: 1920px;
+        padding: 20px;
+        border-radius: 1px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    h2 {
+        margin-bottom: 10px;
+    }
+
+    .product-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        border: 3px solid #ddd;
+        border-radius: 1px;
+        background-color: #f9f9f9;
+        margin-bottom: 500px;
+        position: relative;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    }
+
+    .product-details {
+        display: flex;
+        align-items: left;
+    }
+
+    .product-box img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        margin-right: 40px;
+    }
+
+    .product-info {
+        text-align: left;
+    }
+
+    .quantity-control {
+        display: flex;
+        align-items: center;
+        margin-top: 5px;
+    }
+
+    .quantity-control button {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .quantity-control button:hover{
+        background-color: #CDECDB;
+    }
+
+    .quantity-control span {
+        padding: 0 20px;
+    }
+
+    .product-price {
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .finalprice {
+        position: fixed;        
+        right: 50px;           
+        bottom: 150px;           
+        background-color: #f9f9f9; 
+        padding: 10px;         
+        border-radius: 8px;    
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        display: flex;          
+        align-items: center;    
+    }
+
+    .finalprice h3 {
+        margin: 0;              
+        margin-right: 5px;     
+    }
+
+    .product-price {
+        font-weight: bold;      
+        margin-left: 5px;      
+    }
+
+    .remove-btn {
+        position: absolute;
+        top: 7px;
+        right: 10px;
+        cursor: pointer;
+        color: red;
+        font-size: 18px;
+    }
+
+    .checkout-btn {
+        width: 100%;
+        padding: 10px;
+        background-color: #00462A;
+        color: white;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .checkout-btn:hover {
+        background-color: #A4C1AE;
+    }
+    </style>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주문 내역 확인</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+
+<div class="container">
+    <h3>주문 내역 확인</h3>
+
+    <!-- 상품 박스 -->
+    <div class="product-box" id="product1" data-price="10000">
+        <div class="product-details">
+            <img src="https://via.placeholder.com/60" alt="상품 이미지">
+            <div class="product-info">
+                <h4>상품명</h4>
+                <p>가격: 10,000원</p>
+                <div class="quantity-control">
+                    <button onclick="decreaseQuantity('quantity1', 10000)">-</button>
+                    <span id="quantity1">1</span>
+                    <button onclick="increaseQuantity('quantity1', 10000)">+</button>
+                </div>
+            </div>
+        </div>
+        <span class="remove-btn" onclick="removeProduct('product1')">x</span>
+    </div>
+
+    <div class="finalprice">
+        <h3>최종 결제 금액 : </h3>
+        <span class="product-price" id="finalPrice1"> 원</span>
+    </div>
+
+    <!-- 결제하기 버튼 -->
+    <button class="checkout-btn" onclick="redirectToPayment()">결제하기</button>
+
+</div>
+
+<script>
+    function updateFinalPrice(quantityId, finalPriceId, price) {
+        const quantity = parseInt(document.getElementById(quantityId).innerText);
+        document.getElementById(finalPriceId).innerText = (price * quantity).toLocaleString() + '원';
+    }
+
+    function increaseQuantity(quantityId, price) {
+        const quantityElement = document.getElementById(quantityId);
+        let quantity = parseInt(quantityElement.innerText);
+        quantityElement.innerText = ++quantity;
+        updateFinalPrice(quantityId, 'finalPrice1', price);
+    }
+
+    function decreaseQuantity(quantityId, price) {
+        const quantityElement = document.getElementById(quantityId);
+        let quantity = parseInt(quantityElement.innerText);
+        if (quantity > 1) {
+            quantityElement.innerText = --quantity;
+            updateFinalPrice(quantityId, 'finalPrice1', price);
+        }
+    }
+
+    function removeProduct(productId) {
+        const productElement = document.getElementById(productId);
+        productElement.remove();
+        const finalprice2 = document.querySelector('.finalprice');
+        if (finalprice2) {
+            finalprice2.remove(); // finalprice 클래스를 가진 요소 삭제
+        }
+    }
+
+    function redirectToPayment() {
+    const productBoxes = document.querySelectorAll('.product-box');
+    if (productBoxes.length === 0) {
+        alert("오류입니다. 결제할 상품이 없습니다."); // 상품이 없을 때 경고창 표시
+    } else {
+        window.location.href = "payment.html"; // 결제 중 페이지로 이동
+    }
+}
+</script>
+
+</body>
+</html>
