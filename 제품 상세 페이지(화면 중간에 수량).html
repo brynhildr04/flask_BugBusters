@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>제품 상세 페이지</title>
+
+  <style>
+    .result {
+      font-size: 20px;
+      margin-top: 10px;
+    }
+
+    /* 슬라이드 컨테이너 스타일 */
+    #slider {
+      position: absolute;
+      top: 400px;
+      left: 450px;
+      width: 600px;
+      height: 400px;
+      margin: 0 auto;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    /* 이미지 스타일 */
+    #slider img {
+      width: 100%;
+      position: absolute;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    /* 이전 버튼 스타일 */
+    #prev,
+    #next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    #prev {
+      left: 10px;
+    }
+
+    #next {
+      right: 10px;
+    }
+
+    /* 버튼에 이미지 배경 설정 */
+    #prev {
+      background-image: url('prev.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      width: 50px;
+      height: 50px;
+    }
+
+    #next {
+      background-image: url('next.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      width: 50px;
+      height: 50px;
+    }
+
+    .button {
+      background-color: #D9D9D9;
+      color: black;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 24px;
+    }
+
+    .button:hover {
+      background-color: #A4C1AE;
+      color: #FFFFFF;
+    }
+
+    .tab {
+      display: inline-block;
+      padding: 10px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color 0.3s;
+    }
+
+    .active {
+      color: black;
+      border-bottom: 3px solid black;
+    }
+
+    .content {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .active-content {
+      display: block;
+    }
+
+    .review {
+      border: 1px solid #ccc;
+      margin: 10px;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .rating {
+      color: gold;
+    }
+
+    .content {
+      display: none;
+      /* 초기에는 숨김 */
+      margin-top: 10px;
+    }
+
+    .active-content {
+      display: block;
+      /* 활성화되면 보이도록 설정 */
+    }
+  </style>
+
+</head>
+
+<body>
+
+
+
+
+  <div id="slider">
+    <img src="image1.png" alt="이미지 1" class="slide active">
+    <img src="image2.png" alt="이미지 2" class="slide">
+    <img src="image3.png" alt="이미지 3" class="slide">
+    <img src="image4.png" alt="이미지 4" class="slide">
+    <img src="image5.png" alt="이미지 5" class="slide">
+    <button id="prev"></button>
+    <button id="next"></button>
+  </div>
+
+  <script>
+    function showSlide(index) {
+      slides.forEach((slide, idx) => {
+        slide.style.opacity = idx === index ? '1' : '0';
+      });
+    }
+
+    prev.addEventListener('click', () => {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      showSlide(currentSlide);
+    });
+
+    next.addEventListener('click', () => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    });
+
+    // 초기 슬라이드 표시
+    showSlide(currentSlide);
+
+
+    function addToCart() {
+      alert("장바구니에 담았습니다!");
+    }
+    function buy() {
+      alert("구매 화면으로 이동합니다!");
+    }
+
+    let reviewsAdded = false; // 리뷰가 추가되었는지 여부를 추적하는 변수
+
+    function review(id, name, contents, rating, date, items) {
+      var reviewsContainer = document.getElementById('reviewsContainer');
+      var reviewDiv = document.createElement('div');
+      reviewDiv.classList.add('review');
+
+      reviewDiv.innerHTML = `
+            <strong>${name} (${id})</strong><br>
+            <div class="rating">${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}</div>
+            <small>${date} | 수제 캔들, ${items}개</small><br>
+            <p>${contents}</p>
+        `;
+
+      reviewsContainer.appendChild(reviewDiv);
+    }
+
+    function showDetails() {
+      document.getElementById('detailsTab').classList.add('active');
+      document.getElementById('reviewsTab').classList.remove('active');
+      document.getElementById('detailsContent').classList.add('active-content');
+      document.getElementById('reviewsContent').classList.remove('active-content');
+    }
+
+    function showReviews() {
+      document.getElementById('reviewsTab').classList.add('active');
+      document.getElementById('detailsTab').classList.remove('active');
+      document.getElementById('reviewsContent').classList.add('active-content');
+      document.getElementById('detailsContent').classList.remove('active-content');
+      // 리뷰가 추가되지 않았다면 추가
+      if (!reviewsAdded) {
+        review("1", "오*원", "향도 너무 좋고, 생각보다 커서 오래 사용할 수 있을 것 같아요...", 5, "2024.10.19.", 1);
+        review("2", "김*아", "친구에게 선물로 주려고 샀다가 저도 쓰고 싶어서 하나 더 샀...", 5, "2024.10.18.", 2);
+        review("3", "박*하", "가족들에게 선물을 주려고 많이 샀습니다! 사용해본 캔들 중에...", 5, "2024.10.16.", 5);
+        reviewsAdded = true; // 리뷰가 추가되었음을 기록
+      }
+      const reviewsContainer = document.getElementById('reviewsContainer');
+      reviewsContainer.style.display = 'block'; // 리뷰 컨테이너 보이기
+    }
+
+
+  </script>
+
+
+
+  <!--제품 Header -->
+  <div style="width: 1920px; height: 70px; position: relative; background: white">
+    <div
+      style="width: 148px; height: 41px; left: 300px; top: 14px; position: absolute; background: #D9D9D9; border-radius: 20px">
+    </div>
+    <div
+      style="width: 71.50px; height: 36.01px; left: 304px; top: 17px; position: absolute; background: #A4A4A4; border-radius: 17.57px">
+    </div>
+    <div
+      style="left: 325px; top: 25px; position: absolute; color: white; font-size: 16px; font-family: Inter; font-weight: 700; word-wrap: break-word">
+      제품</div>
+    <div style="width: 24px; height: 24px; left: 1828px; top: 23px; position: absolute">
+      <div style="width: 24px; height: 24px; left: 0px; top: 0px; position: absolute"></div>
+      <div style="width: 16px; height: 16px; left: 4px; top: 4px; position: absolute; background: black"></div>
+    </div>
+    <div style="width: 1140px; height: 41px; left: 478px; top: 14px; position: absolute">
+      <div
+        style="width: 1140px; height: 41px; left: 0px; top: 0px; position: absolute; background: #D9D9D9; border-radius: 20px">
+      </div>
+      <div style="width: 23.59px; height: 24px; left: 1101.67px; top: 9px; position: absolute">
+        <div style="width: 23.59px; height: 24px; left: 0px; top: 0px; position: absolute"></div>
+        <div style="width: 17.19px; height: 17.49px; left: 2.95px; top: 3px; position: absolute; background: black">
+        </div>
+      </div>
+    </div>
+    <div
+      style="width: 24px; height: 24px; left: 1870px; top: 23px; position: absolute; justify-content: center; align-items: center; display: inline-flex">
+      <div style="width: 24px; height: 24px; position: relative">
+        <div style="width: 24px; height: 24px; left: 0px; top: 0px; position: absolute"></div>
+        <div style="width: 16px; height: 20px; left: 4px; top: 2px; position: absolute; background: black"></div>
+      </div>
+    </div>
+    <div style="width: 20px; height: 20px; left: 1790px; top: 25px; position: absolute; background: black"></div>
+    <div
+      style="left: 83px; top: 8px; position: absolute; text-align: center; color: #333333; font-size: 40px; font-family: Poppins; font-weight: 700; word-wrap: break-word">
+      소소한 이화</div>
+    <img style="width: 54px; height: 54px; left: 18px; top: 8px; position: absolute" src="logo.png" />
+    <div
+      style="width: 121px; height: 33px; left: 1651px; top: 18px; position: absolute; background: #A4C1AE; border-radius: 5px">
+    </div>
+    <div
+      style="left: 1670px; top: 26px; position: absolute; text-align: center; color: black; font-size: 14px; font-family: Inter; font-weight: 400; word-wrap: break-word">
+      상품 등록하기</div>
+  </div>
+
+
+  <!--서비스 카테고리 -->
+  <div style="width: 1920px; height: 100px; position: relative; background: white">
+    <div
+      style="left: 483px; top: 28px; position: absolute; color: black; font-size: 32px; font-family: Poppins; font-weight: 500; word-wrap: break-word">
+      ALL</div>
+    <div
+      style="left: 588px; top: 30px; position: absolute; color: #838383; font-size: 32px; font-family: Poppins; font-weight: 700; word-wrap: break-word">
+      어학</div>
+    <div
+      style="left: 716px; top: 28px; position: absolute; color: #838383; font-size: 32px; font-family: Poppins; font-weight: 700; word-wrap: break-word">
+      IT</div>
+    <div
+      style="left: 814px; top: 30px; position: absolute; color: #838383; font-size: 32px; font-family: Poppins; font-weight: 700; word-wrap: break-word">
+      취미</div>
+    <div
+      style="left: 927px; top: 30px; position: absolute; color: #838383; font-size: 32px; font-family: Poppins; font-weight: 700; word-wrap: break-word">
+      디자인</div>
+    <div
+      style="left: 1070px; top: 30px; position: absolute; color: #838383; font-size: 32px; font-family: Poppins; font-weight: 700; word-wrap: break-word">
+      첨삭</div>
+    <div
+      style="left: 1183px; top: 30px; position: absolute; color: #838383; font-size: 32px; font-family: Poppins; font-weight: 700; word-wrap: break-word">
+      생활</div>
+    <div
+      style="left: 1296px; top: 30px; position: absolute; color: #838383; font-size: 32px; font-family: Poppins; font-weight: 700; word-wrap: break-word">
+      기타</div>
+    <div style="width: 964px; height: 0px; left: 478px; top: 80px; position: absolute; border: 1px #838383 solid">
+    </div>
+  </div>
+
+
+  <!--상품 설명 -->
+  <div style="width: 1920px; height: 750px; position: relative; background: white">
+    <div
+      style="width: 586px; height: 0px; left: 1068px; top: 83px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid">
+    </div>
+    <div
+      style="left: 1099px; top: 150px; position: absolute; color: black; font-size: 40px; font-family: Inter; font-weight: 700; word-wrap: break-word">
+      Item Example</div>
+    <div style="width: 412px; height: 0px; left: 1098px; top: 290px; position: absolute; border: 1px #666666 solid">
+    </div>
+    
+    <div
+      style="width: 34px; height: 0px; left: 1265px; top: 236px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px #666666 solid">
+    </div>
+    
+    <div style="width: 412px; height: 0px; left: 1098px; top: 360px; position: absolute; border: 1px #666666 solid">
+    </div>
+
+
+
+    <div
+      style="left: 1098px; top: 380px; position: absolute; color: black; font-size: 24px; font-family: Inter; font-weight: 400; word-wrap: break-word">
+      Total</div>
+    <div
+      style="left: 1354px; top: 380px; position: absolute; text-align: right; color: black; font-size: 24px; font-family: Inter; font-weight: 400; word-wrap: break-word">
+      $20,000 (n개)</div>
+         
+      <div style="position: fixed; top: 495px; left: 1250px; z-index: 3;">
+        <label for="quantity">수량:</label>
+        <input type="number" id="quantity" name="quantity" min="1" max="9" value="1" style="font-size: 28px;">
+    </div>
+    
+    <div
+      style="left: 1101px; top: 205px; position: absolute; color: black; font-size: 24px; font-family: Inter; font-weight: 400; word-wrap: break-word">
+      $10,000</div>
+    <div style="left: 1099px; top: 131px; position: absolute"><span
+        style="color: #666666; font-size: 16px; font-family: Inter; font-weight: 400; word-wrap: break-word">제품 >
+      </span><span
+        style="color: black; font-size: 16px; font-family: Inter; font-weight: 700; word-wrap: break-word">식품</span>
+    </div>
+
+    <button class="button" onclick="addToCart()"
+      style="width: 412px; height: 58px; left: 1098px; top: 519px; position: absolute; border-radius: 20px">Add To
+      Cart</button>
+    <button class="button" onclick="buy()"
+      style="width: 412px; height: 58px; left: 1098px; top: 611px; position: absolute; border-radius: 20px">Buy</button>
+    <div
+      style="left: 1282px; top: 246px; position: absolute; color: #7C7C7C; font-size: 16px; font-family: Inter; font-weight: 300; line-height: 24px; word-wrap: break-word">
+      리뷰(99+)</div>
+    <div style="width: 154px; height: 24px; left: 1097px; top: 242px; position: absolute">
+      <div
+        style="left: 130px; top: 8px; position: absolute; color: #7C7C7C; font-size: 16px; font-family: Inter; font-weight: 300; line-height: 24px; word-wrap: break-word">
+        (5)</div>
+      <span style="color: #FFC700; font-size: 24px;">★★★★★</span>
+    </div>
+
+  </div>
+
+
+  <!--상품 탭 -->
+
+
+  <div style="width: 1920px; height: 100px; position: relative; background: white">
+    <div
+      style="left: 602px; top: 27px; position: absolute; color: black; font-size: 32px; font-family: Poppins; font-weight: 700; word-wrap: break-word">
+    </div>
+    <div style="width: 964px; height: 0px; left: 478px; top: 88px; position: absolute; border: 1px #838383 solid">
+    </div>
+    <div class="tab" id="detailsTab" onclick="showDetails()"
+      style="left: 550px; top: 25px; position: absolute; color: #838383; font-size: 32px; font-family: Poppins; font-weight: 700; word-wrap: break-word">
+      상세 설명</div>
+    <div class="tab" id="reviewsTab" onclick="showReviews()"
+      style="left: 860px; top: 25px; position: absolute; color: #838383; font-size: 32px; font-family: Poppins; font-weight: 700; word-wrap: break-word">
+      리뷰(99+)</div>
+    <div class="tab" id="sellerTab" onclick="askToSeller()"
+      style="left: 1170px; top: 25px; position: absolute; color: #838383; font-size: 32px; font-family: Fenix; font-weight: 700; word-wrap: break-word">
+      판매자 문의</div>
+  </div>
+
+  <div id="detailsContent" class="content active-content"
+    style="width: 1920px; height: 100%; position: relative; background: white">
+    <div
+      style="width: 50%; margin: 0 auto; font-size: 24px; font-family: Inter, sans-serif; font-weight: 300; text-align: center; line-height: 1.5; word-wrap: break-word; overflow-wrap: break-word; padding: 20px;">
+      수제 캔들입니다. 향 좋고 환경에도 좋습니다! 내용이 길어지면 자동으로 줄바꿈이 됩니다. 이 내용은 예시로 넣은 텍스트이며, 필요에 따라 더 긴 내용으로 바꿀 수 있습니다. Lorem ipsum
+      dolor
+      sit amet, consectetur adipiscing elit. Quisque ac diam nec erat fermentum volutpat. Aliquam erat volutpat.
+    </div>
+  </div>
+
+
+  <div id="reviewsContent" class="content"
+    style="width: 1920px; height: 600px; position: relative; top: 50px; background: white">
+    <div id="reviewsContainer"
+      style="margin-top: 20px; width: 50%; height: 100%; margin-left: auto; margin-right: auto;"></div>
+  </div>
+
+
+
+
+  <!--Footer -->
+  <div style="width: 1920px; height: 554px; position: relative; background: white">
+    <div style="width: 1162px; height: 0px; left: 380px; top: 81px; position: absolute; border: 1px #666666 solid">
+    </div>
+    <div style="width: 1162px; height: 0px; left: 380px; top: 464px; position: absolute; border: 1px #666666 solid">
+    </div>
+    <div
+      style="left: 458px; top: 264px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 8px; display: inline-flex">
+      <div style="width: 77px; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
+        <div
+          style="flex: 1 1 0; color: #333333; font-size: 16px; font-family: Poppins; font-weight: 400; word-wrap: break-word">
+          About Us</div>
+      </div>
+    </div>
+    <div
+      style="left: 458px; top: 303px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 8px; display: inline-flex">
+      <div
+        style="text-align: center; color: #333333; font-size: 16px; font-family: Poppins; font-weight: 400; word-wrap: break-word">
+        제품</div>
+    </div>
+    <div
+      style="left: 511px; top: 168px; position: absolute; text-align: center; color: #333333; font-size: 32px; font-family: Poppins; font-weight: 700; word-wrap: break-word">
+      소소한 이화</div>
+    <div
+      style="left: 458px; top: 342px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 8px; display: inline-flex">
+      <div style="color: #333333; font-size: 16px; font-family: Poppins; font-weight: 400; word-wrap: break-word">서비스
+      </div>
+    </div>
+    <img style="width: 45px; height: 45px; left: 458px; top: 168px; position: absolute" src="logo.png" />
+  </div>
+
+</body>
+
+</html>
