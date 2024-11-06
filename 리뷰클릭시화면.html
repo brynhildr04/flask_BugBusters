@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>리뷰클릭시 화면</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body style="display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0;">
+    <header class="header">
+        <div class="logo-section">
+            <div class="logo">
+                <img src="logo.png" alt="소소한 이화">
+                <span class="logo-text">소소한 이화</span>
+            </div>
+            <div class="toggle-switch">
+                <input type="checkbox" id="switch" class="switch-input">
+                <label for="switch" class="switch-label">
+                    <span class="switch-option left">제품</span>
+                    <span class="switch-option right">서비스</span>
+                </label>
+            </div>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="검색">
+            <button class="search-button" type="submit">
+                <img src="search.svg" alt="search icon">
+            </button>
+        </div>
+        <div class="header-icons">
+            <a href="#" class="register-btn">제품 등록하기</a>
+            <a href="#" class="icon-btn"><img src="home.svg" alt="Home"></a>
+            <a href="#" class="icon-btn"><img src="profile.svg" alt="Profile"></a>
+            <a href="#" class="icon-btn"><img src="cart.svg" alt="Cart"></a>
+        </div>
+    </header>
+    
+    <div style="width: 1920px; height: 1080px; background: white; position: relative; padding: 40px; box-sizing: border-box;">
+        
+
+        <h2 style="border-bottom: 2px solid #D9D9D9; padding-bottom: 10px;text-align: center;font-weight:bold; font-size: 32px;">상품 리뷰 상세</h2>
+
+        <!-- 이미지 자리 표시 -->
+        <div style="width: 150px; height: 150px; background-color: #eee; margin: 20px auto;"></div>
+
+        <!-- 별점 및 사용자 정보 -->
+        <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+            <span style="font-size: 24px; color:  #FFC700;">★ ★ ★ ★ ★</span>
+            <span style="font-weight: bold; margin-left: 10px;">(5)</span>
+            <span style="margin-left: 10px;">anj*** | 2024.10.16.</span>
+        </div>
+
+        <!-- 리뷰 텍스트 -->
+        <div style="text-align: left;">
+            <p style="font-weight: bold; font-size: 24px;">캔들 완전 추천드려요!!!</p>
+            <p style="font-weight: medium; font-size: 24px;">가족들에게 선물로 주려고 많이 샀습니다!!<br>
+            사용해본 캔들 중에 향이 가장 좋은 것 같아요~~<br>
+            녹을 때도 정말 예쁘게 녹아서 보고 있으면 힐링됩니다<br>
+            다른 향도 판매해주시면 바로 구매할게요!!!!<br>
+            너무 좋은 상품 만들어주셔서 감사합니다!</p>
+        </div>
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="logo.png" alt="소소한 이화">
+                </div>
+                <div class="footer-name">
+                    <h3>소소한 이화</h3>
+                </div>
+                <div class="footer-links">
+                    <a href="#">About Us</a>
+                    <a href="#">제품</a>
+                    <a href="#">서비스</a>
+    
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-info">
+                    <span>©copyright 2024</span>
+                </div>
+    
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+</html>

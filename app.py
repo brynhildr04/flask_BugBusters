@@ -1,31 +1,33 @@
-<<<<<<< HEAD
-from flask import Flask, render_template, request
-import sys
-application = Flask(__name__)
+from flask import Flask, render_template, request, redirect, url_for
+import os
+from werkzeug.utils import secure_filename
 
-@application.route("/")
-def hello():
-    return render_template("index.html")
-@application.route("/home.html")
-def view_home():
-    return render_template("home.html")
-@application.route("/cart.html")
-def view_cart():
-    return render_template("cart.html")
-@application.route("/profile.html")
-def view_profile():
-    return render_template("profile.html")
-@application.route("/submit_item_post", methods=['POST'])
-def reg_item_submit_post():
+app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = 'static/uploads'  # 이미지가 저장될 폴더 설정
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-    image_url = "https://search.pstatic.net/common/?src=https%3A%2F%2Fshop-phinf.pstatic.net%2F20240925_172%2F1727257588232P8xXD_JPEG%2F42154487053458405_564187763.jpg&type=sc960_832"
+@app.route('/submit_review', methods=['POST'])
+def submit_review():
+    title = request.form['title']
+    content = request.form['content']
+    rating = request.form['rating']
+    image_file = request.files['image']
 
-    data = request.form
-    return render_template("result.html", data=data, img_path=image_url)
-                
-if __name__=="__main__":
-    application.run(host='0.0.0.0', debug=True)
+    # 이미지 파일이 첨부되었는지 확인
+    if image_file and image_file.filename != '':
+        filename = secure_filename(image_file.filename)
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        image_file.save(filepath)  # 이미지 파일 저장
+        image_url = url_for('static', filename='uploads/' + filename)
+    else:
+        image_url = None
 
-=======
->>>>>>> 1dd9642c9c601b2c6032145de6db3bf52364e21a
+    # 상품리뷰상세 페이지로 데이터 전달
+    return render_template('상품리뷰상세.html', title=title, content=content, rating=rating, image_url=image_url)
 
+@app.route('/write_review')
+def write_review():
+    return render_template('리뷰작성.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)

@@ -1,0 +1,456 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+body {
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Header 기본 스타일 */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: white;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* 제품 <-> 서비스 토글 */
+.toggle-switch {
+    position: relative;
+    margin-left: 1rem;
+}
+
+.switch-input {
+    display: none;
+}
+
+.switch-label {
+    display: flex;
+    width: 120px;
+    height: 36px;
+    background: #e0e0e0;
+    border-radius: 18px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.switch-option {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+.switch-option.right {
+    padding-right: 7px; 
+}
+
+.switch-label::after {
+    content: '';
+    position: absolute;
+    width: 54px;
+    height: 30px;
+    background: #006633;
+    border-radius: 15px;
+    top: 3px;
+    left: 3px;
+    transition: transform 0.3s ease,width 0.3s ease;
+}
+
+.switch-input:checked + .switch-label::after {
+    transform: translateX(50px);
+    width: 64px;
+}
+
+.switch-input:checked + .switch-label .switch-option.left {
+    color: #666;
+}
+
+.switch-input:checked + .switch-label .switch-option.right {
+    color: white;
+}
+
+.switch-input:not(:checked) + .switch-label .switch-option.left {
+    color: white;
+}
+
+.switch-input:not(:checked) + .switch-label .switch-option.right {
+    color: #666;
+}
+
+
+
+.logo img {
+    height: 32px;
+}
+
+.logo-text {
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.search-bar {
+    position:relative;
+    display: flex; 
+    justify-content: center; /* 가운데 정렬 */
+    align-items: center; /* 세로 가운데 정렬 */
+    flex: 0 1 1000px;
+    margin: 0 auto; /* 전체 페이지 기준 가운데 정렬 */
+    height: 36px; /* 높이 설정 */
+}
+
+
+.search-button {
+    background: none;
+    border: none;
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0;
+    cursor: pointer;
+    height: 24px;
+    width: 24px;
+}
+
+.search-button img {
+    height: 100%;
+    width: 100%;
+}
+
+.search-bar input {
+    width: 100%; 
+    height: 36px;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 20px;
+    background: #f5f5f5;
+    font-size: 0.9rem;
+}
+
+.search-bar input:focus {
+    outline: none; 
+    border: 2px solid #006633;
+}
+
+
+.header-icons {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.register-btn {
+    padding: 0.5rem 1rem;
+    background: #A4C1AE;
+    color: black;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.register-btn:hover{
+    color: white;
+    background-color: #006633;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.icon-btn img {
+    height: 24px;
+    width: 24px;
+}
+
+/* Hero Section */
+.hero {
+    height: 600px;
+    background-image: url('path-to-your-hero-image.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin-top: 64px;
+    position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.3);
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.shop-now-btn {
+    padding: 0.8rem 2rem;
+    background: rgba(255,255,255,0.9);
+    border-radius: 25px;
+    color: #333;
+    text-decoration: none;
+    position: relative;
+    z-index: 1;
+    transition: background-color 0.3s;
+}
+
+.shop-now-btn:hover {
+    background: white;
+}
+
+/* 카테고리 */
+.nav-categories {
+    position : sticky;
+    top: 64px;
+    z-index: 999;
+    background: white;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1rem 0;
+    background: white;
+    border-bottom: 1px solid #eee;
+}
+
+.nav-categories a {
+    text-decoration: none;
+    color: #333;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s;
+}
+
+.nav-categories a:hover {
+    color: #006633;
+}
+
+.nav-categories a.active {
+    color: #006633;
+    font-weight: bold;
+}
+
+/* 상품 카드 영역 */
+.products-section {
+    max-width: 1158px; /* 1920px - (381px * 2) = 1158px */
+    margin: 0 auto; /* 가운데 정렬 */
+}
+.section-title {
+    margin: 2rem 0 1rem 2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    position: relative;
+}
+
+.product-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+    background: #f5f5f5;
+}
+
+.product-info {
+    padding: 1rem;
+}
+
+.product-info h3 {
+    font-size: 1rem;
+    color: #666;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 2rem 0;
+}
+
+.pagination a {
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: #333;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.pagination a:hover {
+    background: #f5f5f5;
+}
+
+.pagination a.active {
+    background: #006633;
+    color: white;
+}
+
+.pagination .prev,
+.pagination .next {
+    font-weight: 500;
+}
+
+/* Footer */
+footer {
+    background: #f8f8f8;
+    padding: 3rem 2rem;
+    margin-top: 4rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 2rem;
+}
+
+.footer-logo img {
+    max-width: 45px;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-left: 2rem;
+    margin-top: 0.5rem;
+}
+
+
+.footer-name {
+    display: flex;
+    margin-left: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: #666;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #333;
+}
+
+
+.footer-bottom {
+    border-top: 1px solid #eee;
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-info {
+    display: flex;
+    gap: 1.5rem;
+    color: #666;
+}
+
+.footer-info a {
+    color: #666;
+    text-decoration: none;
+}
+
+.language-select select {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+}
+
+/* Resposible ... 근데 줄어들면 헤더가 이상해져서... 고쳐야함.... */
+@media (max-width: 768px) {
+    .header {
+        padding: 1rem;
+    }
+    
+    .search-bar {
+        flex: 0 1 200px;
+        margin: 0 1rem;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .nav-categories {
+        gap: 1rem;
+        padding: 1rem;
+        overflow-x: auto;
+    }
+    
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        padding: 1rem;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+}
