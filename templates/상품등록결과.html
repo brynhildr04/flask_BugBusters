@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>상품 등록 결과</title>
-    <link rel="stylesheet" href="상품등록결과.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='상품등록결과.css') }}">
 </head>
 <body>
     <h1>상품 등록 완료</h1>
     <div class="product-info">
-        <p><strong>제목:</strong> {{ title }}</p>
-        <p><strong>제품 유형:</strong> {{ product_type }}</p>
-        <p><strong>카테고리:</strong> {{ category }}</p>
-        <p><strong>내용:</strong> {{ description }}</p>
+        <p><strong>제목:</strong> {{ data.title }}</p>
+        <p><strong>제품 유형:</strong> {{ data.product_type }}</p>
+        <p><strong>카테고리:</strong> {{ data.category }}</p>
+        <p><strong>내용:</strong> {{ data.description }}</p>
 
         {% if img_path %}
         <p><strong>첨부된 이미지:</strong></p>

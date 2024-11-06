@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>상품 등록</title>
-    <link rel="stylesheet" href="상품등록하기.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='상품등록하기.css') }}">
     <script>
         function updateCategoryOptions() {
             const productType = document.getElementById("product_type").value;
@@ -29,6 +29,21 @@
                 categorySelect.appendChild(option);
             });
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('image').addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const preview = document.getElementById('preview');
+                        preview.src = event.target.result;
+                        preview.style.display = 'block';  // 이미지가 선택되면 미리보기 표시
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
     </script>
 </head>
 <body>
@@ -58,7 +73,7 @@
                 <div class="image-preview">
                     <img id="preview" src="" alt="이미지 미리보기" style="display: none;">
                 </div>
-                <label for="image" class="upload-label">사진 첨부</label>
+                <!--<label for="image" class="upload-label">사진 첨부</label>-->
                 <input type="file" id="image" name="image" accept="image/*"><br><br>
                 </div>
             <label for="description">내용 (500자 이내)</label>
