@@ -8,7 +8,11 @@ DB=DBhandler()
 
 @application.route("/")
 def hello():
-    return render_template("index.html")
+    return render_template("main_product.html")
+
+@application.route("/main_service.html")
+def view_service():
+    return render_template("main_service.html")
 
 @application.route("/home.html")
 def view_home():

@@ -1,88 +1,75 @@
-{% extends "index.html" %}
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <script src="{{ url_for('static', filename='main.js') }}" defer></script>
-    <title>회원가입 페이지</title>
-</head>
+{% extends "header.html" %}
 {% block section %}
 {% with mesg = get_flashed_messages() %}
 {% if mesg !=[] %}
-    <script>alert("{{ mesg[0] }}")</script>
+<script>alert("{{ mesg[0] }}")</script>
 {% endif %}
 {% endwith %}
+<br><br><br><br><br>
+<div class="row">
+    <div class="column side"></div>
+    <div class="column middle">
+        <h2 id="login" style="text-align: center;">회원가입</h2>
+        <hr width=100%>
+        <form method="post" action="/signup_post">
+            <table id="signup_table">
+                <tr>
+                    <th>
+                        <label class="data_name" for="id">아이디</label>
+                    </th>
+                    <td>
+                        <input class="data_input" type="text" name="id" id="id" required>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label class="data_name" for="name">이름</label>
+                    </th>
+                    <td>
+                        <input class="data_input" type="text" name="name" id="name" required>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label class="data_name" for="stdNum">학번</label>
+                    </th>
+                    <td>
+                        <input class="data_input" type="number" name="stdNum" id="stdNum" required>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label class="data_name" for="email_id">학교 이메일</label>
+                    </th>
+                    <td>
+                        <input class="data_input" type="text" name="email_id" id="email_id" required>@
+                        <select class="data_input" name="email_domain" id="email_domain">
+                            <option value="ewhain.net">ewhain.net</option>
+                            <option value="ewha.ac.kr">ewha.ac.kr</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label class="data_name" for="birth">생년월일</label>
+                    </th>
+                    <td>
 
-<body>
-    <div class="row">
-        <div class="column side"></div>
-        <div class="column middle">
-            <h2 id="login" style="text-align: center;">회원가입</h2>
-            <hr width=100%>
-            <form method="post" action="/signup_post">
-                <table id="signup_table">
-                    <tr>
-                        <th>
-                            <label class="data_name" for="id">아이디</label>
-                        </th>
-                        <td>
-                            <input class="data_input" type="text" name="id" id="id" required>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            <label class="data_name" for="name">이름</label>
-                        </th>
-                        <td>
-                            <input class="data_input" type="text" name="name" id="name" required>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            <label class="data_name" for="stdNum">학번</label>
-                        </th>
-                        <td>
-                            <input class="data_input" type="number" name="stdNum" id="stdNum" required>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            <label class="data_name" for="email_id">학교 이메일</label>
-                        </th>
-                        <td>
-                            <input class="data_input" type="text" name="email_id" id="email_id" required>@
-                            <select class="data_input" name="email_domain" id="email_domain">
-                                <option value="ewhain.net">ewhain.net</option>
-                                <option value="ewha.ac.kr">ewha.ac.kr</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            <label class="data_name" for="birth">생년월일</label>
-                        </th>
-                        <td>
+                        <input class="data_input" type="number" name="byear" id="byear" required>년
+                        <input class="data_input" type="number" min="1" max="12" name="bmonth" id="bmonth" required>월
+                        <input class="data_input" type="number" min="1" max="31" name="bday" id="bday" required>일
 
-                            <input class="data_input" type="number" name="byear" id="byear" required>년
-                            <input class="data_input" type="number" min="1" max="12" name="bmonth" id="bmonth"
-                                required>월
-                            <input class="data_input" type="number" min="1" max="31" name="bday" id="bday" required>일
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            <label class="data_name" for="pw">비밀번호</label>
-                        </th>
-                        <td>
-                            <input class="data_input" type="password" name="pw" id="pw" required>
-                        </td>
-                    </tr>
-                    <!--
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label class="data_name" for="pw">비밀번호</label>
+                    </th>
+                    <td>
+                        <input class="data_input" type="password" name="pw" id="pw" required>
+                    </td>
+                </tr>
+                <!--
                     <tr>
                         <th>
                             <label class="data_name" id="pw_check">비밀번호 확인</label>
@@ -92,50 +79,49 @@
                         </td>
                     </tr>
                 -->
-                    <tr>
-                        <th>
-                            <label class="data_name" for="phoneNum">전화번호</label>
-                        </th>
-                        <td>
-                            <input class="data_input" type="number" name="phoneNum" id="phoneNum" required>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            <laebl class="data_name" id="address">주소</label>
-                        </th>
-                        <td>
-                            <input class="data_input" type="text" name="address" id="address" required>
-                        </td>
-                    </tr><br><br>
-                    <tr>
-                        <th colspan="2">
-                            <p class="data_name">이용악관</p>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th colspan="2" class="fakeimg" style="width: auto; height: 200px">이용약관 전문</th>
-                    </tr>
-                    <tr>
-                        <th colspan="2" style="text-align: right;">
-                            <label for="agreed">동의합니다</label>
-                            <input type="checkbox" id="agreed" name="agreed" required><!--js 연결 필요함. 체크되었는지 안되었는지 확인해서 안내 문구 innerHTML 하는 거-->
-                        </th>
-                    </tr>
-                    <tr>
-                        <th colspan="2">
-                            <p style="width: auto; text-align: right;"><br><br>
-                                <!--table의 cell 안에서는 아무리 <br>을 써도 적용되지 않음. <p> 태그 안에서 사용할 것-->
-                                <input class="submit_btn" type="submit" value="회원가입" id="signup_btn"><br><br><!--나중에 a빼고 백엔드 연결 필요. type도 submit으로 바꿔야 함.-->
-                            </p>
-                        </th>
-                    </tr>
-                </table>
-            </form>
-        </div>
-        <div class="column side"></div>
+                <tr>
+                    <th>
+                        <label class="data_name" for="phoneNum">전화번호</label>
+                    </th>
+                    <td>
+                        <input class="data_input" type="number" name="phoneNum" id="phoneNum" required>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <laebl class="data_name" id="address">주소</label>
+                    </th>
+                    <td>
+                        <input class="data_input" type="text" name="address" id="address" required>
+                    </td>
+                </tr><br><br>
+                <tr>
+                    <th colspan="2">
+                        <p class="data_name">이용악관</p>
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="2" class="fakeimg" style="width: auto; height: 200px">이용약관 전문</th>
+                </tr>
+                <tr>
+                    <th colspan="2" style="text-align: right;">
+                        <label for="agreed">동의합니다</label>
+                        <input type="checkbox" id="agreed" name="agreed"
+                            required><!--js 연결 필요함. 체크되었는지 안되었는지 확인해서 안내 문구 innerHTML 하는 거-->
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="2">
+                        <p style="width: auto; text-align: right;"><br><br>
+                            <!--table의 cell 안에서는 아무리 <br>을 써도 적용되지 않음. <p> 태그 안에서 사용할 것-->
+                            <input class="submit_btn" type="submit" value="회원가입"
+                                id="signup_btn"><br><br><!--나중에 a빼고 백엔드 연결 필요. type도 submit으로 바꿔야 함.-->
+                        </p>
+                    </th>
+                </tr>
+            </table>
+        </form>
     </div>
-</body>
+    <div class="column side"></div>
+</div>
 {% endblock section %}
-
-</html>

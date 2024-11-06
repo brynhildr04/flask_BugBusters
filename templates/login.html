@@ -1,72 +1,57 @@
-{% extends "index.html" %}
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <script src="{{ url_for('static', filename='main.js') }}" defer></script>
-    <title>로그인 페이지</title>
-</head>
+{% extends "header.html" %}
 {% block section %}
 {% with mesg = get_flashed_messages() %}
 {% if mesg !=[] %}
 <script>alert("{{ mesg[0] }}")</script>
 {% endif %}
 {% endwith %}
-
-<body>
-    <div class="row">
-        <div class="column side"></div>
-        <div class="column middle">
-            <h2 id="login" style="text-align: center;">로그인</h2>
-            <hr width=100%><br>
-            <form action="/signup_post" method="post"> <!--지금은 오류나서 그냥 뒀는데 나중에 cart처럼 고쳐야 함. 아마 수업시간에 진행되겠지?-->
-                <table id="login_table">
-                    <tr>
-                        <th>
-                            <label class="data_name" for="ID">아이디</label><br><br>
-                            <!--위치 안 맞았던 거는 data_input라인에만 <br>을 넣었기 때문-->
-                        </th>
-                        <td>
-                            <input class="data_input login" type="text" name="id" id="ID" required><br><br>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            <label class="data_name" for="passwd">비밀번호</label><br><br>
-                        </th>
-                        <td>
-                            <input class="data_input login" type="password" name="pw" id="passwd" required><br><br>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th colspan="2">
-                            <input class="submit_btn" type="submit" value="로그인" id="login_btn">
-                            <!--<a href="profile.html"><input class="submit_btn" type="submit" value="로그인"
+<br><br><br><br><br>
+<div class="row">
+    <div class="column side"></div>
+    <div class="column middle">
+        <h2 id="login" style="text-align: center;">로그인</h2>
+        <hr width=100%><br>
+        <form action="/signup_post" method="post"> <!--지금은 오류나서 그냥 뒀는데 나중에 cart처럼 고쳐야 함. 아마 수업시간에 진행되겠지?-->
+            <table id="login_table">
+                <tr>
+                    <th>
+                        <label class="data_name" for="ID">아이디</label><br><br>
+                        <!--위치 안 맞았던 거는 data_input라인에만 <br>을 넣었기 때문-->
+                    </th>
+                    <td>
+                        <input class="data_input login" type="text" name="id" id="ID" required><br><br>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label class="data_name" for="passwd">비밀번호</label><br><br>
+                    </th>
+                    <td>
+                        <input class="data_input login" type="password" name="pw" id="passwd" required><br><br>
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="2">
+                        <input class="submit_btn" type="submit" value="로그인" id="login_btn">
+                        <!--<a href="profile.html"><input class="submit_btn" type="submit" value="로그인"
                                         id="login_btn"><br><br></a> 나중에 a빼고 백엔드 연결 필요. type도 submit으로 바꿔야 함.-->
-                        </th>
-                    </tr>
-                </table>
-            </form>
-            <div class="linkto">
-                <table>
-                    <tr>
-                        <td width="50%">
-                            <a href="/signup.html">회원가입</a>
-                        </td>
-                        <td>
-                            <a href="find_id.html">ID/비밀번호 찾기</a>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+                    </th>
+                </tr>
+            </table>
+        </form>
+        <div class="linkto">
+            <table>
+                <tr>
+                    <td width="50%">
+                        <a href="/signup.html">회원가입</a>
+                    </td>
+                    <td>
+                        <a href="find_id.html">ID/비밀번호 찾기</a>
+                    </td>
+                </tr>
+            </table>
         </div>
-        <div class="column side"></div>
     </div>
-</body>
+    <div class="column side"></div>
+</div>
 {% endblock section %}
-
-</html>
