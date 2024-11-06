@@ -13,14 +13,19 @@
             align-items: center;
             width: 100vw;
             height: 100vh;
+            position: fixed;
         }
         .container {
             width: 1920px;
             height: 1080px;
             background: white;
-            position: relative;
+            position: fixed;
             padding: 20px;
             box-sizing: border-box;
+            top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            
         }
         h2 {
             text-align: center;
@@ -47,14 +52,16 @@
     .gray-box {
         width: 200px;
         height: 200px;
-        border: 1px solid #ddd;
+        border: 1px solid #D9D9D9;
         background-color: #E6E6E6;
         display: flex;
         justify-content: center;
         align-items: center;
         font-size: 60px;
+        border-radius: 10px;
         font-weight: medium;
-        color: #aaa;
+        color: #D9D9D9;
+    
         margin-top: 100px;
     }
 
@@ -81,6 +88,7 @@
             font-size: 20px;
             font-weight: medium;
             margin-top: 10px;
+            border-radius: 20px;
             cursor: pointer;
         }
         .submit-button {
@@ -90,7 +98,7 @@
             background-color: #CDECDB;
             border: none;
             color: #6c6c6c;
-            border-radius: 5px;
+            border-radius: 20px;
             cursor: pointer;
         }
     </style>
@@ -105,15 +113,16 @@
         }
 
         function previewImage(event) {
-            const reader = new FileReader();
-            reader.onload = function() {
-                const imagePreview = document.getElementById('imagePreview');
-                imagePreview.src = reader.result;
-                imagePreview.style.display = 'block';
-                localStorage.setItem('reviewImage', reader.result);
-            }
-            reader.readAsDataURL(event.target.files[0]);
+        const reader = new FileReader();
+        reader.onload = function() {
+        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+        imagePreviewContainer.style.backgroundImage = `url(${reader.result})`;
+        imagePreviewContainer.style.backgroundSize = 'cover';
+        imagePreviewContainer.style.backgroundPosition = 'center';
         }
+        reader.readAsDataURL(event.target.files[0]);
+        }
+
 
         function submitReview() {
             const titleElement = document.getElementById('title');
@@ -181,7 +190,7 @@
             </div>
 
             <!-- 회색 네모 박스 -->
-        <div class="gray-box" style="margin: 0 auto;"></div>
+            <div class="gray-box" id="imagePreviewContainer" style="margin: 0 auto;"></div>
 
         </div>
 
