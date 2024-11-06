@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 등록</title>
+    <link rel="stylesheet" href="상품등록하기.css">
+</head>
+<body>
+    <div class="container">
+        <h2>상품 등록</h2>
+        <form action="/submit_item_post" method="post" enctype="multipart/form-data">
+            <label for="title">제목 (20자 이내)</label>
+            <input type="text" id="title" name="title" maxlength="20" required>
+
+            <div class="dropdowns">
+                <div class="dropdown">
+                    <label for="product_type">제품</label>
+                    <select id="product_type" name="product_type">
+                        <option value="product">제품</option>
+                        <option value="service">서비스</option>
+                    </select>
+                </div>
+
+                <div class="dropdown">
+                    <label for="category">카테고리 (드롭다운)</label>
+                    <select id="category" name="category">
+                        <option value="category1">카테고리 1</option>
+                        <option value="category2">카테고리 2</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="image-upload">
+                <div class="image-preview">
+                    <img id="preview" src="" alt="이미지 미리보기" style="display: none;">
+                </div>
+               <label for="image" class="upload-label">사진 첨부</label>
+               <input type="file" id="image" name="image" accept="image/*" style="display: none;">
+            </div>
+
+            <label for="description">내용 (500자 이내)</label>
+            <textarea id="description" name="description" maxlength="500" required></textarea>
+
+            <div class="button-container">
+                 <button type="submit">작성 완료</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
