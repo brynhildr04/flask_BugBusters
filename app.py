@@ -49,7 +49,6 @@ def view_product_detail():
 def view_service_detail():
     return render_template("service_detail.html")
 
-# soyoon2의 상품 등록 페이지 라우트
 @application.route("/상품등록하기.html")
 def view_register():
     return render_template("상품등록하기.html")
