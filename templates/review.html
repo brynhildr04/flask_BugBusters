@@ -1,0 +1,57 @@
+{% extends "header.html" %}
+
+{% block head %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Review Write Page</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='eunyoung_style.css') }}">
+<script src="{{ url_for('static', filename='main.js') }}" defer></script>
+{% endblock head %}
+
+{% block section %}
+<br><br><br><br>
+<div class="review_body">
+    <div class="container">
+        <h2 id="review_h2">리뷰 작성</h2>
+        <hr style="border: none; border-top: 1px solid #ddd; margin: 10px 0;">
+
+        <div class="rating-container">
+            <p>이 서비스 어때요?</p>
+            <div>
+                <span class="star" onclick="setRating(1)">★</span>
+                <span class="star" onclick="setRating(2)">★</span>
+                <span class="star" onclick="setRating(3)">★</span>
+                <span class="star" onclick="setRating(4)">★</span>
+                <span class="star" onclick="setRating(5)">★</span>
+                <span id="starText">(5)</span>
+            </div>
+
+            <!-- 회색 네모 박스 -->
+            <div class="gray-box" id="imagePreviewContainer"></div>
+
+        </div>
+
+        <div class="image-upload-container">
+            <img id="imagePreview" alt="사진 미리보기">
+            <input type="file" id="image" name="image" accept="image/*" onchange="previewImage(event)"
+                class="file-button">
+        </div>
+
+        <div>
+            <input type="text" id="title" maxlength="50" placeholder="제목 (50자 이내)">
+        </div>
+
+        <div>
+            <textarea id="content" maxlength="500" placeholder="내용 (500자 이내)"></textarea>
+        </div>
+
+        <input type="hidden" id="rating" value="5">
+
+        <div id="submit_div">
+            <button class="submit-button" onclick="submitReview()">작성 완료</button>
+        </div>
+    </div>
+</div>
+<script src="path/to/main.js"></script>
+{% endblock section %}
