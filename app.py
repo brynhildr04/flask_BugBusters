@@ -12,7 +12,7 @@ DB=DBhandler()
 #메인 홈화면
 @application.route("/")
 def hello():
-    return render_template("review.html")
+    return render_template("main_product.html")
 
 #서비스 홈화면
 @application.route("/main_service.html")
