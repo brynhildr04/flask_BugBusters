@@ -123,7 +123,57 @@ function redirectToPayment() {
     }
 }
 
+/********payment js********/
+setTimeout(() => {
+    document.getElementById('paymentStatus').innerHTML = "결제가 완료되었습니다! <br><button onclick='continueShopping()'>쇼핑 계속하기</button>";
+}, 2000);
+
+function continueShopping() {
+    window.location.href = "/main_service.html"; // 메인 페이지로 돌아가는 링크
+}
+
 window.onload=showDetails(); //첫 화면에서 기본은 상품 상세로 설정
+
+/*******chat js*******/
+function sendMessage() {
+    const input = document.getElementById("userInput");
+    const message = input.value.trim();
+    
+    if (message === "") return;
+
+    const chatMessages = document.getElementById("chatMessages");
+
+    // 사용자 메시지 추가
+    addMessage(message, "user");
+
+    // 예제 봇 응답
+    setTimeout(() => {
+        addMessage("안녕하세요! 판매자입니다! 무엇을 도와드릴까요?", "bot");
+    }, 500);
+
+    // 입력 필드 초기화
+    input.value = "";
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function addMessage(text, sender) {
+    const chatMessages = document.getElementById("chatMessages");
+
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add("message", sender);
+    messageDiv.textContent = text;
+
+    const timestamp = document.createElement("div");
+    timestamp.classList.add("timestamp");
+    const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    timestamp.textContent = time;
+
+    messageDiv.appendChild(timestamp);
+    chatMessages.appendChild(messageDiv);
+    
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
 
 
 //은영님 js
