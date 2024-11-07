@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>상품 등록 결과</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='상품등록결과.css') }}">
-</head>
-<body>
+{% extends "header.html" %}
+{% block section %}
+<section id="upload_result">
     <h1>상품 등록 완료</h1>
     <div class="product-info">
         <p><strong>제목:</strong> {{ data.title }}</p>
@@ -19,5 +13,5 @@
         <img src="{{ img_path }}" alt="상품 이미지">
     {% endif %}
     </div>
-</body>
-</html>
+</section>
+{% endblock section %}
