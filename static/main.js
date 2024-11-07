@@ -83,6 +83,7 @@ function showReviews() {
 
 window.onload=showDetails(); //첫 화면에서 기본은 상품 상세로 설정
 
+
 //은영님 js
 function setRating(stars) {
     const starElements = document.querySelectorAll('.star');
@@ -123,5 +124,5 @@ function submitReview() {
     localStorage.setItem('reviewContent', content);
     localStorage.setItem('reviewRating', rating);
 
-    window.location.href = "상품리뷰상세.html";
+    window.location.href = "review_detail.html";
 }
