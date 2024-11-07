@@ -1,28 +1,35 @@
-from flask import Flask, render_template, request
-import sys
-application = Flask(__name__)
+from flask import Flask, render_template, redirect, url_for
 
-@application.route("/")
-def hello():
-    return render_template("index.html")
-@application.route("/home.html")
-def view_home():
-    return render_template("home.html")
-@application.route("/cart.html")
-def view_cart():
-    return render_template("cart.html")
-@application.route("/profile.html")
-def view_profile():
-    return render_template("profile.html")
-@application.route("/submit_item_post", methods=['POST'])
-def reg_item_submit_post():
+app = Flask(__name__)
 
-    image_url = "https://search.pstatic.net/common/?src=https%3A%2F%2Fshop-phinf.pstatic.net%2F20240925_172%2F1727257588232P8xXD_JPEG%2F42154487053458405_564187763.jpg&type=sc960_832"
+# 기본 페이지 설정: purchase_p.html
+@app.route('/')
+def home():
+    return render_template('purchase_product.html')
 
-    data = request.form
-    return render_template("result.html", data=data, img_path=image_url)
-                
-if __name__=="__main__":
-    application.run(host='0.0.0.0', debug=True)
+# 특정 버튼을 클릭하면 payment.html로 이동하는 경로 설정
+@app.route('/payment')
+def view_payment():
+    return render_template('payment.html')
 
+# 기타 독립적인 페이지
+@app.route('/aboutus')
+def view_aboutus():
+    return render_template('aboutus.html')
+
+@app.route('/chat_product')
+def view_chat_product():
+    return render_template('chat_product.html')
+
+@app.route('/chat_service')
+def view_chat_service():
+    return render_template('chat_service.html')
+
+@app.route('/purchase_service')
+def view_purchase_service():
+    return render_template('purchase_service.html')
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
