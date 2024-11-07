@@ -123,5 +123,5 @@ function submitReview() {
     localStorage.setItem('reviewContent', content);
     localStorage.setItem('reviewRating', rating);
 
-    window.location.href = "상품리뷰상세.html";
+    window.location.href = "review_detail.html";
 }
