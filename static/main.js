@@ -1,3 +1,5 @@
+
+//민하님 js
 document.getElementById('quantity').addEventListener('input', function () {
     const quantity = parseInt(this.value, 10) || 0;
     const total = quantity * 10000;
@@ -80,3 +82,46 @@ function showReviews() {
 }
 
 window.onload=showDetails(); //첫 화면에서 기본은 상품 상세로 설정
+
+//은영님 js
+function setRating(stars) {
+    const starElements = document.querySelectorAll('.star');
+    starElements.forEach((star, index) => {
+        star.style.color = index < stars ? '#FFC700' : '#ccc';
+    });
+    document.getElementById('rating').value = stars;
+    document.getElementById('starText').innerText = `(${stars})`;
+}
+
+function previewImage(event) {
+const reader = new FileReader();
+reader.onload = function() {
+const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+imagePreviewContainer.style.backgroundImage = `url(${reader.result})`;
+imagePreviewContainer.style.backgroundSize = 'cover';
+imagePreviewContainer.style.backgroundPosition = 'center';
+}
+reader.readAsDataURL(event.target.files[0]);
+}
+
+
+function submitReview() {
+    const titleElement = document.getElementById('title');
+    const contentElement = document.getElementById('content');
+    const ratingElement = document.getElementById('rating');
+
+    if (!titleElement || !contentElement || !ratingElement) {
+        alert("필수 입력 요소를 찾을 수 없습니다.");
+        return;
+    }
+
+    const title = titleElement.value;
+    const content = contentElement.value;
+    const rating = ratingElement.value;
+
+    localStorage.setItem('reviewTitle', title);
+    localStorage.setItem('reviewContent', content);
+    localStorage.setItem('reviewRating', rating);
+
+    window.location.href = "상품리뷰상세.html";
+}

@@ -1,0 +1,38 @@
+{% extends "header.html" %}
+{% block head %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Review Detail Page</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='eunyoung_style.css') }}">
+<script src="{{ url_for('static', filename='main.js') }}" defer></script>
+{% endblock head %}
+
+{% block section %}
+<br><br><br>
+<div class="review_body">
+    <div id="review_detail_div">
+        <h2 id="review_detail_h2">상품 리뷰 상세</h2>
+
+        <!-- 이미지 자리 표시 -->
+        <div id="review_detail_image"></div>
+
+        <!-- 별점 및 사용자 정보 -->
+        <div id="review_user_info">
+            <span id="user_star">★ ★ ★ ★ ★</span>
+            <span id="user_score">(5)</span>
+            <span id="user_id">anj*** | 2024.10.16.</span>
+        </div>
+
+        <!-- 리뷰 텍스트 -->
+        <div class="revie_text">
+            <p id="review_title">캔들 완전 추천드려요!!!</p>
+            <p id="review_text">가족들에게 선물로 주려고 많이 샀습니다!!<br>
+                사용해본 캔들 중에 향이 가장 좋은 것 같아요~~<br>
+                녹을 때도 정말 예쁘게 녹아서 보고 있으면 힐링됩니다<br>
+                다른 향도 판매해주시면 바로 구매할게요!!!!<br>
+                너무 좋은 상품 만들어주셔서 감사합니다!</p>
+        </div>
+    </div>
+</div>
+{% endblock section %}
