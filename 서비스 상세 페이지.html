@@ -7,7 +7,6 @@
   <title>서비스 상세 페이지</title>
 
   <style>
-
     .result {
       font-size: 20px;
       margin-top: 10px;
@@ -22,7 +21,7 @@
       height: 400px;
       margin: 0 auto;
       overflow: hidden;
-      z-index:2;
+      z-index: 2;
     }
 
     /* 이미지 스타일 */
@@ -110,6 +109,8 @@
       margin: 10px;
       padding: 10px;
       border-radius: 5px;
+      cursor: pointer;
+      /* 리뷰에 포인터 커서 추가 */
     }
 
     .rating {
@@ -147,7 +148,7 @@
 
   <script>
 
-document.getElementById('quantity').addEventListener('input', function() {
+    document.getElementById('quantity').addEventListener('input', function () {
       const quantity = parseInt(this.value, 10) || 0;
       const total = quantity * 10000;
       document.getElementById('result').innerText = `수량: ${quantity}, 총액: ${total.toLocaleString()}원`;
@@ -196,11 +197,16 @@ document.getElementById('quantity').addEventListener('input', function() {
       reviewDiv.classList.add('review');
 
       reviewDiv.innerHTML = `
-            <strong>${name} (${id})</strong><br>
-            <div class="rating">${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}</div>
-            <small>${date} | 수제 캔들, ${items}개</small><br>
-            <p>${contents}</p>
-        `;
+                <strong>${name} (${id})</strong><br>
+                <div class="rating">${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}</div>
+                <small>${date} | 수제 캔들, ${items}개</small><br>
+                <p>${contents}</p>
+            `;
+
+      // 클릭 이벤트 추가
+      reviewDiv.addEventListener('click', function () {
+        window.location.href = `review_detail.html?id=${id}`;
+      });
 
       reviewsContainer.appendChild(reviewDiv);
     }
@@ -242,7 +248,8 @@ document.getElementById('quantity').addEventListener('input', function() {
       style="width: 71.50px; height: 36.01px; left: 372px; top: 17px; position: absolute; background: #A4A4A4; border-radius: 17.57px">
     </div>
     <div
-      style="left: 385px; top: 25px; position: absolute; color: white; font-size: 16px; font-family: Inter; font-weight: 700; word-wrap: break-word">서비스</div>
+      style="left: 385px; top: 25px; position: absolute; color: white; font-size: 16px; font-family: Inter; font-weight: 700; word-wrap: break-word">
+      서비스</div>
     <div style="width: 24px; height: 24px; left: 1828px; top: 23px; position: absolute">
       <div style="width: 24px; height: 24px; left: 0px; top: 0px; position: absolute"></div>
       <div style="width: 16px; height: 16px; left: 4px; top: 4px; position: absolute; background: black"></div>
@@ -344,7 +351,8 @@ document.getElementById('quantity').addEventListener('input', function() {
       Cart</button>
     <button class="button" onclick="buy(); location.href='purchase_service.html';"
       style="width: 412px; height: 58px; left: 1098px; top: 611px; position: absolute; border-radius: 20px">Buy</button>
-      <div style="left: 1282px; top: 246px; position: absolute; color: #7C7C7C; font-size: 16px; font-family: Inter; font-weight: 300; line-height: 24px; word-wrap: break-word">
+    <div
+      style="left: 1282px; top: 246px; position: absolute; color: #7C7C7C; font-size: 16px; font-family: Inter; font-weight: 300; line-height: 24px; word-wrap: break-word">
       리뷰(99+)</div>
     <div style="width: 154px; height: 24px; left: 1097px; top: 242px; position: absolute">
       <div
@@ -371,9 +379,9 @@ document.getElementById('quantity').addEventListener('input', function() {
     <div class="tab" id="reviewsTab" onclick="showReviews()"
       style="left: 860px; top: 25px; position: absolute; color: #838383; font-size: 32px; font-family: Poppins; font-weight: 700; word-wrap: break-word">
       리뷰(99+)</div>
-      <div class="tab" id="sellerTab" onclick="alert('판매자 문의 화면으로 이동합니다!'); location.href='service.html';"
+    <div class="tab" id="sellerTab" onclick="alert('판매자 문의 화면으로 이동합니다!'); location.href='chat_service.html';"
       style="left: 1170px; top: 25px; position: absolute; color: #838383; font-size: 32px; font-family: Fenix; font-weight: 700; word-wrap: break-word">
-      판매자 문의</div>  
+      판매자 문의</div>
   </div>
 
   <div id="detailsContent" class="content active-content"

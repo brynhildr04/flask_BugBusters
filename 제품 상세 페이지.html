@@ -110,6 +110,7 @@
       margin: 10px;
       padding: 10px;
       border-radius: 5px;
+      cursor: pointer;/* 리뷰에 포인터 커서 추가 */
     }
 
     .rating {
@@ -196,11 +197,16 @@ document.getElementById('quantity').addEventListener('input', function() {
       reviewDiv.classList.add('review');
 
       reviewDiv.innerHTML = `
-            <strong>${name} (${id})</strong><br>
-            <div class="rating">${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}</div>
-            <small>${date} | 수제 캔들, ${items}개</small><br>
-            <p>${contents}</p>
-        `;
+                <strong>${name} (${id})</strong><br>
+                <div class="rating">${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}</div>
+                <small>${date} | 수제 캔들, ${items}개</small><br>
+                <p>${contents}</p>
+            `;
+
+      // 클릭 이벤트 추가
+      reviewDiv.addEventListener('click', function () {
+        window.location.href = `review_detail.html?id=${id}`;
+      });
 
       reviewsContainer.appendChild(reviewDiv);
     }
