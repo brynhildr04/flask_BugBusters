@@ -1,6 +1,6 @@
 /* 상품등록하기.css */
 
-body {
+#ps_upload {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px 0; /* 상단 여백 추가 */
@@ -12,7 +12,7 @@ body {
     color: #000000
 }
 
-.container {
+#ps_upload .container {
     width: 821px;
     padding: 20px;
     background-color: #FFFFFF; /* 컨테이너 배경을 흰색으로 설정 */
@@ -20,7 +20,7 @@ body {
     border-radius: 8px;
 }
 
-h2 {
+#ps_upload h2 {
     font-size: 32px;
     font-weight: bold;
     width: 100%;
@@ -31,7 +31,7 @@ h2 {
     background-color: #FFFFFF;
 }
 
-.title-line {
+#ps_upload .title-line {
     width: 821px;
     height: 2px;
     background-color: #000000; /* 선의 색상 */
@@ -39,7 +39,7 @@ h2 {
     margin: 10px auto 20px; /* 제목과 간격 조정 */
 }
 
-label {
+#ps_upload label {
     font-size: 24px;
     font-weight: 500;
     color: #000000; /* 텍스트 색상 */
@@ -52,8 +52,8 @@ label {
     box-sizing: border-box;
 }
 
-input[type="text"],
-select {
+#ps_upload input[type="text"],
+#ps_upload select {
     font-size: 20px;
     font-weight: 500;
     border: 1px solid #ccc;
@@ -62,44 +62,44 @@ select {
     background-color: #E6E6E6;
 }
 
-#title {
+#ps_upload #title {
     width: 100%;
     height: 80px;
     padding: 10px;
 }
 
-.dropdowns {
+#ps_upload .dropdowns {
     display: flex;
     gap: 10px;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
-.dropdown {
+#ps_upload .dropdown {
     flex: 1;
 }
 
-#product_type {
+#ps_upload #product_type {
     width: 260px;
     height: 80px;
     padding: 10px;
     margin-right: 10px;
 }
 
-#category {
+#ps_upload #category {
     width: 523px;
     height: 80px;
     padding: 10px;
 }
 
-.image-upload {
+#ps_upload .image-upload {
     display: flex;
     flex-direction: column;
     align-items: center; /* 중앙 정렬 */
     margin-bottom: 20px;
 }
 
-.image-preview {
+#ps_upload .image-preview {
     width: 180px;
     height: 180px;
     background-color: #E6E6E6;
@@ -112,13 +112,13 @@ select {
     margin-bottom: 10px; /* 버튼과의 간격 */
 }
 
-.image-preview img {
+#ps_upload .image-preview img {
     max-width: 100%;
     max-height: 100%;
     display: block;
 }
 
-.image-upload label.upload-label {
+#ps_upload .image-upload label.upload-label {
     font-size: 24px;
     font-weight: bold;
     width: 119px;
@@ -133,7 +133,7 @@ select {
     cursor: pointer;
 }
 
-textarea {
+#ps_upload textarea {
     width: 100%;
     height: 535px;
     font-size: 20px;
@@ -146,11 +146,11 @@ textarea {
     box-sizing: border-box;
 }
 
-.button-container {
+#ps_upload .button-container {
     text-align: right;
 }
 
-button {
+#ps_upload button {
     font-size: 24px;
     font-weight: bold;
     width: 138px;
