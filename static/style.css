@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -474,9 +475,28 @@ footer {
 }
 
 h2:not(#login) {
-    padding: 20px;
+=======
+/********aboutus css*******/
+#aboutus_r * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
+#aboutus_r {
+    background-color: #ffffff;
+}
+
+#aboutus_r.container {
+    max-width: 1200px;
+    margin: 0 auto;
+>>>>>>> origin/kimjiyoon
+    padding: 20px;
+    position: relative;
+}
+
+<<<<<<< HEAD
 /*구역 나누기*/
 .column {
     float: left;
@@ -610,3 +630,342 @@ label .data_name {
     color: #FFC700;
     text-decoration: underline;
 }
+=======
+#aboutus_r .about-section {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+#aboutus_r .about-title {
+    font-size: 32px;
+    margin-bottom: 10px;
+    color: #333;
+    position: relative;
+    display: inline-block;
+}
+
+#aboutus_r .title-underline {
+    width: 964px;  /* 길이를 964px로 변경 */
+    height: 1px;
+    background-color: #000;
+    margin: 0 auto 30px;
+}
+
+#aboutus_r .logo-title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px; /* 로고와 텍스트 사이 간격 */
+    margin-bottom: 30px;
+}
+
+#aboutus_r .logo {
+    width: 100px;
+    height: 100px;
+}
+
+#aboutus_r .logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* 이미지 비율 유지 */
+}
+
+#aboutus_r .title-korean {
+    font-size: 96px;
+    font-weight: bold;
+    margin: 20px 0;
+    color: #333;
+}
+
+#aboutus_r .description {
+    font-size: 24px;
+    line-height: 1.6;
+    color: #666;
+    margin: 0 auto;
+    max-width: 800px;
+    word-break: keep-all;
+}
+
+/* 반응형을 위한 미디어 쿼리 추가 */
+@media (max-width: 1000px) {
+    #aboutus_r .title-underline {
+        width: 90vw; /* 화면이 작아질 때는 viewport 너비의 90%로 조정 */
+    }
+
+    #aboutus_r .logo-title-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+/********chat css*******/
+#char_r * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+#char_r .chatchat{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#char_r .chat-container {
+    width: 700px;
+    height: 800px;
+    max-width: 90%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#char_r .chat-header {
+    background-color: #00462A;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#char_r .chat-messages {
+    padding: 10px;
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#char_r .message {
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    border-radius: 15px;
+    position: relative;
+    word-wrap: break-word;
+}
+
+#char_r .message.user {
+    align-self: flex-end;
+    background-color: #CDECDB;
+    color: #000;
+}
+
+#char_r .message.bot {
+    align-self: flex-start;
+    background-color: #ffffff;
+    color: #000;
+    border: 1px solid #e5e5e5;
+}
+
+#char_r .timestamp {
+    font-size: 10px;
+    color: #888;
+    margin-top: 5px;
+    align-self: flex-end;
+}
+
+#char_r .chat-input {
+    display: flex;
+    padding: 8px;
+    border-top: 1px solid #ddd;
+    background-color: #f7f7f7;
+}
+
+#char_r .chat-input input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    outline: none;
+}
+
+#char_r .chat-input button {
+    padding: 0 15px;
+    margin-left: 8px;
+    background-color: #00462A;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#char_r .chat-input button:hover {
+    background-color: #CDECDB;
+}
+
+/********purchase css*******/
+#purchase_r * {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+#purchase_r {
+    max-width: 1158px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0 auto;
+    background-color: #f4f4f9;
+}
+
+#purchase_r .container {
+    width: 1920px;
+    padding: 20px;
+    border-radius: 1px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+#purchase_r h2 {
+    margin-bottom: 10px;
+}
+
+#purchase_r .product-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border: 3px solid #ddd;
+    border-radius: 1px;
+    background-color: #f9f9f9;
+    margin-bottom: 500px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+#purchase_r .product-details {
+    display: flex;
+    align-items: left;
+}
+
+#purchase_r .product-box img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-right: 40px;
+}
+
+#purchase_r .product-info {
+    text-align: left;
+}
+
+#purchase_r .quantity-control {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+#purchase_r .quantity-control button {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#purchase_r .quantity-control button:hover{
+    background-color: #CDECDB;
+}
+
+#purchase_r .quantity-control span {
+    padding: 0 20px;
+}
+
+#purchase_r .product-price {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#purchase_r .finalprice {
+    position: fixed;        
+    right: 50px;           
+    bottom: 150px;           
+    background-color: #f9f9f9; 
+    padding: 10px;         
+    border-radius: 8px;    
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    display: flex;          
+    align-items: center;    
+}
+
+#purchase_r .finalprice h3 {
+    margin: 0;              
+    margin-right: 5px;     
+}
+
+#purchase_r .product-price {
+    font-weight: bold;      
+    margin-left: 5px;      
+}
+
+#purchase_r .remove-btn {
+    position: absolute;
+    top: 7px;
+    right: 10px;
+    cursor: pointer;
+    color: red;
+    font-size: 18px;
+}
+
+#purchase_r .checkout-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #00462A;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#purchase_r .checkout-btn:hover {
+    background-color: #A4C1AE;
+}
+
+/********payment css*******/
+#payment_r .payment-message {
+    text-align: center;
+    font-size: 2em;
+    font-size: 30px;
+    color: #333;
+}
+
+#payment_r {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, sans-serif;
+}
+
+#payment_r .payment-message button {
+    margin-top: 20px;
+    padding: 8px 12px;
+    font-size: 20px;
+    background-color: #04624A;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#payment_r .payment-message button:hover {
+    background-color: #A4C1AE;
+}
+>>>>>>> origin/kimjiyoon

@@ -1,0 +1,15 @@
+{% extends "header.html" %}
+{% block section %}
+{% include 'nav_product.html' %}
+<section id="chat_r">
+<div class="chat-container">
+    <div class="chat-header">판매자 문의 채팅</div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-input">
+        <input type="text" id="userInput" placeholder="메시지를 입력하세요">
+        <button onclick="sendMessage()">보내기</button>
+    </div>
+</div>
+<script src="path/to/main.js"></script>
+</section>
+{% endblock section %}
