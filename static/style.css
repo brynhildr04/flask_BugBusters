@@ -306,13 +306,43 @@
 }
 
 /* Login and Signup Styles */
+/*css 함부로 지우지 마세요... 지웠다면 꼭 화면이 어떻게 나오는지 확인하세요*/
+.column {
+    float: left;
+    padding: 10px;
+}
+.column.side {
+    width: 25%;
+}
+.column.middle {
+    width: 50%;
+}
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+#login_table, #link_table{
+    width: auto;
+    border: none;
+    margin: auto;
+    text-align: center;
+}
+
 #signup_table {
+    width: auto;
+    border: none;
+    margin: auto;
     text-align: left;
 }
 
 #findId {
     width: auto;
     text-align: left;
+}
+#find{
+    padding: 5px 20% 0px 20%;
+    width: auto;
 }
 
 .data_name {
@@ -342,6 +372,35 @@
     border-radius: 15px;
     font-size: 16px;
     font-weight: 900;
+}
+#login_btn{
+    width: 380px;
+}
+#findId_btn, #findPW_btn{
+    width: auto;
+    font-size: 12px;
+    border-radius: 5px;
+}
+
+.fakeimg {
+    background-color: #858a80;
+    width: 100%;
+    padding: 20px;
+}
+
+.linkto a{
+    float: left;
+    display:block;
+    text-align: center;
+    padding: 14px 16px;
+    font-size: 16px;
+    font-weight: 800;
+    color: black;
+    text-decoration: none;
+}
+.linkto a:hover{
+    color: #FFC700;
+    text-decoration: underline;
 }
 
 /* Footer */

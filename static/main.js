@@ -54,7 +54,7 @@ function review(id, name, contents, rating, date, items) {
         <small>${date} | 수제 캔들, ${items}개</small><br>
         <p>${contents}</p>
     `;
-
+     
     reviewsContainer.appendChild(reviewDiv);
 }
 
@@ -167,4 +167,16 @@ function submitReview() {
     localStorage.setItem('reviewRating', rating);
 
     window.location.href = "review_detail.html";
+}
+
+//박수민 js
+function pwSending(){
+    var msg=document.getElementById("findPW_msg");
+    msg.innerHTML="*임시 비밀번호가 이메일이 전송되었습니다."; 
+    msg.style.visibility="visible";
+}
+function idSending(){
+    var msg=document.getElementById("findId_msg");
+    msg.innerHTML="*아이디가 이메일이 전송되었습니다."; 
+    msg.style.visibility="visible";
 }
