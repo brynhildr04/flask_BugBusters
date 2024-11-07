@@ -1,0 +1,118 @@
+{% extends 'header.html' %}
+{% block check %}
+<input type="checkbox" id="switch" class="switch-input" onclick="location.href='main_service.html'">
+{% endblock check %}
+    {% block section %}
+    <section class="hero">
+        <h1>Ewha Market Project</h1>
+        <a href="#" class="shop-now-btn">shop now</a>
+    </section>
+
+    {% include 'nav_product.html' %}
+
+    <section class="products-section">
+        <h2 class="section-title">오늘의 인기 상품<br></h2>
+        <div class="slider-container">
+            <button class="slider-button prev" id="prevBtn1">&lt;</button>
+            <div class="product-slider">
+                <div class="slide-track">
+                    <a href="product_detail.html" class="product-card">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3># 식품</h3>
+                        </div>
+                    </a>
+                    <a href="product_detail.html" class="product-card">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3># 공예</h3>
+                        </div>
+                    </a>
+                    <a href="product_detail.html" class="product-card">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3># 뷰티</h3>
+                        </div>
+                    </a>
+                    <div class="product-card">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3># 패션</h3>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3># 기타 제품</h3>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3># 제품 제작 의뢰</h3>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            <button class="slider-button next" id="nextBtn1">&gt;</button>
+        </div>
+    </section>
+
+    <section class="products-section">
+        <h2 class="section-title">최신 등록 상품<br></h2>
+        <div class="slider-container">
+            <button class="slider-button prev" id="prevBtn2">&lt;</button>
+            <div class="product-slider">
+                <div class="slide-track">
+                    <a href="product_detail.html" class="product-card">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3># 식품</h3>
+                        </div>
+                    </a>
+                    <a href="product_detail.html" class="product-card">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3># 공예</h3>
+                        </div>
+                    </a>
+                    <a href="product_detail.html" class="product-card">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3># 뷰티</h3>
+                        </div>
+                    </a>
+                    <div class="product-card">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3># 패션</h3>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3># 기타 제품</h3>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <h3># 제품 제작 의뢰</h3>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+            <button class="slider-button next" id="nextBtn2">&gt;</button>
+        </div>
+    </section>
+    <div class="pagination">
+        <a href="#" class="prev">Previous</a>
+        <a href="#">1</a>
+        <a href="#" class="active">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">5</a>
+        <a href="#" class="next">Next</a>
+    </div>
+{% endblock section %}

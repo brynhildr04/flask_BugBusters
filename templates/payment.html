@@ -1,60 +1,9 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <style>
-    .payment-message {
-        text-align: center;
-        font-size: 2em;
-        font-size: 30px;
-        color: #333;
-    }
-
-    body, html {
-            height: 100%;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
-    }
-
-    .payment-message button {
-        margin-top: 20px;
-        padding: 8px 12px;
-        font-size: 20px;
-        background-color: #04624A;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .payment-message button:hover {
-        background-color: #A4C1AE;
-    }
-    </style>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>결제 중...</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-
-<body>
-
+{% extends "header.html" %}
+{% block section %}
+<section id="payment_r">
 <div class="container">
     <div id="paymentStatus" class="payment-message">결제중입니다...</div>
 </div>
-
-<script>
-    setTimeout(() => {
-        document.getElementById('paymentStatus').innerHTML = "결제가 완료되었습니다! <br><button onclick='continueShopping()'>쇼핑 계속하기</button>";
-    }, 2000);
-
-    function continueShopping() {
-        window.location.href = "index.html"; // 메인 페이지로 돌아가는 링크
-    }
-</script>
-
-</body>
-</html>
+<script src="path/to/main.js"></script>
+</section>
+{% endblock section %}

@@ -1,0 +1,9 @@
+{
+    "apiKey": "AIzaSyBuKSjbkvETBGuXpSOpp80kMcl7U7zopa4",
+    "authDomain": "sosohan-ewha.firebaseapp.com",
+    "databaseURL": "https://sosohan-ewha-default-rtdb.firebaseio.com",
+    "projectId": "sosohan-ewha",
+    "storageBucket": "sosohan-ewha.firebasestorage.app",
+    "messagingSenderId": "300678011557",
+    "appId": "1:300678011557:web:ae7ccd3ae1e57c56548b4c"
+}

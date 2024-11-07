@@ -1,0 +1,1073 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+/* Header 기본 스타일 */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: white;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* 제품 <-> 서비스 토글 */
+.toggle-switch {
+    position: relative;
+    margin-left: 1rem;
+}
+
+.switch-input {
+    display: none;
+}
+
+.switch-label {
+    display: flex;
+    width: 120px;
+    height: 36px;
+    background: #e0e0e0;
+    border-radius: 18px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.switch-option {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+.switch-option.right {
+    padding-right: 7px;
+}
+
+.switch-label::after {
+    content: '';
+    position: absolute;
+    width: 54px;
+    height: 30px;
+    background: #006633;
+    border-radius: 15px;
+    top: 3px;
+    left: 3px;
+    transition: transform 0.3s ease, width 0.3s ease;
+}
+
+.switch-input:checked+.switch-label::after {
+    transform: translateX(50px);
+    width: 64px;
+}
+
+.switch-input:checked+.switch-label .switch-option.left {
+    color: #666;
+}
+
+.switch-input:checked+.switch-label .switch-option.right {
+    color: white;
+}
+
+.switch-input:not(:checked)+.switch-label .switch-option.left {
+    color: white;
+}
+
+.switch-input:not(:checked)+.switch-label .switch-option.right {
+    color: #666;
+}
+
+.logo img {
+    height: 32px;
+}
+
+.logo-text {
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.search-bar {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 1 1000px;
+    margin: 0 auto;
+    height: 36px;
+}
+
+.search-button {
+    background: none;
+    border: none;
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0;
+    cursor: pointer;
+    height: 24px;
+    width: 24px;
+}
+
+.search-button img {
+    height: 100%;
+    width: 100%;
+}
+
+.search-bar input {
+    width: 100%;
+    height: 36px;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 20px;
+    background: #f5f5f5;
+    font-size: 0.9rem;
+}
+
+.search-bar input:focus {
+    outline: none;
+    border: 2px solid #006633;
+}
+
+.header-icons {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.register-btn {
+    padding: 0.5rem 1rem;
+    background: #A4C1AE;
+    color: black;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.register-btn:hover {
+    color: white;
+    background-color: #006633;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.icon-btn img {
+    height: 24px;
+    width: 24px;
+}
+
+/* 카테고리 */
+.nav-categories {
+    position: sticky;
+    top: 64px;
+    z-index: 999;
+    background: white;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1rem 0;
+    background: white;
+    border-bottom: 1px solid #eee;
+}
+
+.nav-categories a {
+    text-decoration: none;
+    color: #333;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s;
+}
+
+.nav-categories a:hover {
+    color: #006633;
+}
+
+.nav-categories a.active {
+    color: #006633;
+    font-weight: bold;
+}
+
+/* 상품 카드 영역 */
+
+.products-section {
+    max-width: 1158px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.slider-container {
+    position: relative;
+    margin: 0 40px; /* 양쪽 화살표 버튼을 위한 여백 */
+}
+
+.product-slider {
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.slide-track {
+    display: flex;
+    gap: 2rem;
+    transition: transform 0.5s ease-in-out;
+}
+
+.product-card {
+    flex: 0 0 calc((100% - 4rem) / 3); /* 3개의 카드가 보이도록 설정 */
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+    background: #f5f5f5;
+}
+
+.product-info {
+    padding: 1rem;
+}
+
+.product-info h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: #666;
+}
+
+.slider-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: #006633;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 10;
+}
+
+.slider-button.prev {
+    left: -40px;
+}
+
+.slider-button.next {
+    right: -40px;
+}
+
+.slider-button:hover {
+    background: #004d26;
+}
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+    background: #f5f5f5;
+}
+
+.product-info {
+    padding: 1rem;
+}
+
+.product-info h3 {
+    font-size: 1rem;
+    color: #666;
+}
+
+/* Login and Signup Styles */
+/*css 함부로 지우지 마세요... 지웠다면 꼭 화면이 어떻게 나오는지 확인하세요*/
+.column {
+    float: left;
+    padding: 10px;
+}
+.column.side {
+    width: 25%;
+}
+.column.middle {
+    width: 50%;
+}
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+#login_table, #link_table{
+    width: auto;
+    border: none;
+    margin: auto;
+    text-align: center;
+}
+
+#signup_table {
+    width: auto;
+    border: none;
+    margin: auto;
+    text-align: left;
+}
+
+#findId {
+    width: auto;
+    text-align: left;
+}
+#find{
+    padding: 5px 20% 0px 20%;
+    width: auto;
+}
+
+.data_name {
+    height: 40px;
+    font-weight: 900;
+    padding: 5px;
+}
+
+.data_input {
+    height: 40px;
+    background-color: #E6E6E6;
+    border-radius: 5px;
+    border: 3px solid black;
+    margin: 5px;
+    padding: 5px;
+    text-align: left;
+}
+
+.data_input.login {
+    width: 300px;
+}
+
+.submit_btn {
+    height: 40px;
+    background-color: #CDECDB;
+    border: 3px solid black;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: 900;
+}
+#login_btn{
+    width: 380px;
+}
+#findId_btn, #findPW_btn{
+    width: auto;
+    font-size: 12px;
+    border-radius: 5px;
+}
+
+.fakeimg {
+    background-color: #858a80;
+    width: 100%;
+    padding: 20px;
+}
+
+.linkto a{
+    float: left;
+    display:block;
+    text-align: center;
+    padding: 14px 16px;
+    font-size: 16px;
+    font-weight: 800;
+    color: black;
+    text-decoration: none;
+}
+.linkto a:hover{
+    color: #FFC700;
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    background: #f8f8f8;
+    padding: 3rem 2rem;
+    margin-top: 4rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 2rem;
+}
+
+.footer-logo img {
+    max-width: 45px;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-left: 2rem;
+    margin-top: 0.5rem;
+}
+
+.footer-name {
+    display: flex;
+    margin-left: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: #666;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #333;
+}
+
+.footer-bottom {
+    border-top: 1px solid #eee;
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/********상품등록 css********/
+#ps_upload {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+    color: #000000
+}
+
+/********상품등록 css********/
+#ps_upload {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    background-color: #f9f9f9;
+    color: #000;
+}
+
+#ps_upload .container {
+    width: 100%;
+    max-width: 800px; /* 화면 크기에 맞춰 최대 너비 설정 */
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+#ps_upload h2 {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Title Line */
+#ps_upload .title-line {
+    width: 100%;
+    height: 2px;
+    background-color: #000;
+    margin: 10px 0 20px;
+}
+
+/* Form Labels */
+#ps_upload label {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* Input Fields */
+#ps_upload input[type="text"],
+#ps_upload select,
+#ps_upload textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #E6E6E6;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+#ps_upload #title {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+}
+
+#ps_upload .dropdowns {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#ps_upload .dropdown {
+    flex: 1;
+}
+
+#ps_upload #product_type {
+    width: 260px;
+    height: 80px;
+    padding: 10px;
+    margin-right: 10px;
+}
+
+#ps_upload #category {
+    width: 523px;
+    height: 80px;
+    padding: 10px;
+}
+
+#ps_upload .image-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#ps_upload .image-preview {
+    width: 180px;
+    height: 180px;
+    background-color: #E6E6E6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+#ps_upload .image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+
+#ps_upload .image-upload label.upload-label {
+    font-size: 24px;
+    font-weight: bold;
+    width: 119px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    background-color: #CDECDB;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+#ps_upload .button-container {
+    text-align: right;
+}
+
+#ps_upload button {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    color: black;
+    background-color: #CDECDB;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#ps_upload button:hover {
+    background-color: #A4C1AE;
+}
+
+/******상품등록결과 css******/
+#upload_result {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #000000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 세로 중앙 정렬 */
+    align-items: center; /* 가로 중앙 정렬 */
+    padding-top: 20px;
+    height: 100vh;
+    margin: 0;
+}
+
+#upload_result h1 {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    max-width: 821px; /* 고정 너비 대신 최대 너비 사용 */
+    width: 100%;
+    height: 80px;
+    margin: 0 0 20px;
+    line-height: 80px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#upload_result .product-info {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 821px; /* 고정 너비 대신 최대 너비 사용 */
+    width: 100%;
+    text-align: center;
+}
+
+#upload_result .product-info p {
+    font-size: 1em;
+    margin: 10px 0;
+}
+
+#upload_result .product-info img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+#upload_result .product-info strong {
+    font-weight: bold;
+} 
+
+/********aboutus css*******/
+#aboutus_r * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+/********aboutus css*******/
+#aboutus_r * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+#aboutus_r {
+    background-color: #ffffff;
+}
+
+#aboutus_r.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+}
+
+#aboutus_r .about-section {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+#aboutus_r .about-title {
+    font-size: 32px;
+    margin-bottom: 10px;
+    color: #333;
+    position: relative;
+    display: inline-block;
+}
+
+#aboutus_r .title-underline {
+    width: 964px;  /* 길이를 964px로 변경 */
+    height: 1px;
+    background-color: #000;
+    margin: 0 auto 30px;
+}
+
+#aboutus_r .logo-title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px; /* 로고와 텍스트 사이 간격 */
+    margin-bottom: 30px;
+}
+
+#aboutus_r .logo {
+    width: 100px;
+    height: 100px;
+}
+
+#aboutus_r .logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* 이미지 비율 유지 */
+}
+
+#aboutus_r .title-korean {
+    font-size: 96px;
+    font-weight: bold;
+    margin: 20px 0;
+    color: #333;
+}
+
+#aboutus_r .description {
+    font-size: 24px;
+    line-height: 1.6;
+    color: #666;
+    margin: 0 auto;
+    max-width: 800px;
+    word-break: keep-all;
+}
+
+/* 반응형을 위한 미디어 쿼리 추가 */
+@media (max-width: 1000px) {
+    #aboutus_r .title-underline {
+        width: 90vw; /* 화면이 작아질 때는 viewport 너비의 90%로 조정 */
+    }
+
+    #aboutus_r .logo-title-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+/********chat css*******/
+#chat_r * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+#chat_r {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#chat_r .chat-container {
+    width: 700px;
+    height: 800px;
+    max-width: 90%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#chat_r .chat-header {
+    background-color: #00462A;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#chat_r .chat-messages {
+    padding: 10px;
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#chat_r .message {
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    border-radius: 15px;
+    position: relative;
+    word-wrap: break-word;
+}
+
+#chat_r .message.user {
+    align-self: flex-end;
+    background-color: #CDECDB;
+    color: #000;
+}
+
+#chat_r .message.bot {
+    align-self: flex-start;
+    background-color: #ffffff;
+    color: #000;
+    border: 1px solid #e5e5e5;
+}
+
+#chat_r .timestamp {
+    font-size: 10px;
+    color: #888;
+    margin-top: 5px;
+    align-self: flex-end;
+}
+
+#chat_r .chat-input {
+    display: flex;
+    padding: 8px;
+    border-top: 1px solid #ddd;
+    background-color: #f7f7f7;
+}
+
+#chat_r .chat-input input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    outline: none;
+}
+
+#chat_r .chat-input button {
+    padding: 0 15px;
+    margin-left: 8px;
+    background-color: #00462A;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#chat_r .chat-input button:hover {
+    background-color: #CDECDB;
+}
+
+/********purchase css*******/
+#purchase_r * {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+#purchase_r {
+    max-width: 1158px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0 auto;
+    background-color: #f4f4f9;
+}
+
+#purchase_r .container {
+    width: 1920px;
+    padding: 20px;
+    border-radius: 1px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+#purchase_r h2 {
+    margin-bottom: 10px;
+}
+
+#purchase_r .product-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border: 3px solid #ddd;
+    border-radius: 1px;
+    background-color: #f9f9f9;
+    margin-bottom: 500px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+#purchase_r .product-details {
+    display: flex;
+    align-items: left;
+}
+
+#purchase_r .product-box img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-right: 40px;
+}
+
+#purchase_r .product-info {
+    text-align: left;
+}
+
+#purchase_r .quantity-control {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+#purchase_r .quantity-control button {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#purchase_r .quantity-control button:hover{
+    background-color: #CDECDB;
+}
+
+#purchase_r .quantity-control span {
+    padding: 0 20px;
+}
+
+#purchase_r .product-price {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#purchase_r .finalprice {
+    position: fixed;        
+    right: 710px;           
+    bottom: 250px;           
+    background-color: #f9f9f9; 
+    padding: 10px;         
+    border-radius: 8px;    
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    display: flex;          
+    align-items: center;    
+}
+
+#purchase_r .finalprice h3 {
+    margin: 0;              
+    margin-right: 5px;     
+}
+
+#purchase_r .product-price {
+    font-weight: bold;      
+    margin-left: 5px;      
+}
+
+#purchase_r .remove-btn {
+    position: absolute;
+    top: 7px;
+    right: 10px;
+    cursor: pointer;
+    color: red;
+    font-size: 18px;
+}
+
+#purchase_r .checkout-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #00462A;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#purchase_r .checkout-btn:hover {
+    background-color: #A4C1AE;
+}
+
+/********payment css*******/
+#payment_r .payment-message {
+    text-align: center;
+    margin-top: 500px;
+    font-size: 2em;
+    font-size: 50px;
+    color: #333;
+}
+
+#payment_r {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, sans-serif;
+}
+
+#payment_r .payment-message button {
+    margin-top: 300px;
+    padding: 8px 12px;
+    font-size: 20px;
+    background-color: #04624A;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#payment_r .payment-message button:hover {
+    background-color: #A4C1AE;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header {
+        padding: 1rem;
+    }
+
+    .search-bar {
+        flex: 0 1 200px;
+        margin: 0 1rem;
+    }
+
+    .nav-categories {
+        gap: 1rem;
+        padding: 1rem;
+        overflow-x: auto;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        padding: 1rem;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+}
