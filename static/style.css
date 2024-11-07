@@ -212,26 +212,31 @@
 }
 
 /* 상품 카드 영역 */
+
 .products-section {
     max-width: 1158px;
     margin: 0 auto;
+    padding: 20px;
 }
 
-.section-title {
-    margin: 2rem 0 1rem 2rem;
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 2rem;
-    padding: 2rem;
+.slider-container {
     position: relative;
+    margin: 0 40px; /* 양쪽 화살표 버튼을 위한 여백 */
+}
+
+.product-slider {
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.slide-track {
+    display: flex;
+    gap: 2rem;
+    transition: transform 0.5s ease-in-out;
 }
 
 .product-card {
+    flex: 0 0 calc((100% - 4rem) / 3); /* 3개의 카드가 보이도록 설정 */
     background: white;
     border-radius: 8px;
     overflow: hidden;
@@ -239,6 +244,48 @@
     transition: transform 0.3s;
 }
 
+.product-image {
+    width: 100%;
+    height: 200px;
+    background: #f5f5f5;
+}
+
+.product-info {
+    padding: 1rem;
+}
+
+.product-info h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: #666;
+}
+
+.slider-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: #006633;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 10;
+}
+
+.slider-button.prev {
+    left: -40px;
+}
+
+.slider-button.next {
+    right: -40px;
+}
+
+.slider-button:hover {
+    background: #004d26;
+}
 .product-card:hover {
     transform: translateY(-5px);
 }
@@ -365,65 +412,59 @@ footer {
 
 /********상품등록 css********/
 #ps_upload {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px 0; /* 상단 여백 추가 */
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* 상단에 맞춤 */
+    align-items: center;
     min-height: 100vh;
+    padding: 40px 20px;
     background-color: #f9f9f9;
-    color: #000000
+    color: #000;
 }
 
 #ps_upload .container {
-    width: 821px;
+    width: 100%;
+    max-width: 800px; /* 화면 크기에 맞춰 최대 너비 설정 */
     padding: 20px;
-    background-color: #FFFFFF; /* 컨테이너 배경을 흰색으로 설정 */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
 }
 
 #ps_upload h2 {
     font-size: 32px;
     font-weight: bold;
-    width: 100%;
-    height: 80px;
     text-align: center;
-    margin: 0 0 20px;
-    line-height: 80px; /* 텍스트 중앙 정렬 */
-    background-color: #FFFFFF;
+    margin-bottom: 20px;
 }
 
+/* Title Line */
 #ps_upload .title-line {
-    width: 821px;
+    width: 100%;
     height: 2px;
-    background-color: #000000; /* 선의 색상 */
-    border: none;
-    margin: 10px auto 20px; /* 제목과 간격 조정 */
+    background-color: #000;
+    margin: 10px 0 20px;
 }
 
+/* Form Labels */
 #ps_upload label {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 500;
-    color: #000000; /* 텍스트 색상 */
-    display: inline-block; /* 레이블을 블록 형태로 표시하여 간격 조정 */
-    margin-bottom: 5px; /* 아래 여백을 추가하여 input과 간격 확보 */
-    padding: 4px 8px; /* 약간의 패딩 추가 */
-    background-color: #E6E6E6; /* 배경색 */
-    border: 1px solid #ccc; /* 테두리 */
-    border-radius: 4px; /* 모서리 둥글게 */
-    box-sizing: border-box;
+    margin-bottom: 8px;
+    display: block;
 }
 
+/* Input Fields */
 #ps_upload input[type="text"],
-#ps_upload select {
-    font-size: 20px;
-    font-weight: 500;
+#ps_upload select,
+#ps_upload textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box;
     background-color: #E6E6E6;
+    margin-bottom: 20px;
+    box-sizing: border-box;
 }
 
 #ps_upload #title {
@@ -459,7 +500,7 @@ footer {
 #ps_upload .image-upload {
     display: flex;
     flex-direction: column;
-    align-items: center; /* 중앙 정렬 */
+    align-items: center;
     margin-bottom: 20px;
 }
 
@@ -473,7 +514,7 @@ footer {
     border: 1px solid #ccc;
     border-radius: 4px;
     overflow: hidden;
-    margin-bottom: 10px; /* 버튼과의 간격 */
+    margin-bottom: 10px;
 }
 
 #ps_upload .image-preview img {
@@ -497,33 +538,24 @@ footer {
     cursor: pointer;
 }
 
-#ps_upload textarea {
-    width: 100%;
-    height: 535px;
-    font-size: 20px;
-    font-weight: 500;
-    padding: 10px;
-    resize: vertical;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #E6E6E6;
-    box-sizing: border-box;
-}
 
 #ps_upload .button-container {
     text-align: right;
 }
 
 #ps_upload button {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: bold;
-    width: 138px;
-    height: 63px;
+    padding: 10px 20px;
     color: black;
     background-color: #CDECDB;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+}
+
+#ps_upload button:hover {
+    background-color: #A4C1AE;
 }
 
 /******상품등록결과 css******/

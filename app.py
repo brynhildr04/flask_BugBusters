@@ -54,7 +54,6 @@ def view_product_detail():
 def view_service_detail():
     return render_template("service_detail.html")
 
-<<<<<<< HEAD
 @application.route("/상품등록하기.html")
 def view_register():
     return render_template("상품등록하기.html")
@@ -80,7 +79,6 @@ def view_chat_service():
 def view_purchase_service():
     return render_template('purchase_service.html')
 
-=======
 #리뷰 작성 페이지
 @application.route("/review.html")
 def review_write():
@@ -92,7 +90,6 @@ def view_review_detail():
     return render_template("review_detail.html")
 
 #회원가입 백엔드 연결
->>>>>>> bb3ffcc9dc9cb355079a6e3e1abd13084304618e
 @application.route("/signup_post", methods=['POST'])
 def register_user():
     data=request.form
@@ -101,16 +98,10 @@ def register_user():
     if DB.insert_user(data,pw_hash):
         return render_template("login.html")
     else:
-<<<<<<< HEAD
-        flash("user id already exist!")
-        return render_template("signup.html")
-
-=======
         flash("user id already exist!") #중복된 아이디 있으면 플래시 메세지 생성
         return render_template("signup.html") 
 
 #제품등록 백엔드 연결
->>>>>>> bb3ffcc9dc9cb355079a6e3e1abd13084304618e
 @application.route("/submit_item_post", methods=['POST'])
 def reg_item_submit_post():
     data = {

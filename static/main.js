@@ -124,3 +124,82 @@ function redirectToPayment() {
 }
 
 window.onload=showDetails(); //첫 화면에서 기본은 상품 상세로 설정
+
+document.addEventListener('DOMContentLoaded', function() {
+    function initializeSlider(trackSelector, prevBtnId, nextBtnId) {
+        const track = document.querySelector(trackSelector);
+        if (!track) return;
+
+        const slides = track.querySelectorAll('.product-card');
+        const nextButton = document.getElementById(nextBtnId);
+        const prevButton = document.getElementById(prevBtnId);
+        
+        let currentIndex = 0;
+        const slidesToShow = 3;
+        const totalSlides = slides.length;
+        
+        function updateSlidePosition() {
+            const slideWidth = slides[0].offsetWidth + 32; // 32px는 gap
+            track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+        }
+        
+        function moveNext() {
+            currentIndex = (currentIndex + slidesToShow) >= totalSlides 
+                ? 0 
+                : currentIndex + 1;
+            updateSlidePosition();
+        }
+        
+        function movePrev() {
+            currentIndex = currentIndex === 0 
+                ? totalSlides - slidesToShow 
+                : currentIndex - 1;
+            updateSlidePosition();
+        }
+        
+        nextButton?.addEventListener('click', moveNext);
+        prevButton?.addEventListener('click', movePrev);
+        
+        // 초기 위치 설정
+        updateSlidePosition();
+
+        // 창 크기 변경 시 슬라이더 위치 조정
+        window.addEventListener('resize', updateSlidePosition);
+    }
+
+    // 각 슬라이더 초기화
+    initializeSlider('.products-section:nth-child(2) .slide-track', 'prevBtn1', 'nextBtn1');
+    initializeSlider('.products-section:nth-child(3) .slide-track', 'prevBtn2', 'nextBtn2');
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const sliders = document.querySelectorAll('.slide-track');
+    
+    sliders.forEach((slider, index) => {
+        const slides = slider.querySelectorAll('.product-card');
+        const prevButton = document.querySelector(`#prevBtn${index + 1}`);
+        const nextButton = document.querySelector(`#nextBtn${index + 1}`);
+        let currentPosition = 0;
+        const slideWidth = slides[0].offsetWidth;
+        const visibleSlides = 3;
+        const maxPosition = slides.length - visibleSlides;
+
+        function updateSliderPosition() {
+            slider.style.transform = `translateX(${-currentPosition * slideWidth}px)`;
+        }
+
+        nextButton.addEventListener('click', () => {
+            if (currentPosition < maxPosition) {
+                currentPosition++;
+                updateSliderPosition();
+            }
+        });
+
+        prevButton.addEventListener('click', () => {
+            if (currentPosition > 0) {
+                currentPosition--;
+                updateSliderPosition();
+            }
+        });
+    });
+});
