@@ -1,61 +1,216 @@
-* {
+/********상품등록 css********/
+#ps_upload {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px 0; /* 상단 여백 추가 */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* 상단에 맞춤 */
+    min-height: 100vh;
+    background-color: #f9f9f9;
+    color: #000000
+}
+
+#ps_upload .container {
+    width: 821px;
+    padding: 20px;
+    background-color: #FFFFFF; /* 컨테이너 배경을 흰색으로 설정 */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+#ps_upload h2 {
+    font-size: 32px;
+    font-weight: bold;
+    width: 100%;
+    height: 80px;
+    text-align: center;
+    margin: 0 0 20px;
+    line-height: 80px; /* 텍스트 중앙 정렬 */
+    background-color: #FFFFFF;
+}
+
+#ps_upload .title-line {
+    width: 821px;
+    height: 2px;
+    background-color: #000000; /* 선의 색상 */
+    border: none;
+    margin: 10px auto 20px; /* 제목과 간격 조정 */
+}
+
+#ps_upload label {
+    font-size: 24px;
+    font-weight: 500;
+    color: #000000; /* 텍스트 색상 */
+    display: inline-block; /* 레이블을 블록 형태로 표시하여 간격 조정 */
+    margin-bottom: 5px; /* 아래 여백을 추가하여 input과 간격 확보 */
+    padding: 4px 8px; /* 약간의 패딩 추가 */
+    background-color: #E6E6E6; /* 배경색 */
+    border: 1px solid #ccc; /* 테두리 */
+    border-radius: 4px; /* 모서리 둥글게 */
     box-sizing: border-box;
 }
 
-body {
+#ps_upload input[type="text"],
+#ps_upload select {
+    font-size: 20px;
+    font-weight: 500;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #E6E6E6;
+}
+
+#ps_upload #title {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+}
+
+#ps_upload .dropdowns {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#ps_upload .dropdown {
+    flex: 1;
+}
+
+#ps_upload #product_type {
+    width: 260px;
+    height: 80px;
+    padding: 10px;
+    margin-right: 10px;
+}
+
+#ps_upload #category {
+    width: 523px;
+    height: 80px;
+    padding: 10px;
+}
+
+#ps_upload .image-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 중앙 정렬 */
+    margin-bottom: 20px;
+}
+
+#ps_upload .image-preview {
+    width: 180px;
+    height: 180px;
+    background-color: #E6E6E6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 10px; /* 버튼과의 간격 */
+}
+
+#ps_upload .image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+
+#ps_upload .image-upload label.upload-label {
+    font-size: 24px;
+    font-weight: bold;
+    width: 119px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    background-color: #CDECDB;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#ps_upload textarea {
+    width: 100%;
+    height: 535px;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 10px;
+    resize: vertical;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #E6E6E6;
+    box-sizing: border-box;
+}
+
+#ps_upload .button-container {
+    text-align: right;
+}
+
+#ps_upload button {
+    font-size: 24px;
+    font-weight: bold;
+    width: 138px;
+    height: 63px;
+    color: black;
+    background-color: #CDECDB;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/******상품등록결과 css******/
+#upload_result {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #000000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 세로 중앙 정렬 */
+    align-items: center; /* 가로 중앙 정렬 */
+    padding-top: 20px;
+    height: 100vh;
     margin: 0;
 }
 
-.navbar {
-    overflow: hidden;
-    background-color: #333;
-}
-
-.navbar a {
-    display: block;
-    color: #f2f2f2;
+#upload_result h1 {
     text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
+    font-size: 32px;
+    font-weight: bold;
+    max-width: 821px; /* 고정 너비 대신 최대 너비 사용 */
+    width: 100%;
+    height: 80px;
+    margin: 0 0 20px;
+    line-height: 80px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.navbar__menu a {
-    float: right;
-}
-
-.navbar__logo a {
-    float: left;
-}
-.navbar a:hover {
-    background-color: #ddd;
-    color: black;
-}
-.card {
-    background-color: white;
-    display:flex;
-}
-.fakeimg {
-    padding: 14px 16px;
-    background-color: #858a80;
+#upload_result .product-info {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 821px; /* 고정 너비 대신 최대 너비 사용 */
     width: 100%;
     text-align: center;
 }
-.product{
-    margin: 10px;
+
+#upload_result .product-info p {
+    font-size: 1em;
+    margin: 10px 0;
 }
 
-h2{
-    padding: 20px;
+#upload_result .product-info img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 10px;
 }
 
-/*리스트로 속성 바꾸고 이렇게 사용하면 가운데로 모이게 해서 정렬 가능
-li{
-    display: inline-block;
-}
-li a{
-    display: block;
-}
-ul{
-    text-align: auto;
-}
-*/
+#upload_result .product-info strong {
+    font-weight: bold;
+} 
