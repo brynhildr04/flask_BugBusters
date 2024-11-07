@@ -1,13 +1,13 @@
-
 //민하님 js
-document.getElementById('quantity').addEventListener('input', function () {
+document.getElementById('quantity')?.addEventListener('input', function () {
     const quantity = parseInt(this.value, 10) || 0;
     const total = quantity * 10000;
     document.getElementById('result').innerText = `수량: ${quantity}, 총액: ${total.toLocaleString()}원`;
 });
 
-document.getElementById('quantity').dispatchEvent(new Event('input'));
-
+if (document.getElementById('quantity')) {
+    document.getElementById('quantity').dispatchEvent(new Event('input'));
+}
 
 const slides = document.querySelectorAll('.slide');
 const prev = document.getElementById('prev');
@@ -20,12 +20,12 @@ function showSlide(index) {
     });
 }
 
-prev.addEventListener('click', () => {
+prev?.addEventListener('click', () => {
     currentSlide = (currentSlide - 1 + slides.length) % slides.length;
     showSlide(currentSlide);
 });
 
-next.addEventListener('click', () => {
+next?.addEventListener('click', () => {
     currentSlide = (currentSlide + 1) % slides.length;
     showSlide(currentSlide);
 });
@@ -33,10 +33,10 @@ next.addEventListener('click', () => {
 // 초기 슬라이드 표시
 showSlide(currentSlide);
 
-
 function addToCart() {
     alert("장바구니에 담았습니다!");
 }
+
 function buy() {
     alert("구매 화면으로 이동합니다!");
 }
@@ -49,27 +49,27 @@ function review(id, name, contents, rating, date, items) {
     reviewDiv.classList.add('review');
 
     reviewDiv.innerHTML = `
-          <strong>${name} (${id})</strong><br>
-          <div class="rating">${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}</div>
-          <small>${date} | 수제 캔들, ${items}개</small><br>
-          <p>${contents}</p>
-      `;
+        <strong>${name} (${id})</strong><br>
+        <div class="rating">${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}</div>
+        <small>${date} | 수제 캔들, ${items}개</small><br>
+        <p>${contents}</p>
+    `;
 
     reviewsContainer.appendChild(reviewDiv);
 }
 
 function showDetails() {
-    document.getElementById('detailsTab').classList.add('active');
-    document.getElementById('reviewsTab').classList.remove('active');
-    document.getElementById('detailsContent').classList.add('active-content');
-    document.getElementById('reviewsContent').classList.remove('active-content');
+    document.getElementById('detailsTab')?.classList.add('active');
+    document.getElementById('reviewsTab')?.classList.remove('active');
+    document.getElementById('detailsContent')?.classList.add('active-content');
+    document.getElementById('reviewsContent')?.classList.remove('active-content');
 }
 
 function showReviews() {
-    document.getElementById('reviewsTab').classList.add('active');
-    document.getElementById('detailsTab').classList.remove('active');
-    document.getElementById('reviewsContent').classList.add('active-content');
-    document.getElementById('detailsContent').classList.remove('active-content');
+    document.getElementById('reviewsTab')?.classList.add('active');
+    document.getElementById('detailsTab')?.classList.remove('active');
+    document.getElementById('reviewsContent')?.classList.add('active-content');
+    document.getElementById('detailsContent')?.classList.remove('active-content');
     // 리뷰가 추가되지 않았다면 추가
     if (!reviewsAdded) {
         review("1", "오*원", "향도 너무 좋고, 생각보다 커서 오래 사용할 수 있을 것 같아요...", 5, "2024.10.19.", 1);
@@ -78,7 +78,49 @@ function showReviews() {
         reviewsAdded = true; // 리뷰가 추가되었음을 기록
     }
     const reviewsContainer = document.getElementById('reviewsContainer');
-    reviewsContainer.style.display = 'block'; // 리뷰 컨테이너 보이기
+    if (reviewsContainer) {
+        reviewsContainer.style.display = 'block'; // 리뷰 컨테이너 보이기
+    }
+}
+
+/*******purchase js********/
+function updateFinalPrice(quantityId, finalPriceId, price) {
+    const quantity = parseInt(document.getElementById(quantityId).innerText);
+    document.getElementById(finalPriceId).innerText = (price * quantity).toLocaleString() + '원';
+}
+
+function increaseQuantity(quantityId, price) {
+    const quantityElement = document.getElementById(quantityId);
+    let quantity = parseInt(quantityElement.innerText);
+    quantityElement.innerText = ++quantity;
+    updateFinalPrice(quantityId, 'finalPrice1', price);
+}
+
+function decreaseQuantity(quantityId, price) {
+    const quantityElement = document.getElementById(quantityId);
+    let quantity = parseInt(quantityElement.innerText);
+    if (quantity > 1) {
+        quantityElement.innerText = --quantity;
+        updateFinalPrice(quantityId, 'finalPrice1', price);
+    }
+}
+
+function removeProduct(productId) {
+    const productElement = document.getElementById(productId);
+    productElement.remove();
+    const finalprice2 = document.querySelector('.finalprice');
+    if (finalprice2) {
+        finalprice2.remove(); // finalprice 클래스를 가진 요소 삭제
+    }
+}
+
+function redirectToPayment() {
+    const productBoxes = document.querySelectorAll('.product-box');
+    if (productBoxes.length === 0) {
+        alert("오류입니다. 결제할 상품이 없습니다."); // 상품이 없을 때 경고창 표시
+    } else {
+        window.location.href = "payment.html"; // 결제 중 페이지로 이동
+    }
 }
 
 window.onload=showDetails(); //첫 화면에서 기본은 상품 상세로 설정
