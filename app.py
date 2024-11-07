@@ -38,6 +38,14 @@ def signup():
 def view_find_id():
     return render_template("find_id.html")
 
+@application.route("/product_detail.html")
+def view_product_detail():
+    return render_template("product_detail.html")
+
+@application.route("/service_detail.html")
+def view_service_detail():
+    return render_template("service_detail.html")
+
 @application.route("/signup_post", methods=['POST'])
 def register_user():
     data=request.form
