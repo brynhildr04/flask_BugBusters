@@ -768,21 +768,21 @@ footer {
     }
 }
 /********chat css*******/
-#char_r * {
+#chat_r * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
 }
 
-#char_r .chatchat{
+#chat_r {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
 
-#char_r .chat-container {
+#chat_r .chat-container {
     width: 700px;
     height: 800px;
     max-width: 90%;
@@ -794,7 +794,7 @@ footer {
     flex-direction: column;
 }
 
-#char_r .chat-header {
+#chat_r .chat-header {
     background-color: #00462A;
     color: #fff;
     padding: 10px;
@@ -802,7 +802,7 @@ footer {
     font-weight: bold;
 }
 
-#char_r .chat-messages {
+#chat_r .chat-messages {
     padding: 10px;
     flex: 1;
     overflow-y: auto;
@@ -811,7 +811,7 @@ footer {
     gap: 8px;
 }
 
-#char_r .message {
+#chat_r .message {
     display: flex;
     flex-direction: column;
     max-width: 70%;
@@ -823,34 +823,34 @@ footer {
     word-wrap: break-word;
 }
 
-#char_r .message.user {
+#chat_r .message.user {
     align-self: flex-end;
     background-color: #CDECDB;
     color: #000;
 }
 
-#char_r .message.bot {
+#chat_r .message.bot {
     align-self: flex-start;
     background-color: #ffffff;
     color: #000;
     border: 1px solid #e5e5e5;
 }
 
-#char_r .timestamp {
+#chat_r .timestamp {
     font-size: 10px;
     color: #888;
     margin-top: 5px;
     align-self: flex-end;
 }
 
-#char_r .chat-input {
+#chat_r .chat-input {
     display: flex;
     padding: 8px;
     border-top: 1px solid #ddd;
     background-color: #f7f7f7;
 }
 
-#char_r .chat-input input[type="text"] {
+#chat_r .chat-input input[type="text"] {
     flex: 1;
     padding: 10px;
     border: 1px solid #ddd;
@@ -859,7 +859,7 @@ footer {
     outline: none;
 }
 
-#char_r .chat-input button {
+#chat_r .chat-input button {
     padding: 0 15px;
     margin-left: 8px;
     background-color: #00462A;
@@ -870,7 +870,7 @@ footer {
     cursor: pointer;
 }
 
-#char_r .chat-input button:hover {
+#chat_r .chat-input button:hover {
     background-color: #CDECDB;
 }
 
@@ -960,8 +960,8 @@ footer {
 
 #purchase_r .finalprice {
     position: fixed;        
-    right: 50px;           
-    bottom: 150px;           
+    right: 710px;           
+    bottom: 250px;           
     background-color: #f9f9f9; 
     padding: 10px;         
     border-radius: 8px;    
@@ -1007,8 +1007,9 @@ footer {
 /********payment css*******/
 #payment_r .payment-message {
     text-align: center;
+    margin-top: 500px;
     font-size: 2em;
-    font-size: 30px;
+    font-size: 50px;
     color: #333;
 }
 
@@ -1022,7 +1023,7 @@ footer {
 }
 
 #payment_r .payment-message button {
-    margin-top: 20px;
+    margin-top: 300px;
     padding: 8px 12px;
     font-size: 20px;
     background-color: #04624A;
