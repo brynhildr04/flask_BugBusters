@@ -44,20 +44,142 @@ function buy() {
 
 let reviewsAdded = false; // 리뷰가 추가되었는지 여부를 추적하는 변수
 
-function review(id, name, contents, rating, date, items) {
-    var reviewsContainer = document.getElementById('reviewsContainer');
-    var reviewDiv = document.createElement('div');
-    reviewDiv.classList.add('review');
+function showReviews() {
+    // 탭 활성화
+    const reviewsTab = document.getElementById('reviewsTab');
+    const detailsTab = document.getElementById('detailsTab');
+    const reviewsContent = document.getElementById('reviewsContent');
+    const detailsContent = document.getElementById('detailsContent');
+    if (reviewsTab && detailsTab && reviewsContent && detailsContent) {
+        reviewsTab.classList.add('active');
+        detailsTab.classList.remove('active');
+        reviewsContent.classList.add('active-content');
+        detailsContent.classList.remove('active-content');
+        // 리뷰가 추가되지 않았다면 추가
+        if (!reviewsAdded) {
+            addReviews();
+            reviewsAdded = true;
+        }
+    }
+}
+function addReviews() {
+    const reviewsContainer = document.getElementById('reviewsContainer');
+    if (!reviewsContainer) return;
+    // 기존 리뷰 데이터 배열
+    const reviews = [
+        {
+            id: "user1",
+            name: "오*원",
+            contents: "향도 너무 좋고, 생각보다 커서 오래 사용할 수 있을 것 같아요. 특히 잠들기 전에 켜두면 좋아요!",
+            rating: 5,
+            date: "2024.10.19",
+            items: 1
+        },
+        {
+            id: "user2",
+            name: "김*아",
+            contents: "친구에게 선물로 주려고 샀다가 저도 쓰고 싶어서 하나 더 샀어요. 포장도 예쁘고 향도 은은해서 좋네요.",
+            rating: 5,
+            date: "2024.10.18",
+            items: 2
+        },
+        {
+            id: "user3",
+            name: "박*하",
+            contents: "가족들에게 선물을 주려고 많이 샀습니다! 다들 너무 좋아하셨어요.",
+            rating: 5,
+            date: "2024.10.16",
+            items: 5
+        }
+    ];
+    // 각 리뷰 데이터로 리뷰 요소 생성
+    reviews.forEach(reviewData => {
+        const reviewDiv = document.createElement('div');
+        reviewDiv.classList.add('review-item');
+        
+        const stars = '★'.repeat(reviewData.rating) + '☆'.repeat(5 - reviewData.rating);
+        
+        reviewDiv.innerHTML = `
+            <div class="review-header">
+                <div class="reviewer-info">
+                    <span class="reviewer-name">${reviewData.name}</span>
+                    <span class="review-date">${reviewData.date}</span>
+                </div>
+                <div class="review-rating">${stars}</div>
+            </div>
+            <div class="review-purchase-info">
+                구매 수량: ${reviewData.items}개
+            </div>
+            <div class="review-content">${reviewData.contents}</div>
+        `;
+        // 클릭 이벤트 추가
+        reviewDiv.addEventListener('click', () => {
+            localStorage.setItem('selectedReview', JSON.stringify(reviewData));
+            window.location.href = 'review_detail.html';
+        });
+        reviewDiv.style.cursor = 'pointer';
+        reviewsContainer.appendChild(reviewDiv);
+    });
+}
+// 페이지 로드 시 기본 탭 설정
+document.addEventListener('DOMContentLoaded', function() {
+    showDetails(); // 기본은 상세 설명 탭
+});
+function goToReviewDetail(id, name, contents, rating, date, items) {
+    // 리뷰 데이터를 localStorage에 저장
+    const reviewData = {
+        id: id,
+        name: name,
+        contents: contents,
+        rating: rating,
+        date: date,
+        items: items
+    };
+    localStorage.setItem('selectedReview', JSON.stringify(reviewData));
+    
+    // 리뷰 상세 페이지로 이동
+    window.location.href = 'review_detail.html';
+}
+    // 커서 스타일 추가
+    reviewDiv.style.cursor = 'pointer';
+    const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
 
     reviewDiv.innerHTML = `
-        <strong>${name} (${id})</strong><br>
-        <div class="rating">${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}</div>
-        <small>${date} | 수제 캔들, ${items}개</small><br>
-        <p>${contents}</p>
+        <div class="review-header">
+            <div class="reviewer-info">
+                <span class="reviewer-name">${name}</span>
+                <span class="review-date">${date}</span>
+            </div>
+            <div class="review-rating">${stars}</div>
+        </div>
+        <div class="review-purchase-info">
+            구매 수량: ${items}개
+        </div>
+        <div class="review-content">${contents}</div>
     `;
      
     reviewsContainer.appendChild(reviewDiv);
-}
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // localStorage에서 리뷰 정보 가져오기
+        const reviewData = JSON.parse(localStorage.getItem('selectedReview'));
+        
+        if (reviewData) {
+            // 별점 표시
+            const stars = '★ '.repeat(reviewData.rating);
+            document.getElementById('user_star').textContent = stars;
+            document.getElementById('user_score').textContent = `(${reviewData.rating})`;
+            
+            // 사용자 정보 표시
+            document.getElementById('user_id').textContent = 
+                `${reviewData.name} | ${reviewData.date}`;
+            
+            // 리뷰 내용 표시
+            document.getElementById('review_title').textContent = 
+                `${reviewData.contents.substring(0, 20)}...`; // 앞부분 20자를 제목으로
+            document.getElementById('review_text').textContent = reviewData.contents;
+        }
+    });
 
 function showDetails() {
     document.getElementById('detailsTab')?.classList.add('active');
@@ -102,13 +224,56 @@ function showReviews() {
         reviewsContent.classList.add('active-content');
         detailsContent.classList.remove('active-content');
         
-        if (!reviewsAdded) {
-            // 더미 리뷰 데이터 추가
-            review("1", "오*원", "향도 너무 좋고, 생각보다 커서 오래 사용할 수 있을 것 같아요. 특히 잠들기 전에 켜두면 좋아요!", 5, "2024.10.19.", 1);
-            review("2", "김*아", "친구에게 선물로 주려고 샀다가 저도 쓰고 싶어서 하나 더 샀어요. 포장도 예쁘고 향도 은은해서 좋네요.", 5, "2024.10.18.", 2);
-            review("3", "박*하", "가족들에게 선물을 주려고 많이 샀습니다! 다들 너무 좋아하셨어요.", 5, "2024.10.16.", 5);
-            reviewsAdded = true;
-        }
+        // 리뷰 컨테이너 초기화
+        const reviewsContainer = document.getElementById('reviewsContainer');
+        reviewsContainer.innerHTML = '';
+        // 리뷰 데이터 생성
+        const reviews = [
+            {
+                name: "오*원",
+                date: "2024.10.19",
+                quantity: 1,
+                content: "향도 너무 좋고, 생각보다 커서 오래 사용할 수 있을 것 같아요. 특히 잠들기 전에 켜두면 좋아요!",
+                rating: 5
+            },
+            {
+                name: "김*아",
+                date: "2024.10.18",
+                quantity: 2,
+                content: "친구에게 선물로 주려고 샀다가 저도 쓰고 싶어서 하나 더 샀어요. 포장도 예쁘고 향도 은은해서 좋네요.",
+                rating: 5
+            },
+            {
+                name: "박*하",
+                date: "2024.10.16",
+                quantity: 5,
+                content: "가족들에게 선물을 주려고 많이 샀습니다! 다들 너무 좋아하셨어요.",
+                rating: 5
+            }
+        ];
+        // 각 리뷰를 HTML로 렌더링
+        reviews.forEach(review => {
+            const reviewElement = document.createElement('div');
+            reviewElement.className = 'review-box';
+            reviewElement.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <span style="font-weight: bold;">${review.name}</span>
+                        <span style="color: #666; margin-left: 10px;">${review.date}</span>
+                    </div>
+                    <div style="color: #FFD700;">${'★'.repeat(review.rating)}</div>
+                </div>
+                <div style="color: #666; margin: 10px 0;">구매 수량: ${review.quantity}개</div>
+                <div style="line-height: 1.5;">${review.content}</div>
+            `;
+            // 리뷰 클릭 이벤트 추가
+            reviewElement.style.cursor = 'pointer';
+            reviewElement.onclick = () => {
+                localStorage.setItem('selectedReview', JSON.stringify(review));
+                window.location.href = 'review_detail.html';
+            };
+            reviewsContainer.appendChild(reviewElement);
+        });
     }
 }
 
