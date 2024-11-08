@@ -1,0 +1,172 @@
+#review_body{
+    margin: 0;
+    background-color: #E6E6E6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: auto;
+    position: fixed;
+}
+
+#review_detail_div{
+    width: auto; 
+    height: auto; 
+    background: white; 
+    position: relative; 
+    padding: 40px; 
+    box-sizing: border-box;
+}
+
+#review_detail_image{
+    width: 150px; 
+    height: 150px; 
+    background-color: #eee; 
+    margin: 20px auto;
+}
+
+#review_user_info{
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    margin-bottom: 10px;
+}
+#user_star{
+    font-size: 24px; 
+    color:  #FFC700;
+}
+#user_score{
+    font-weight: bold; 
+    margin-left: 10px;
+}
+#user_id{
+    margin-left: 10px;
+}
+
+#review_h2{
+    text-align: center;
+    font-weight: bold;
+    font-size: 32px;
+    margin: 0;
+    padding: 10px 0;
+}
+#review_detail_h2{
+    border-bottom: 2px solid #D9D9D9; 
+    padding-bottom: 10px;
+    text-align: center;
+    font-weight:bold; 
+    font-size: 32px;
+}
+.review_text{
+    text-align: center;
+}
+#review_title{
+    font-weight: bold; 
+    font-size: 24px;
+    padding-left: 25%;
+}
+#review_text{
+    font-weight: medium; 
+    font-size: 24px;
+    text-align: left;
+    padding-left: 25%;
+}
+
+.rating-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.rating-container p {
+    font-weight: bold;
+    font-size: 24px;
+    margin: 0;
+}
+
+.star {
+    font-size: 32px;
+    font-weight: bold;
+    color: #ccc;
+    cursor: pointer;
+}
+#starText{
+    font-size: 24px; 
+    color: #D9D9D9;
+}
+
+.image-upload-container{
+    text-align: center; 
+    margin-top: 30px;
+}
+#imagePreviewContainer{
+    margin: 0 auto;
+}
+#imagePreview{
+    width: 120px; 
+    height: 120px; 
+    display: none;
+}
+
+.gray-box {
+    width: 200px;
+    height: 200px;
+    border: 1px solid #D9D9D9;
+    background-color: #E6E6E6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 60px;
+    border-radius: 10px;
+    font-weight: medium;
+    color: #D9D9D9;
+
+    margin-top: 100px;
+}
+
+
+label,
+input[type="text"],
+textarea {
+    font-weight: medium;
+    font-size: 24px;
+    color: #6c6c6c;
+    background-color: #E6E6E6;
+    padding: 10px;
+    border: 1px solid #ddd;
+    width: 50%;
+    margin: 10px auto;
+    display: block;
+}
+
+textarea {
+    height: 150px;
+}
+
+.file-button {
+    background-color: #CDECDB;
+    color: #6c6c6c;
+    border: none;
+    padding: 5px 10px;
+    font-size: 20px;
+    font-weight: medium;
+    margin-top: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.submit-button {
+    padding: 10px 20px;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: #CDECDB;
+    border: none;
+    color: #6c6c6c;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+#submit_div{
+    text-align: right; 
+    width: 50%; 
+    margin: 0 auto;
+}

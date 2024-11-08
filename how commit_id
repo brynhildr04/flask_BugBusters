@@ -1,0 +1,117 @@
+[33mcommit b6bd73346257ad2ca372d4cf4dfcd45b941357c9[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mgP02[m[33m, [m[1;31morigin/gP02[m[33m)[m
+Author: soyoon0414 <anjelica0414@ewhain.net>
+Date:   Tue Oct 22 15:51:58 2024 +0900
+
+    Update app.py
+
+[33mcommit c56975e87c87dcc8695d22bd59ffb9e54b1c6559[m
+Author: brynhildr04 <blackbeanleaves@ewhain.net>
+Date:   Tue Oct 22 15:48:31 2024 +0900
+
+    Delete static/images
+    
+    불필요한 파일 삭제
+
+[33mcommit e9c0afb994374d02f426f457de3fc9dad4a4d30e[m
+Author: soyoon0414 <anjelica0414@ewhain.net>
+Date:   Tue Oct 22 14:53:29 2024 +0900
+
+    Update cart.html
+
+[33mcommit fbf96cf0129f081124dec4d39846fe17b5d216f6[m
+Author: soyoon0414 <anjelica0414@ewhain.net>
+Date:   Tue Oct 22 14:40:16 2024 +0900
+
+    Update result.html
+
+[33mcommit 3bc37fed6a0a911e99c1ee41478d9f6d3dc89410[m
+Author: soyoon0414 <anjelica0414@ewhain.net>
+Date:   Tue Oct 22 14:36:49 2024 +0900
+
+    Update app.py
+
+[33mcommit 48b70db2ce19d8ccb610f0aefa43c87a34bf0fa7[m
+Author: soyoon0414 <anjelica0414@ewhain.net>
+Date:   Tue Oct 22 13:18:21 2024 +0900
+
+    Update app.py
+
+[33mcommit 798bff08f4e493a8cbb71d547384c939bb4aa35b[m
+Author: soyoon0414 <anjelica0414@ewhain.net>
+Date:   Tue Oct 22 13:17:09 2024 +0900
+
+    Update cart.html
+
+[33mcommit aa47c7e603e19b12f5f09ba389fa2ac26c4f27c4[m
+Author: soyoon0414 <anjelica0414@ewhain.net>
+Date:   Tue Oct 22 04:59:26 2024 +0900
+
+    Update cart.html
+
+[33mcommit 48a52a08c492688b4db40f3b812f97781f94517a[m
+Author: soyoon0414 <anjelica0414@ewhain.net>
+Date:   Tue Oct 22 04:58:37 2024 +0900
+
+    Update app.py
+
+[33mcommit a24a2a8ee91c9f5578ea4dc4e563df2e2192af2c[m
+Author: soyoon0414 <anjelica0414@ewhain.net>
+Date:   Tue Oct 22 04:39:04 2024 +0900
+
+    Update app.py
+
+[33mcommit bee4d095fc098bc68b0e8ec8fc3b3f83bdd9dcdb[m
+Author: soyoon0414 <anjelica0414@ewhain.net>
+Date:   Tue Oct 22 04:35:45 2024 +0900
+
+    Update cart.html
+
+[33mcommit 7420bb9cb821abb87a8abd5097edd0a3301fc99a[m
+Author: soyoon0414 <anjelica0414@ewhain.net>
+Date:   Tue Oct 22 04:09:50 2024 +0900
+
+    Add files via upload
+
+[33mcommit c708267d9a8e1f7b48ba0b3260e014e234e2bd2f[m
+Author: brynhildr04 <blackbeanleaves@ewhain.net>
+Date:   Sat Oct 19 19:53:02 2024 +0900
+
+    Update index.html
+    
+    home 링크 연결 문제 해결했습니다.
+
+[33mcommit 59a1f5a1ed73775d04b2b1863828729636f1a2dc[m
+Author: brynhildr04 <blackbeanleaves@ewhain.net>
+Date:   Fri Oct 18 16:59:34 2024 +0900
+
+    두번째 버전
+
+[33mcommit dc6d355a5b92708c29bee6b95347b25103cad773[m[33m ([m[1;31morigin/gP01[m[33m)[m
+Author: brynhildr04 <blackbeanleaves@ewhain.net>
+Date:   Fri Oct 18 15:56:13 2024 +0900
+
+    다시다시
+
+[33mcommit c5800a4d24d7262dbf1ef58534962d5dc2f800a2[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/groupPractice01[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: brynhildr04 <blackbeanleaves@ewhain.net>
+Date:   Tue Oct 15 14:11:37 2024 +0900
+
+    Create app.py
+
+[33mcommit f55f9ffe992a0b6435f01459c3afd4ed909ce11f[m
+Author: brynhildr04 <blackbeanleaves@ewhain.net>
+Date:   Tue Oct 15 14:09:59 2024 +0900
+
+    Create 폴더생성용 파일
+
+[33mcommit ad427adde23f9b0c9b58c4a8ca07dbfbb42a0398[m
+Author: brynhildr04 <blackbeanleaves@ewhain.net>
+Date:   Tue Oct 15 14:08:57 2024 +0900
+
+    Create images
+
+[33mcommit 44a8955a2792bbb0174aac7699807eb3ccf02536[m
+Author: brynhildr04 <blackbeanleaves@ewhain.net>
+Date:   Tue Oct 15 13:59:25 2024 +0900
+
+    Initial commit

@@ -1,0 +1,95 @@
+{% extends "header.html" %}
+{% block section %}
+<br><br><br><br><br>
+<div class="row">
+    <div class="column side"></div>
+    <div class="column middle">
+        <h2 id="login" style="text-align: center;">마이페이지</h2>
+        <hr width=100%><br>
+        <table width=50% style="text-align: left;">
+            <tr>
+                <th>
+                    <p class="data_name">아이디</p>
+                </th>
+                <td>
+                    <p class="data_print">idexample123</p>
+                    <!--나중에 data.id}}로 고쳐야 함--><!--중괄호 두개 넣으니 오류남... 아니 주석인데 왜?-->
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <p class="data_name">이름</p>
+                </th>
+                <td>
+                    <p class="data_print">김이화</p> <!--나중에 data.name}}으로 고쳐야 함-->
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <p class="data_name">학번</p>
+                </th>
+                <td>
+                    <p class="data_print">2012345</p> <!--나중에 data.stdNum}}으로 고쳐야 함-->
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <p class="data_name">학교 이메일</p>
+                </th>
+                <td colspan="2">
+                    <p class="data_print">idexample123@ewhain.net</p> <!--나중에 data.email}}로 고쳐야 함-->
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <p class="data_name">생년월일</p>
+                </th>
+                <td>
+                    <p class="data_print">2001년 2월 3일</p>
+                    <!--나중에 data.byear}}년 data.bmonth}}월 data.bday}}일로 고쳐야 함-->
+                </td>
+            </tr>
+            <form><!--나중에 데이터베이스랑 연결해야 함-->
+                <tr>
+                    <th>
+                        <p class="data_name">변경할 비밀번호</p>
+                    </th>
+                    <td>
+                        <input class="data_input" type="password" name="pw_changed" id="pw_changed">
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <p class="data_name">변경된 비밀번호 확인</p><br>
+                    </th>
+                    <td>
+                        <input class="data_input" type="password" name="pw_changed" id="pw_ckeck">
+                        <input class="submit_btn" type="button" value="비밀번호 확인" id="check_btn"
+                            onclick='document.getElementById("check_pw_msg").innerHTML="*비밀번호가 변경되었습니다"; document.getElementById("check_pw_msg").style.visibility="visible"'>
+                        <br>
+                        <p id="check_pw_msg"
+                            style="color: red; font-size: 10px; text-align: right; visibility: hidden;">여기보세요</p>
+                    </td>
+                </tr>
+            </form>
+            <tr>
+                <th>
+                    <p class="data_name">전화번호</p>
+                </th>
+                <td>
+                    <p class="data_print">010-1234-5678</p> <!--나중에 data.phone}}으로 고쳐야 함-->
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <p class="data_name">주소</p>
+                </th>
+                <td>
+                    <p class="data_print">서울특별시 서대문구 이화여대길 12 304동 506호</p> <!--나중에 data.addr}}로 고쳐야 함-->
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="column side"></div>
+</div>
+{% endblock section %}

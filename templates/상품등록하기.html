@@ -1,0 +1,43 @@
+{% extends "header.html" %}
+{% block section %}
+<section id="ps_upload">
+    <div class="container">
+        <h2>상품 등록</h2>
+        <hr class="title-line">
+        <form action="/submit_item_post" method="POST" enctype="multipart/form-data">
+            <label for="title">제목 (20자 이내)</label>
+            <input type="text" id="title" name="title" maxlength="20" required>
+
+            <div class="dropdowns">
+                <div class="dropdown">
+                        <select id="product_type" name="product_type" onchange="updateCategoryOptions()">
+                        <option value="product">제품</option>
+                        <option value="service">서비스</option>
+                    </select>
+                </div>
+
+                <div class="dropdown">
+                        <select id="category" name="category">
+                        <!-- JavaScript로 옵션이 업데이트될 예정 -->
+                    </select>
+                </div>
+            </div>
+
+            <div class="image-upload">
+                <div class="image-preview">
+                    <img id="preview" src="" alt="이미지 미리보기" style="display: none;">
+                </div>
+                <!--<label for="image" class="upload-label">사진 첨부</label>-->
+                <input type="file" id="image" name="image" accept="image/*"><br><br>
+                </div>
+            <label for="description">내용 (500자 이내)</label>
+            <textarea id="description" name="description" maxlength="500" required></textarea>
+
+            <div class="button-container">
+                 <button type="submit">작성 완료</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock section %}
+
