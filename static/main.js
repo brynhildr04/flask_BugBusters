@@ -65,23 +65,56 @@ function showDetails() {
     document.getElementById('reviewsContent')?.classList.remove('active-content');
 }
 
-function showReviews() {
-    document.getElementById('reviewsTab')?.classList.add('active');
-    document.getElementById('detailsTab')?.classList.remove('active');
-    document.getElementById('reviewsContent')?.classList.add('active-content');
-    document.getElementById('detailsContent')?.classList.remove('active-content');
-    // 리뷰가 추가되지 않았다면 추가
-    if (!reviewsAdded) {
-        review("1", "오*원", "향도 너무 좋고, 생각보다 커서 오래 사용할 수 있을 것 같아요...", 5, "2024.10.19.", 1);
-        review("2", "김*아", "친구에게 선물로 주려고 샀다가 저도 쓰고 싶어서 하나 더 샀...", 5, "2024.10.18.", 2);
-        review("3", "박*하", "가족들에게 선물을 주려고 많이 샀습니다! 사용해본 캔들 중에...", 5, "2024.10.16.", 5);
-        reviewsAdded = true; // 리뷰가 추가되었음을 기록
-    }
+function review(id, name, contents, rating, date, items) {
     const reviewsContainer = document.getElementById('reviewsContainer');
-    if (reviewsContainer) {
-        reviewsContainer.style.display = 'block'; // 리뷰 컨테이너 보이기
+    const reviewDiv = document.createElement('div');
+    reviewDiv.classList.add('review-item');
+
+    const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+
+    reviewDiv.innerHTML = `
+        <div class="review-header">
+            <div class="reviewer-info">
+                <span class="reviewer-name">${name}</span>
+                <span class="review-date">${date}</span>
+            </div>
+            <div class="review-rating">${stars}</div>
+        </div>
+        <div class="review-purchase-info">
+            구매 수량: ${items}개
+        </div>
+        <div class="review-content">${contents}</div>
+    `;
+     
+    reviewsContainer.appendChild(reviewDiv);
+}
+
+function showReviews() {
+    const reviewsTab = document.getElementById('reviewsTab');
+    const detailsTab = document.getElementById('detailsTab');
+    const reviewsContent = document.getElementById('reviewsContent');
+    const detailsContent = document.getElementById('detailsContent');
+    
+    if (reviewsTab && detailsTab && reviewsContent && detailsContent) {
+        reviewsTab.classList.add('active');
+        detailsTab.classList.remove('active');
+        reviewsContent.classList.add('active-content');
+        detailsContent.classList.remove('active-content');
+        
+        if (!reviewsAdded) {
+            // 더미 리뷰 데이터 추가
+            review("1", "오*원", "향도 너무 좋고, 생각보다 커서 오래 사용할 수 있을 것 같아요. 특히 잠들기 전에 켜두면 좋아요!", 5, "2024.10.19.", 1);
+            review("2", "김*아", "친구에게 선물로 주려고 샀다가 저도 쓰고 싶어서 하나 더 샀어요. 포장도 예쁘고 향도 은은해서 좋네요.", 5, "2024.10.18.", 2);
+            review("3", "박*하", "가족들에게 선물을 주려고 많이 샀습니다! 다들 너무 좋아하셨어요.", 5, "2024.10.16.", 5);
+            reviewsAdded = true;
+        }
     }
 }
+
+// 페이지 로드 시 기본 탭 설정
+window.onload = () => {
+    showDetails();
+};
 
 /*******purchase js********/
 function updateFinalPrice(quantityId, finalPriceId, price) {
