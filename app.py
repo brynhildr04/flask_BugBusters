@@ -89,6 +89,17 @@ def review_write():
 def view_review_detail():
     return render_template("review_detail.html")
 
+#전체 상품 조회 페이지
+@application.route("/all_product.html")
+def view_all_products():
+    return render_template("all_product.html")
+
+#전체 서비스 조회 페이지
+@application.route("/all_service.html")
+def view_all_services():
+    return render_template("all_service.html")
+
+
 #회원가입 백엔드 연결
 @application.route("/signup_post", methods=['POST'])
 def register_user():

@@ -1,0 +1,90 @@
+{% extends 'header.html' %}
+{% block check %}
+<input type="checkbox" id="switch" class="switch-input" onclick="location.href='main_service.html'">
+{% endblock check %}
+
+{% block section %}
+<div class="all-products-container">
+    <h1 class="page-title">전체 상품</h1>
+    
+    {% include 'nav_product.html' %}
+
+    <div class="products-grid">
+        <a href="product_detail.html" class="product-card">
+            <div class="product-image"></div>
+            <div class="product-info">
+                <h3># 식품</h3>
+                <p class="product-name">유기농 수제 쿠키</p>
+                <p class="product-price">12,000원</p>
+            </div>
+        </a>
+        <a href="product_detail.html" class="product-card">
+            <div class="product-image"></div>
+            <div class="product-info">
+                <h3># 공예</h3>
+                <p class="product-name">수제 도자기 컵</p>
+                <p class="product-price">25,000원</p>
+            </div>
+        </a>
+        <a href="product_detail.html" class="product-card">
+            <div class="product-image"></div>
+            <div class="product-info">
+                <h3># 뷰티</h3>
+                <p class="product-name">천연 비누</p>
+                <p class="product-price">8,000원</p>
+            </div>
+        </a>
+        <a href="product_detail.html" class="product-card">
+            <div class="product-image"></div>
+            <div class="product-info">
+                <h3># 패션</h3>
+                <p class="product-name">수제 니트 가디건</p>
+                <p class="product-price">55,000원</p>
+            </div>
+        </a>
+        <!-- 더미 데이터로 4열 그리드 레이아웃 표시 -->
+        <a href="product_detail.html" class="product-card">
+            <div class="product-image"></div>
+            <div class="product-info">
+                <h3># 기타 제품</h3>
+                <p class="product-name">핸드메이드 캔들</p>
+                <p class="product-price">15,000원</p>
+            </div>
+        </a>
+        <a href="product_detail.html" class="product-card">
+            <div class="product-image"></div>
+            <div class="product-info">
+                <h3># 공예</h3>
+                <p class="product-name">macrame 월행잉</p>
+                <p class="product-price">35,000원</p>
+            </div>
+        </a>
+        <a href="product_detail.html" class="product-card">
+            <div class="product-image"></div>
+            <div class="product-info">
+                <h3># 패션</h3>
+                <p class="product-name">귀걸이</p>
+                <p class="product-price">12,000원</p>
+            </div>
+        </a>
+        <a href="product_detail.html" class="product-card">
+            <div class="product-image"></div>
+            <div class="product-info">
+                <h3># 식품</h3>
+                <p class="product-name">수제 마카롱</p>
+                <p class="product-price">16,000원</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="pagination">
+        <a href="#" class="prev">Previous</a>
+        <a href="#" class="active">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">5</a>
+        <a href="#" class="next">Next</a>
+    </div>
+</div>
+{% endblock section %}
