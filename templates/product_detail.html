@@ -1,4 +1,7 @@
 {% extends "header.html" %}
+{% block check %}
+<input type="checkbox" id="switch" class="switch-input" onclick="location.href='main_service.html'">
+{% endblock check %}
 {% block section %}
 {% include 'nav_product.html' %}
 <div class="product-detail-container">

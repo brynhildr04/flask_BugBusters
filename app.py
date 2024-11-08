@@ -24,6 +24,7 @@ def view_service():
 def view_cart():
     return render_template("cart_product.html")
 
+
 #마이페이지
 @application.route("/profile.html")
 def view_profile():
