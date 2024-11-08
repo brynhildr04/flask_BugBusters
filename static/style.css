@@ -219,11 +219,22 @@
     padding: 20px;
 }
 
-.slider-container {
-    position: relative;
-    margin: 0 40px; /* 양쪽 화살표 버튼을 위한 여백 */
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 32px;
+    color: #333;
+    text-align: left;
 }
 
+
+/* 슬라이더 컨테이너 */
+.slider-container {
+    position: relative;
+    padding: 20px 40px;
+}
+
+/* 슬라이더 */
 .product-slider {
     overflow: hidden;
     margin: 0 auto;
@@ -231,17 +242,17 @@
 
 .slide-track {
     display: flex;
-    gap: 2rem;
+    gap: 32px;
     transition: transform 0.5s ease-in-out;
 }
 
 .product-card {
-    flex: 0 0 calc((100% - 4rem) / 3); /* 3개의 카드가 보이도록 설정 */
+    flex: 0 0 calc((100% - 64px) / 3);
     background: white;
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
 }
 
 .product-image {
@@ -260,6 +271,7 @@
     color: #666;
 }
 
+/* 슬라이더 버튼 */
 .slider-button {
     position: absolute;
     top: 50%;
@@ -276,11 +288,11 @@
 }
 
 .slider-button.prev {
-    left: -40px;
+    left: 0;
 }
 
 .slider-button.next {
-    right: -40px;
+    right: 0;
 }
 
 .slider-button:hover {
@@ -296,112 +308,441 @@
     background: #f5f5f5;
 }
 
+
 .product-info {
-    padding: 1rem;
+    padding: 20px;
 }
 
 .product-info h3 {
-    font-size: 1rem;
+    font-size: 16px;
     color: #666;
+    margin: 0;
 }
 
 /* Login and Signup Styles */
 /*css 함부로 지우지 마세요... 지웠다면 꼭 화면이 어떻게 나오는지 확인하세요*/
-.column {
-    float: left;
-    padding: 10px;
+/* 241108v1. 신우림이 주석달고 추가하였음. (제거, 너비설정, 좌우여백추가) */
+.row {
+    display: flex;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 40px auto;
 }
+
 .column.side {
-    width: 25%;
+    display: none; /* side column 제거 */
 }
+
 .column.middle {
-    width: 50%;
+    flex: 0 1 600px; /* 최대 너비 설정 */
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin: 0 20px; /* 좌우 여백 추가 */
 }
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-#login_table, #link_table{
-    width: auto;
-    border: none;
-    margin: auto;
+
+/* 로그인 타이틀 */
+#login {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 30px;
     text-align: center;
 }
 
-#signup_table {
-    width: auto;
+hr {
     border: none;
-    margin: auto;
-    text-align: left;
+    border-top: 1px solid #ddd;
+    margin: 30px 0;
 }
 
-#findId {
-    width: auto;
-    text-align: left;
-}
-#find{
-    padding: 5px 20% 0px 20%;
-    width: auto;
-}
-
-.data_name {
-    height: 40px;
-    font-weight: 900;
-    padding: 5px;
-}
-
-.data_input {
-    height: 40px;
-    background-color: #E6E6E6;
-    border-radius: 5px;
-    border: 3px solid black;
-    margin: 5px;
-    padding: 5px;
-    text-align: left;
-}
-
-.data_input.login {
-    width: 300px;
-}
-
-.submit_btn {
-    height: 40px;
-    background-color: #CDECDB;
-    border: 3px solid black;
-    border-radius: 15px;
-    font-size: 16px;
-    font-weight: 900;
-}
-#login_btn{
-    width: 380px;
-}
-#findId_btn, #findPW_btn{
-    width: auto;
-    font-size: 12px;
-    border-radius: 5px;
-}
-
-.fakeimg {
-    background-color: #858a80;
+/* 로그인 테이블 */
+#login_table {
     width: 100%;
-    padding: 20px;
+    margin: 20px 0;
 }
 
-.linkto a{
-    float: left;
-    display:block;
-    text-align: center;
-    padding: 14px 16px;
+#login_table th {
+    text-align: left;
+    padding-right: 20px;
+    width: 100px;
+}
+
+/* 입력 필드 라벨 */
+.data_name {
     font-size: 16px;
-    font-weight: 800;
-    color: black;
+    font-weight: 500;
+    color: #333;
+}
+
+/* 입력 필드 */
+.data_input.login {
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #f8f8f8;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.data_input.login:focus {
+    border-color: #006633;
+    background-color: white;
+    outline: none;
+}
+
+/* 로그인 버튼 */
+#login_btn.submit_btn {
+    width: 450px;  /* 241108v1. 버튼 크기 조정 */
+    height: 48px;
+    background-color: #006633;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 20px auto;
+    display: block;     /* block 요소로 설정 */
+}
+
+#login_btn.submit_btn:hover {
+    background-color: #004d26;
+}
+
+/* 하단 링크 */
+
+/* 하단 링크 테이블 추가 */
+#link_table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+#link_table td {
+    width: 50%;
+    text-align: center;  /* 각 열의 텍스트 중앙 정렬 */
+    padding: 10px 0;
+}
+.linkto {
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+#link_table {
+    width: 100%;
+}
+
+.linkto a {
+    font-size: 14px;
+    color: #666;
     text-decoration: none;
+    transition: color 0.3s;
+    padding: 5px 10px;  /* 링크 영역 확장 */
 }
-.linkto a:hover{
-    color: #FFC700;
-    text-decoration: underline;
+
+.linkto a:hover {
+    color: #006633;
 }
+
+/* All Product 영역 */
+.all-products-container {
+    max-width: 1158px;
+    margin: 120px auto 0;
+    padding: 0 20px;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin: 30px 0;
+}
+
+/* 상품 카드 스타일 - 기존 스타일 확장 */
+.products-grid .product-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    text-decoration: none;
+    color: inherit;
+}
+
+.products-grid .product-card:hover {
+    transform: translateY(-5px);
+}
+
+.products-grid .product-image {
+    width: 100%;
+    height: 200px;
+    background: #f5f5f5;
+}
+
+.products-grid .product-info {
+    padding: 1rem;
+}
+
+.products-grid .product-info h3 {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.product-name {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.product-price {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #006633;
+}
+
+
+
+
+/* 아이디/비밀번호 찾기 페이지 스타일 */
+.row {
+    display: flex;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 40px auto;
+}
+
+.column.side {
+    display: none; /* side column 제거 */
+}
+
+.column.middle {
+    flex: 0 1 600px; /* 최대 너비 설정 */
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin: 0 20px; /* 좌우 여백 추가 */
+}
+
+/* 아이디/비밀번호 찾기 영역 */
+#find {
+    padding: 0;
+    width: 100%;
+}
+
+/* 제목 스타일 */
+#login {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 테이블 스타일 */
+#findId {
+    width: 100%;
+    margin: 30px 0;
+}
+
+/* 섹션 제목 */
+#findId .data_name {
+    font-size: 20px; /* 글자 크기 증가 */
+    font-weight: bold;
+    color: #333;
+    padding: 15px 0;
+}
+
+/* 설명 텍스트 */
+#findId .data_name.findId {
+    font-size: 15px;
+    color: #666;
+    font-weight: normal;
+    padding: 0 0 20px 0;
+}
+
+/* 라벨 */
+#findId th {
+    width: 100px;
+    text-align: left;
+    padding: 12px 0;
+    vertical-align: middle;
+}
+
+#findId th .data_name {
+    font-size: 16px;
+    padding: 0;
+}
+/* 입력 필드 그룹 정렬 */
+#findId td {
+    padding: 5px 0;
+}
+
+#findId .data_input.findId {
+    flex: 1;
+    max-width: 150px;
+}
+
+#findId select.data_input {
+    width: 150px;
+    margin: 0 10px;
+}
+
+
+
+
+/* 입력 필드 스타일 */
+#findId .data_input {
+    height: 45px;
+    padding: 0 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: #f8f8f8;
+}
+
+#findId input[type="text"],
+#findId input[type="number"] {
+    width: calc(100% - 24px); /* 패딩 고려 */
+}
+
+#findId input[type="text"].findId {
+    width: 180px;
+}
+
+
+
+
+#findId .data_input:focus {
+    border-color: #006633;
+    background-color: white;
+    outline: none;
+}
+
+/* 이메일 전송 버튼 */
+#findId_btn,
+#findPW_btn {
+    width: 120px;
+    height: 45px;
+    background-color: #006633;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#findId_btn:hover,
+#findPW_btn:hover {
+    background-color: #004d26;
+}
+
+#findId td:last-child {
+    width: 120px;
+    padding-left: 10px;
+}
+
+/* 메시지 스타일 */
+#findId_msg,
+#findPW_msg {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #e74c3c;
+}
+
+/* 구분선 */
+hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 30px 0;
+}
+
+
+
+/* 페이지네이션 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 40px 0;
+    font-size: 16px;
+}
+
+.pagination a {
+    text-decoration: none;
+    padding: 8px 16px;
+    color: #666;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+.pagination a:not(.prev):not(.next) {
+    min-width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination a.active {
+    background-color: #006633;
+    color: white;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #f5f5f5;
+}
+
+.pagination .prev,
+.pagination .next {
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pagination .prev::before {
+    content: "←";
+    margin-right: 4px;
+}
+
+.pagination .next::after {
+    content: "→";
+    margin-left: 4px;
+}
+
+.pagination a.disabled {
+    color: #ccc;
+    pointer-events: none;
+}
+
+/* 페이지 번호 사이의 ... 스타일 */
+.pagination .dots {
+    color: #666;
+    padding: 8px;
+}
+
+
+
+
 
 /* Footer */
 footer {
@@ -1069,5 +1410,65 @@ footer {
         flex-direction: column;
         gap: 1rem;
         text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .column.middle {
+        margin: 0 20px;
+        padding: 30px 20px;
+    }
+
+    #login_table th {
+        width: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .column.middle {
+        padding: 20px;
+    }
+
+    #login_table th {
+        display: none;
+    }
+
+    .data_input.login {
+        height: 44px;
+    }
+}
+
+@media (max-width: 768px) {
+    #login_btn.submit_btn {
+        width: 100%;  /* 모바일은 전채 너비 */
+    }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    #find {
+        padding: 20px;
+    }
+
+    #findId th {
+        display: block;
+        width: 100%;
+        padding: 5px 0;
+    }
+
+    #findId td {
+        display: block;
+        width: 100%;
+    }
+
+    #findId input[type="text"].findId,
+    #findId select.data_input {
+        width: calc(50% - 24px);
+    }
+
+    #findId_btn,
+    #findPW_btn {
+        width: 100%;
+        margin: 10px 0 0 0;
     }
 }

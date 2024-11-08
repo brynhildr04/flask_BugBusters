@@ -230,3 +230,58 @@ function idSending(){
     msg.innerHTML="*아이디가 이메일이 전송되었습니다."; 
     msg.style.visibility="visible";
 }
+
+// 슬라이더 기능 (신우림 js)
+document.addEventListener('DOMContentLoaded', function() {
+    // 슬라이더 1 (인기 상품)
+    initializeSlider('slideTrack1', 'prevBtn1', 'nextBtn1');
+    // 슬라이더 2 (최신 등록 상품)
+    initializeSlider('slideTrack2', 'prevBtn2', 'nextBtn2');
+});
+
+function initializeSlider(trackId, prevBtnId, nextBtnId) {
+    const slideTrack = document.getElementById(trackId);
+    const prevBtn = document.getElementById(prevBtnId);
+    const nextBtn = document.getElementById(nextBtnId);
+    
+    if (!slideTrack || !prevBtn || !nextBtn) return;
+
+    let currentPosition = 0;
+    const cards = slideTrack.querySelectorAll('.product-card');
+    const cardWidth = cards[0].offsetWidth;
+    const gap = 32; // CSS에서 설정한 gap 크기
+    const visibleCards = 3; // 한 번에 보여질 카드 수
+    const maxPosition = cards.length - visibleCards;
+
+    // 초기 상태 설정
+    updateSliderState();
+
+    prevBtn.addEventListener('click', () => {
+        if (currentPosition > 0) {
+            currentPosition--;
+            updateSliderPosition();
+        }
+    });
+
+    nextBtn.addEventListener('click', () => {
+        if (currentPosition < maxPosition) {
+            currentPosition++;
+            updateSliderPosition();
+        }
+    });
+
+    function updateSliderPosition() {
+        const translateX = currentPosition * -(cardWidth + gap);
+        slideTrack.style.transform = `translateX(${translateX}px)`;
+        updateSliderState();
+    }
+
+    function updateSliderState() {
+        prevBtn.disabled = currentPosition === 0;
+        nextBtn.disabled = currentPosition >= maxPosition;
+        
+        // 버튼 스타일 업데이트
+        prevBtn.style.opacity = currentPosition === 0 ? '0.5' : '1';
+        nextBtn.style.opacity = currentPosition >= maxPosition ? '0.5' : '1';
+    }
+}

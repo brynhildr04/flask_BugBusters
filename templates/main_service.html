@@ -11,116 +11,129 @@
     {% include 'nav_service.html' %}
 
     <section class="products-section">
-        <h2 class="section-title">오늘의 인기 상품<br></h2>
-        <div class="slider-container">
+        <h2 class="section-title" style="padding-top: 20px;">오늘의 인기 상품<br></h2>
+        <div class="slider-container">    
             <button class="slider-button prev" id="prevBtn1">&lt;</button>
             <div class="product-slider">
-                <div class="slide-track">
+                <div class="slide-track" id="slideTrack1">
                     <a href="service_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># 어학</h3>
+                            <p class="product-name">영어 회화 과외</p>
+                            <p class="product-price">30,000원/시간</p>
                         </div>
                     </a>
                     <a href="service_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># IT</h3>
+                            <p class="product-name">프로그래밍 기초 강의</p>
+                            <p class="product-price">40,000원/시간</p>
                         </div>
                     </a>
                     <a href="service_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># 취미</h3>
+                            <p class="product-name">수채화 클래스</p>
+                            <p class="product-price">35,000원/회</p>
                         </div>
                     </a>
-                    <div class="product-card">
+                    <a href="service_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># 디자인</h3>
+                            <p class="product-name">로고 디자인</p>
+                            <p class="product-price">100,000원</p>
                         </div>
-                    </div>
-                    <div class="product-card">
+                    </a>
+                    <a href="service_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># 첨삭</h3>
+                            <p class="product-name">자기소개서 첨삭</p>
+                            <p class="product-price">20,000원/장</p>
                         </div>
-                    </div>
-                    <div class="product-card">
+                    </a>
+                    <a href="service_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># 생활</h3>
+                            <p class="product-name">요리 레시피 강의</p>
+                            <p class="product-price">25,000원/회</p>
                         </div>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image"></div>
-                        <div class="product-info">
-                            <h3># 기타 제품</h3>
-                        </div>
-                    </div>
+                    </a>
                 </div>
             </div>
             <button class="slider-button next" id="nextBtn1">&gt;</button>
         </div>
     </section>
-    
+
     <section class="products-section">
         <h2 class="section-title">최신 등록 상품<br></h2>
         <div class="slider-container">
             <button class="slider-button prev" id="prevBtn2">&lt;</button>
             <div class="product-slider">
-                <div class="slide-track">
+                <div class="slide-track" id="slideTrack2">
                     <a href="service_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># 어학</h3>
+                            <p class="product-name">중국어 발음 교정</p>
+                            <p class="product-price">35,000원/시간</p>
                         </div>
                     </a>
                     <a href="service_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># IT</h3>
+                            <p class="product-name">웹사이트 제작</p>
+                            <p class="product-price">500,000원</p>
                         </div>
                     </a>
                     <a href="service_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># 취미</h3>
+                            <p class="product-name">기타 레슨</p>
+                            <p class="product-price">40,000원/시간</p>
                         </div>
                     </a>
-                    <div class="product-card">
+                    <a href="service_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># 디자인</h3>
+                            <p class="product-name">명함 디자인</p>
+                            <p class="product-price">50,000원</p>
                         </div>
-                    </div>
-                    <div class="product-card">
+                    </a>
+                    <a href="service_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># 첨삭</h3>
+                            <p class="product-name">논문 교정</p>
+                            <p class="product-price">30,000원/장</p>
                         </div>
-                    </div>
-                    <div class="product-card">
+                    </a>
+                    <a href="service_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># 생활</h3>
+                            <p class="product-name">인테리어 컨설팅</p>
+                            <p class="product-price">80,000원/회</p>
                         </div>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image"></div>
-                        <div class="product-info">
-                            <h3># 기타 제품</h3>
-                        </div>
-                    </div>
+                    </a>
                 </div>
             </div>
             <button class="slider-button next" id="nextBtn2">&gt;</button>
         </div>
     </section>
+
     <div class="pagination">
         <a href="#" class="prev">Previous</a>
-        <a href="#">1</a>
-        <a href="#" class="active">2</a>
+        <a href="#" class="active">1</a>
+        <a href="#" >2</a>
         <a href="#">3</a>
         <a href="#">4</a>
         <a href="#">5</a>
