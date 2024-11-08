@@ -1,5 +1,6 @@
 {% extends "header.html" %}
 {% block section %}
+{% include 'nav_product.html' %}
 <div class="product-detail-container">
     <!-- 상품 이미지 섹션 -->
     <div class="product-images">
@@ -46,7 +47,7 @@
   </div>
 
         <div class="product-buttons">
-            <button class="button cart-button" onclick="addToCart(); location.href='cart_product.html';">
+            <button class="button cart-button" onclick="addToCart1(); location.href='cart_product.html';">
                 Add To Cart
             </button>
             <button class="button buy-button" onclick="buy(); location.href='purchase_product.html';">
