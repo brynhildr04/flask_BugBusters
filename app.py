@@ -20,9 +20,9 @@ def view_service():
     return render_template("main_service.html")
 
 #장바구니
-@application.route("/cart.html")
+@application.route("/cart_product.html")
 def view_cart():
-    return render_template("cart.html")
+    return render_template("cart_product.html")
 
 #마이페이지
 @application.route("/profile.html")
