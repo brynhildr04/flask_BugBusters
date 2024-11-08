@@ -79,6 +79,10 @@ def view_chat_service():
 def view_purchase_service():
     return render_template('purchase_service.html')
 
+@application.route('/purchase_product.html')
+def view_purchase_product():
+    return render_template('purchase_product.html')
+
 #리뷰 작성 페이지
 @application.route("/review.html")
 def review_write():
