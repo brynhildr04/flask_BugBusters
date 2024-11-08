@@ -6,22 +6,22 @@
         <div id="slider" class="slider-container">
             <button class="slider-button prev" id="prev">&lt;</button>
             <div class="slider-content">
-                <img src="/static/images/image1.png" alt="이미지 1" class="slide active">
-                <img src="/static/images/image2.png" alt="이미지 2" class="slide">
-                <img src="/static/images/image3.png" alt="이미지 3" class="slide">
-                <img src="/static/images/image4.png" alt="이미지 4" class="slide">
-                <img src="/static/images/image5.png" alt="이미지 5" class="slide">
+  <img src="/static/images/image1.png" alt="이미지 1" class="slide active">
+  <img src="/static/images/image2.png" alt="이미지 2" class="slide">
+  <img src="/static/images/image3.png" alt="이미지 3" class="slide">
+  <img src="/static/images/image4.png" alt="이미지 4" class="slide">
+  <img src="/static/images/image5.png" alt="이미지 5" class="slide">
             </div>
             <button class="slider-button next" id="next">&gt;</button>
         </div>
-    </div>
+</div>
 
     <!-- 상품 정보 섹션 -->
     <div class="product-info-section">
         <div class="product-category">
             <span class="category-path">제품 ></span>
             <span class="category-current">식품</span>
-        </div>
+  </div>
 
         <h1 class="product-title">Item Example</h1>
 
@@ -29,21 +29,21 @@
             <span class="stars">★★★★★</span>
             <span class="rating-score">(5)</span>
             <span class="review-count">리뷰(99+)</span>
-        </div>
+  </div>
 
         <div class="product-price">
             <span class="price">10,000원</span>
-        </div>
+  </div>
 
         <div class="quantity-selector">
             <label for="quantity">수량:</label>
             <input type="number" id="quantity" name="quantity" min="1" max="9" value="1">
-        </div>
+  </div>
 
         <div class="total-price">
             <span>Total</span>
             <span class="total-amount">20,000원 (2개)</span>
-        </div>
+  </div>
 
         <div class="product-buttons">
             <button class="button cart-button" onclick="addToCart(); location.href='cart_product.html';">
@@ -62,18 +62,29 @@
         <button class="tab active" id="detailsTab" onclick="showDetails()">상세 설명</button>
         <button class="tab" id="reviewsTab" onclick="showReviews()">리뷰(99+)</button>
         <button class="tab" id="sellerTab" onclick="location.href='chat_product.html'">판매자 문의</button>
-    </div>
+  </div>
 
     <div id="detailsContent" class="tab-content active-content">
         <div class="product-description">
             수제 캔들입니다. 향 좋고 환경에도 좋습니다! 
             <!-- 상세 설명 내용 -->
-        </div>
-    </div>
+  </div>
+</div>
 
     <div id="reviewsContent" class="tab-content">
       <div class="review-section">
-          <!-- 리뷰 요약 정보 -->
+           <!-- 리뷰 작성하기 버튼 -->
+<div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+  <a href="review.html" style="text-decoration: none;">
+      <button style="width: 200px; height: 60px; background-color: #A4C1AE; color: black; font-size: 16px; font-family: Inter; font-weight: 700; border: none; border-radius: 5px; cursor: pointer;">
+          리뷰 작성하기
+      </button>
+  </a>
+</div>
+
+        
+        <!-- 리뷰 요약 정보 -->
+
           <div class="review-summary">
               <div class="average-rating">
                   <div class="rating-number">4.8</div>
@@ -81,9 +92,9 @@
                       <span>★★★★★</span>
                   </div>
                   <div class="total-reviews">리뷰 99+개</div>
-              </div>
-          </div>
-  
+  </div>
+</div>
+
           <!-- 리뷰 목록 -->
           <div id="reviewsContainer">
               <!-- 리뷰들이 여기에 동적으로 추가됨 -->
