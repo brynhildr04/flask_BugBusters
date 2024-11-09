@@ -11,105 +11,132 @@
     {% include 'nav_product.html' %}
 
     <section class="products-section">
-        <h2 class="section-title">오늘의 인기 상품<br></h2>
-        <div class="slider-container">
+        <h2 class="section-title" style="padding-top: 20px;">오늘의 인기 상품<br></h2>
+        <div class="slider-container">    
             <button class="slider-button prev" id="prevBtn1">&lt;</button>
             <div class="product-slider">
-                <div class="slide-track">
-                    <div class="product-card" onclick="location.href='product_detail.html'">
+                <div class="slide-track" id="slideTrack1">
+                    <a href="product_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># 식품</h3>
+                            <p class="product-name">유기농 수제 쿠키</p>
+                            <p class="product-price">12,000원</p>
                         </div>
-                    </div>
-                    <div class="product-card">
+                    </a>
+                    <a href="product_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># 공예</h3>
+                            <p class="product-name">수제 도자기</p>
+                            <p class="product-price">25,000원</p>
                         </div>
-                    </div>
-                    <div class="product-card">
+                    </a>
+                    <a href="product_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># 뷰티</h3>
+                            <p class="product-name">천연 비누</p>
+                            <p class="product-price">8,000원</p>
                         </div>
-                    </div>
-                    <div class="product-card">
+                    </a>
+                    <a href="product_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># 패션</h3>
+                            <p class="product-name">니트 머플러</p>
+                            <p class="product-price">18,000원</p>
                         </div>
-                    </div>
-                    <div class="product-card">
+                    </a>
+                    <a href="product_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># 기타 제품</h3>
+                            <p class="product-name">캔들</p>
+                            <p class="product-price">15,000원</p>
                         </div>
-                    </div>
-                    <div class="product-card">
+                    </a>
+                    <a href="product_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># 제품 제작 의뢰</h3>
+                            <p class="product-name">커스텀 제작</p>
+                            <p class="product-price">가격문의</p>
                         </div>
-                    </div>
-               
+                    </a>
                 </div>
+            </div>
             <button class="slider-button next" id="nextBtn1">&gt;</button>
         </div>
     </section>
+
 
     <section class="products-section">
         <h2 class="section-title">최신 등록 상품<br></h2>
         <div class="slider-container">
             <button class="slider-button prev" id="prevBtn2">&lt;</button>
             <div class="product-slider">
-                <div class="slide-track">
-                    <div class="product-card">
+                <div class="slide-track" id="slideTrack2">
+                    <a href="product_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># 식품</h3>
+                            <p class="product-name">수제 마카롱</p>
+                            <p class="product-price">16,000원</p>
                         </div>
-                    </div>
-                    <div class="product-card">
+                    </a>
+
+                    <a href="product_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># 공예</h3>
+                            <p class="product-name">수제 도자기</p>
+                            <p class="product-price">25,000원</p>
                         </div>
-                    </div>
-                    <div class="product-card">
+                    </a>
+                    <a href="product_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># 뷰티</h3>
+                            <p class="product-name">천연 비누</p>
+                            <p class="product-price">8,000원</p>
                         </div>
-                    </div>
-                    <div class="product-card">
+                    </a>
+                    <a href="product_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># 패션</h3>
+                            <p class="product-name">니트 머플러</p>
+                            <p class="product-price">18,000원</p>
                         </div>
-                    </div>
-                    <div class="product-card">
+                    </a>
+                    <a href="product_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># 기타 제품</h3>
+                            <p class="product-name">캔들</p>
+                            <p class="product-price">15,000원</p>
                         </div>
-                    </div>
-                    <div class="product-card">
+                    </a>
+                    <a href="product_detail.html" class="product-card">
                         <div class="product-image"></div>
                         <div class="product-info">
                             <h3># 제품 제작 의뢰</h3>
+                            <p class="product-name">커스텀 제작</p>
+                            <p class="product-price">가격문의</p>
                         </div>
-                    </div>
-                   
+                    </a>
+
                 </div>
             </div>
             <button class="slider-button next" id="nextBtn2">&gt;</button>
         </div>
     </section>
+
     <div class="pagination">
         <a href="#" class="prev">Previous</a>
-        <a href="#">1</a>
-        <a href="#" class="active">2</a>
+        <a href="#" class="active">1</a>
+        <a href="#">2</a>
         <a href="#">3</a>
         <a href="#">4</a>
         <a href="#">5</a>

@@ -49,7 +49,6 @@ class DBhandler:
         
     def user_duplicate_check(self, id_string):
         users = self.db.child("user").get() #user 노드에 사용자 정보 등록
-        
         print("users###",users.val())
         if str(users.val()) == "None": # first registration 이때는 중복 체크로직 타지 않음
             return True
