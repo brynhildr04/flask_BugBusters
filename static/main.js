@@ -1,5 +1,5 @@
 //민하님 js
-document.getElementById('quantity')?.addEventListener('input', function () {
+document.getElementById('quantity').addEventListener('input', function () {
     const quantity = parseInt(this.value, 10) || 0;
     const total = quantity * 10000;
     document.getElementById('result').innerText = `수량: ${quantity}, 총액: ${total.toLocaleString()}원`;
@@ -54,6 +54,9 @@ function review(id, name, contents, rating, date, items) {
         <small>${date} | 수제 캔들, ${items}개</small><br>
         <p>${contents}</p>
     `;
+    reviewDiv.addEventListener('click', function () {
+        window.location.href = `review_detail.html?id=${id}`;
+      });
      
     reviewsContainer.appendChild(reviewDiv);
 }
