@@ -6,85 +6,52 @@
 {% block section %}
 <div class="all-products-container">
     <h1 class="page-title">전체 상품</h1>
-    
+
     {% include 'nav_product.html' %}
 
+    {% if total > 0 %}
+    <p>상품 리스트 -- 현재까지 {{total}}개 등록됨</p>
+
+    <!--상품 보이기-->
     <div class="products-grid">
-        <a href="product_detail.html" class="product-card">
-            <div class="product-image"></div>
+        <!--첫 번째 열-->
+        {% for key, value in row1 %}
+        <a href="/view_detail/{{key}}" class="product-card" style="cursor:pointer">
+            <div class="product-image"><img src="static/images/{{value.img_path}}"></div>
             <div class="product-info">
-                <h3># 식품</h3>
-                <p class="product-name">유기농 수제 쿠키</p>
-                <p class="product-price">12,000원</p>
+                <h3># {{value.category}}</h3>
+                <p class="product-name">{{key}}</p>
+                <!--<p class="product-price">{{value.price}}</p>--><!--상품 등록 탭에 가격이 없음... 실화?-->
             </div>
         </a>
-        <a href="product_detail.html" class="product-card">
-            <div class="product-image"></div>
+        {% endfor %}
+        <!--두 번쨰 열-->
+        {% for key, value in row2 %}
+        <a href="'/view_detail/{{key}}';" class="product-card">
+            <div class="product-image"><img src="static/images/{{value.img_path}}"></div>
             <div class="product-info">
-                <h3># 공예</h3>
-                <p class="product-name">수제 도자기 컵</p>
-                <p class="product-price">25,000원</p>
+                <h3># {{value.category}}</h3>
+                <p class="product-name">{{key}}</p>
+                <!--<p class="product-price">{{value.price}}</p>--><!--상품 등록 탭에 가격이 없음... 실화?-->
             </div>
         </a>
-        <a href="product_detail.html" class="product-card">
-            <div class="product-image"></div>
-            <div class="product-info">
-                <h3># 뷰티</h3>
-                <p class="product-name">천연 비누</p>
-                <p class="product-price">8,000원</p>
-            </div>
-        </a>
-        <a href="product_detail.html" class="product-card">
-            <div class="product-image"></div>
-            <div class="product-info">
-                <h3># 패션</h3>
-                <p class="product-name">수제 니트 가디건</p>
-                <p class="product-price">55,000원</p>
-            </div>
-        </a>
-        <!-- 더미 데이터로 4열 그리드 레이아웃 표시 -->
-        <a href="product_detail.html" class="product-card">
-            <div class="product-image"></div>
-            <div class="product-info">
-                <h3># 기타 제품</h3>
-                <p class="product-name">핸드메이드 캔들</p>
-                <p class="product-price">15,000원</p>
-            </div>
-        </a>
-        <a href="product_detail.html" class="product-card">
-            <div class="product-image"></div>
-            <div class="product-info">
-                <h3># 공예</h3>
-                <p class="product-name">macrame 월행잉</p>
-                <p class="product-price">35,000원</p>
-            </div>
-        </a>
-        <a href="product_detail.html" class="product-card">
-            <div class="product-image"></div>
-            <div class="product-info">
-                <h3># 패션</h3>
-                <p class="product-name">귀걸이</p>
-                <p class="product-price">12,000원</p>
-            </div>
-        </a>
-        <a href="product_detail.html" class="product-card">
-            <div class="product-image"></div>
-            <div class="product-info">
-                <h3># 식품</h3>
-                <p class="product-name">수제 마카롱</p>
-                <p class="product-price">16,000원</p>
-            </div>
-        </a>
+        {% endfor %}
     </div>
 
+    <!--페이지네이션-->
     <div class="pagination">
-        <a href="#" class="prev">Previous</a>
-        <a href="#" class="active">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a href="#" class="next">Next</a>
+        <div class="page-nation">
+            <ul>
+                <li>
+                    {% for i in range(page_count)%}
+                    <a href="{{url_for('view_list', page=i)}}" color="black">{{i}}</a>
+                    {% endfor %}
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
-{% endblock section %}
+
+    {% else %}
+    <p>등록된 상품이 없습니다</p>
+    {% endif %}
+    {% endblock section %}

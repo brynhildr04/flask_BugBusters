@@ -298,6 +298,7 @@
 .slider-button:hover {
     background: #004d26;
 }
+
 .product-card:hover {
     transform: translateY(-5px);
 }
@@ -330,16 +331,19 @@
 }
 
 .column.side {
-    display: none; /* side column 제거 */
+    display: none;
+    /* side column 제거 */
 }
 
 .column.middle {
-    flex: 0 1 600px; /* 최대 너비 설정 */
+    flex: 0 1 600px;
+    /* 최대 너비 설정 */
     background: white;
     padding: 40px;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    margin: 0 20px; /* 좌우 여백 추가 */
+    margin: 0 20px;
+    /* 좌우 여백 추가 */
 }
 
 /* 로그인 타이틀 */
@@ -396,7 +400,8 @@ hr {
 
 /* 로그인 버튼 */
 #login_btn.submit_btn {
-    width: 450px;  /* 241108v1. 버튼 크기 조정 */
+    width: 450px;
+    /* 241108v1. 버튼 크기 조정 */
     height: 48px;
     background-color: #006633;
     color: white;
@@ -407,7 +412,8 @@ hr {
     cursor: pointer;
     transition: background-color 0.3s;
     margin: 20px auto;
-    display: block;     /* block 요소로 설정 */
+    display: block;
+    /* block 요소로 설정 */
 }
 
 #login_btn.submit_btn:hover {
@@ -425,9 +431,11 @@ hr {
 
 #link_table td {
     width: 50%;
-    text-align: center;  /* 각 열의 텍스트 중앙 정렬 */
+    text-align: center;
+    /* 각 열의 텍스트 중앙 정렬 */
     padding: 10px 0;
 }
+
 .linkto {
     margin-top: 20px;
     border-top: 1px solid #eee;
@@ -443,7 +451,8 @@ hr {
     color: #666;
     text-decoration: none;
     transition: color 0.3s;
-    padding: 5px 10px;  /* 링크 영역 확장 */
+    padding: 5px 10px;
+    /* 링크 영역 확장 */
 }
 
 .linkto a:hover {
@@ -527,16 +536,19 @@ hr {
 }
 
 .column.side {
-    display: none; /* side column 제거 */
+    display: none;
+    /* side column 제거 */
 }
 
 .column.middle {
-    flex: 0 1 600px; /* 최대 너비 설정 */
+    flex: 0 1 600px;
+    /* 최대 너비 설정 */
     background: white;
     padding: 40px;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    margin: 0 20px; /* 좌우 여백 추가 */
+    margin: 0 20px;
+    /* 좌우 여백 추가 */
 }
 
 /* 아이디/비밀번호 찾기 영역 */
@@ -562,7 +574,8 @@ hr {
 
 /* 섹션 제목 */
 #findId .data_name {
-    font-size: 20px; /* 글자 크기 증가 */
+    font-size: 20px;
+    /* 글자 크기 증가 */
     font-weight: bold;
     color: #333;
     padding: 15px 0;
@@ -588,6 +601,7 @@ hr {
     font-size: 16px;
     padding: 0;
 }
+
 /* 입력 필드 그룹 정렬 */
 #findId td {
     padding: 5px 0;
@@ -618,7 +632,8 @@ hr {
 
 #findId input[type="text"],
 #findId input[type="number"] {
-    width: calc(100% - 24px); /* 패딩 고려 */
+    width: calc(100% - 24px);
+    /* 패딩 고려 */
 }
 
 #findId input[type="text"].findId {
@@ -823,7 +838,8 @@ footer {
 
 #ps_upload .container {
     width: 100%;
-    max-width: 800px; /* 화면 크기에 맞춰 최대 너비 설정 */
+    max-width: 800px;
+    /* 화면 크기에 맞춰 최대 너비 설정 */
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -965,8 +981,10 @@ footer {
     color: #000000;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* 세로 중앙 정렬 */
-    align-items: center; /* 가로 중앙 정렬 */
+    justify-content: center;
+    /* 세로 중앙 정렬 */
+    align-items: center;
+    /* 가로 중앙 정렬 */
     padding-top: 20px;
     height: 100vh;
     margin: 0;
@@ -976,7 +994,8 @@ footer {
     text-align: center;
     font-size: 32px;
     font-weight: bold;
-    max-width: 821px; /* 고정 너비 대신 최대 너비 사용 */
+    max-width: 821px;
+    /* 고정 너비 대신 최대 너비 사용 */
     width: 100%;
     height: 80px;
     margin: 0 0 20px;
@@ -991,7 +1010,8 @@ footer {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 821px; /* 고정 너비 대신 최대 너비 사용 */
+    max-width: 821px;
+    /* 고정 너비 대신 최대 너비 사용 */
     width: 100%;
     text-align: center;
 }
@@ -1010,7 +1030,7 @@ footer {
 
 #upload_result .product-info strong {
     font-weight: bold;
-} 
+}
 
 /********aboutus css*******/
 #aboutus_r * {
@@ -1056,7 +1076,8 @@ footer {
 }
 
 #aboutus_r .title-underline {
-    width: 964px;  /* 길이를 964px로 변경 */
+    width: 964px;
+    /* 길이를 964px로 변경 */
     height: 1px;
     background-color: #000;
     margin: 0 auto 30px;
@@ -1066,7 +1087,8 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px; /* 로고와 텍스트 사이 간격 */
+    gap: 20px;
+    /* 로고와 텍스트 사이 간격 */
     margin-bottom: 30px;
 }
 
@@ -1078,7 +1100,8 @@ footer {
 #aboutus_r .logo img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* 이미지 비율 유지 */
+    object-fit: contain;
+    /* 이미지 비율 유지 */
 }
 
 #aboutus_r .title-korean {
@@ -1100,7 +1123,8 @@ footer {
 /* 반응형을 위한 미디어 쿼리 추가 */
 @media (max-width: 1000px) {
     #aboutus_r .title-underline {
-        width: 90vw; /* 화면이 작아질 때는 viewport 너비의 90%로 조정 */
+        width: 90vw;
+        /* 화면이 작아질 때는 viewport 너비의 90%로 조정 */
     }
 
     #aboutus_r .logo-title-container {
@@ -1108,6 +1132,7 @@ footer {
         gap: 10px;
     }
 }
+
 /********chat css*******/
 #chat_r * {
     box-sizing: border-box;
@@ -1254,7 +1279,8 @@ footer {
     background-color: #f9f9f9;
     margin-bottom: 500px;
     position: relative;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* 그림자 효과 */
 }
 
 #purchase_r .product-details {
@@ -1286,7 +1312,7 @@ footer {
     cursor: pointer;
 }
 
-#purchase_r .quantity-control button:hover{
+#purchase_r .quantity-control button:hover {
     background-color: #CDECDB;
 }
 
@@ -1300,25 +1326,25 @@ footer {
 }
 
 #purchase_r .finalprice {
-    position: fixed;        
-    right: 710px;           
-    bottom: 250px;           
-    background-color: #f9f9f9; 
-    padding: 10px;         
-    border-radius: 8px;    
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    display: flex;          
-    align-items: center;    
+    position: fixed;
+    right: 710px;
+    bottom: 250px;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
 }
 
 #purchase_r .finalprice h3 {
-    margin: 0;              
-    margin-right: 5px;     
+    margin: 0;
+    margin-right: 5px;
 }
 
 #purchase_r .product-price {
-    font-weight: bold;      
-    margin-left: 5px;      
+    font-weight: bold;
+    margin-left: 5px;
 }
 
 #purchase_r .remove-btn {
@@ -1355,12 +1381,12 @@ footer {
 }
 
 #payment_r {
-        height: 100%;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: Arial, sans-serif;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
 }
 
 #payment_r .payment-message button {
@@ -1384,7 +1410,8 @@ footer {
 /* 상품 상세 페이지 컨테이너 - 상단 여백 추가 */
 .product-detail-container {
     max-width: 1158px;
-    margin: 120px auto 40px; /* 상단 여백 120px로 수정 */
+    margin: 120px auto 40px;
+    /* 상단 여백 120px로 수정 */
     display: flex;
     gap: 60px;
     padding: 0 20px;
@@ -1487,6 +1514,7 @@ footer {
     white-space: nowrap;
     overflow: hidden;
 }
+
 /* 이미지 슬라이더 */
 .product-images {
     flex: 1;
@@ -1684,6 +1712,39 @@ footer {
     text-align: center;
 }
 
+/*페이지네이션 스타일 (교수님 코드)*/
+.page-nation li {
+    list-style: none;
+}
+
+.page-wrap {
+    text-align: center;
+    font-size: 0;
+}
+
+.page-nation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.page-nation a {
+    display: block;
+    margin: 0 3px;
+    float: left;
+    border: 1px solid #e6e6e6;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    background-color: #fff;
+    font-size: 13px;
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+}
+
 /* 반응형 디자인 */
 @media (max-width: 1024px) {
     .product-detail-container {
@@ -1708,12 +1769,6 @@ footer {
         font-size: 20px;
     }
 }
-
-
-
-
-
-
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -1776,7 +1831,8 @@ footer {
 
 @media (max-width: 768px) {
     #login_btn.submit_btn {
-        width: 100%;  /* 모바일은 전채 너비 */
+        width: 100%;
+        /* 모바일은 전채 너비 */
     }
 }
 

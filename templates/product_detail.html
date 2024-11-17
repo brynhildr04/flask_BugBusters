@@ -10,11 +10,7 @@
         <div id="slider" class="slider-container">
             <button class="slider-button prev" id="prev">&lt;</button>
             <div class="slider-content">
-  <img src="/static/images/image1.png" alt="이미지 1" class="slide active">
-  <img src="/static/images/image2.png" alt="이미지 2" class="slide">
-  <img src="/static/images/image3.png" alt="이미지 3" class="slide">
-  <img src="/static/images/image4.png" alt="이미지 4" class="slide">
-  <img src="/static/images/image5.png" alt="이미지 5" class="slide">
+  <img src="../../static/images/{{data.img_path}}" alt="이미지 1" class="slide active">
             </div>
             <button class="slider-button next" id="next">&gt;</button>
         </div>
@@ -23,11 +19,11 @@
     <!-- 상품 정보 섹션 -->
     <div class="product-info-section">
         <div class="product-category">
-            <span class="category-path">제품 ></span>
-            <span class="category-current">식품</span>
+            <span class="category-path">{{data.product_type}} ></span>
+            <span class="category-current">{{data.category}}</span>
   </div>
 
-        <h1 class="product-title">Item Example</h1>
+        <h1 class="product-title">{{data.title}}</h1>
 
         <div class="product-rating">
             <span class="stars">★★★★★</span>
@@ -36,7 +32,7 @@
   </div>
 
         <div class="product-price">
-            <span class="price">10,000원</span>
+            <span class="price">10,000원</span> <!--상품 등록 화면에서 가격 입력받아야 함...-->
   </div>
 
         <div class="quantity-selector">
@@ -46,7 +42,7 @@
 
         <div class="total-price">
             <span>Total</span>
-            <span class="total-amount">20,000원 (2개)</span>
+            <span class="total-amount">20,000원 (2개)</span> <!--여기도 마찬가지로-->
   </div>
 
         <div class="product-buttons">
@@ -72,6 +68,7 @@
         <div class="product-description">
             수제 캔들입니다. 향 좋고 환경에도 좋습니다! 
             <!-- 상세 설명 내용 -->
+             {{data.description}}
   </div>
 </div>
 
