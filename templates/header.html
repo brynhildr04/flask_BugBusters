@@ -36,11 +36,17 @@
                 <img src="/static/images/search.svg" alt="search icon">
             </button>
         </div>
+
+        <!-- 241107v1. 여기 다시 설정 필요합니다!!!!-->
         <div class="header-icons">
-            <a href="cart.html" class="register-btn">제품 등록하기</a>
+            <a href="상품등록하기.html" class="register-btn">제품 등록하기</a>
             <a href="http://127.0.0.1:5000" class="icon-btn"><img src="/static/images/home.svg" alt="Home"></a>
+            {% if session['id'] %}
+            <a href="profile.html"><img src="/static/images/profile.svg" alt="Profile"></a><b>{{session['id']}}님</b><a href ="/logout">logout</a>
+            {% else %}
             <a href="login.html" class="icon-btn"><img src="/static/images/profile.svg" alt="Profile"></a>
-            <a href="cart.html" class="icon-btn"><img src="/static/images/cart.svg" alt="Cart"></a>
+            {% endif %}
+            <a href="cart_product.html" class="icon-btn"><img src="/static/images/cart.svg" alt="Cart"></a>
         </div>
     </header>
     {% block section %}
@@ -53,6 +59,7 @@
             <div class="footer-name">
                 <h3>소소한 이화</h3>
             </div>
+            <!--http full name으로 추가하기 !!!!!!!-->
             <div class="footer-links">
                 <a href="aboutus.html">About Us</a>
                 <a href="http://127.0.0.1:5000">제품</a>

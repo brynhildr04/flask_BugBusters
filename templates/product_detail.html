@@ -1,109 +1,112 @@
 {% extends "header.html" %}
-{% block head %}
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Product Detail Page</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='minha_style.css') }}">
-<script src="{{ url_for('static', filename='main.js') }}" defer></script>
-{% endblock head %}
+{% block check %}
+<input type="checkbox" id="switch" class="switch-input" onclick="location.href='main_service.html'">
+{% endblock check %}
 {% block section %}
-<label for="quantity">수량:</label>
-<input type="number" id="quantity" name="quantity" min="1" max="9" value="1" style="font-size: 28px;">
-<div class="result" id="result"></div>
-<div id="slider">
-  <img src="/static/images/image1.png" alt="이미지 1" class="slide active">
-  <img src="/static/images/image2.png" alt="이미지 2" class="slide">
-  <img src="/static/images/image3.png" alt="이미지 3" class="slide">
-  <img src="/static/images/image4.png" alt="이미지 4" class="slide">
-  <img src="/static/images/image5.png" alt="이미지 5" class="slide">
-  <button id="prev"></button>
-  <button id="next"></button>
+{% include 'nav_product.html' %}
+<div class="product-detail-container">
+    <!-- 상품 이미지 섹션 -->
+    <div class="product-images">
+        <div id="slider" class="slider-container">
+            <button class="slider-button prev" id="prev">&lt;</button>
+            <div class="slider-content">
+  <img src="../../static/images/{{data.img_path}}" alt="이미지 1" class="slide active">
+            </div>
+            <button class="slider-button next" id="next">&gt;</button>
+        </div>
 </div>
 
-<!--상품 설명 -->
-<div style="width: 1920px; height: 750px; position: relative; background: white">
-  <div
-    style="width: 586px; height: 0px; left: 1068px; top: 83px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid">
-  </div>
-  <div
-    style="left: 1099px; top: 150px; position: absolute; color: black; font-size: 40px; font-family: Inter; font-weight: 700; word-wrap: break-word">
-    Item Example</div>
-  <div style="width: 412px; height: 0px; left: 1098px; top: 290px; position: absolute; border: 1px #666666 solid">
-  </div>
-  <div
-    style="width: 34px; height: 0px; left: 1265px; top: 236px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px #666666 solid">
-  </div>
-  <div style="width: 412px; height: 0px; left: 1098px; top: 360px; position: absolute; border: 1px #666666 solid">
-  </div>
-  <div
-    style="left: 1098px; top: 380px; position: absolute; color: black; font-size: 24px; font-family: Inter; font-weight: 400; word-wrap: break-word">
-    Total</div>
-  <div
-    style="left: 1354px; top: 380px; position: absolute; text-align: right; color: black; font-size: 24px; font-family: Inter; font-weight: 400; word-wrap: break-word">
-    $20,000 (n개)</div>
-  <div
-    style="left: 1101px; top: 205px; position: absolute; color: black; font-size: 24px; font-family: Inter; font-weight: 400; word-wrap: break-word">
-    $10,000</div>
-  <div style="left: 1099px; top: 131px; position: absolute"><span
-      style="color: #666666; font-size: 16px; font-family: Inter; font-weight: 400; word-wrap: break-word">제품 >
-    </span><span
-      style="color: black; font-size: 16px; font-family: Inter; font-weight: 700; word-wrap: break-word">식품</span>
+    <!-- 상품 정보 섹션 -->
+    <div class="product-info-section">
+        <div class="product-category">
+            <span class="category-path">{{data.product_type}} ></span>
+            <span class="category-current">{{data.category}}</span>
   </div>
 
-  <button class="button" onclick="addToCart(); location.href='cart_product.html';"
-    style="width: 412px; height: 58px; left: 1098px; top: 519px; position: absolute; border-radius: 20px">Add To
-    Cart</button>
-  <button class="button" onclick="buy(); location.href='purchase_product.html';"
-    style="width: 412px; height: 58px; left: 1098px; top: 611px; position: absolute; border-radius: 20px">Buy</button>
-  <div
-    style="left: 1282px; top: 246px; position: absolute; color: #7C7C7C; font-size: 16px; font-family: Inter; font-weight: 300; line-height: 24px; word-wrap: break-word">
-    리뷰(99+)</div>
-  <div style="width: 154px; height: 24px; left: 1097px; top: 242px; position: absolute">
-    <div
-      style="left: 130px; top: 8px; position: absolute; color: #7C7C7C; font-size: 16px; font-family: Inter; font-weight: 300; line-height: 24px; word-wrap: break-word">
-      (5)</div>
-    <span style="color: #FFC700; font-size: 24px;">★★★★★</span>
+        <h1 class="product-title">{{data.title}}</h1>
+
+        <div class="product-rating">
+            <span class="stars">★★★★★</span>
+            <span class="rating-score">(5)</span>
+            <span class="review-count">리뷰(99+)</span>
   </div>
 
+        <div class="product-price">
+            <span class="price">10,000원</span> <!--상품 등록 화면에서 가격 입력받아야 함...-->
+  </div>
+
+        <div class="quantity-selector">
+            <label for="quantity">수량:</label>
+            <input type="number" id="quantity" name="quantity" min="1" max="9" value="1">
+  </div>
+
+        <div class="total-price">
+            <span>Total</span>
+            <span class="total-amount">20,000원 (2개)</span> <!--여기도 마찬가지로-->
+  </div>
+
+        <div class="product-buttons">
+            <button class="button cart-button" onclick="addToCart1(); location.href='cart_product.html';">
+                Add To Cart
+            </button>
+            <button class="button buy-button" onclick="buy(); location.href='purchase_product.html';">
+                Buy
+            </button>
+        </div>
+    </div>
 </div>
 
-<!--상품 탭 -->
-<div style="width: 1920px; height: 100px; position: relative; background: white">
-  <div
-    style="left: 602px; top: 27px; position: absolute; color: black; font-size: 32px; font-family: Poppins; font-weight: 700; word-wrap: break-word">
+<!-- 상품 탭 섹션 -->
+<div class="product-tabs">
+    <div class="tab-buttons">
+        <button class="tab active" id="detailsTab" onclick="showDetails()">상세 설명</button>
+        <button class="tab" id="reviewsTab" onclick="showReviews()">리뷰(99+)</button>
+        <button class="tab" id="sellerTab" onclick="location.href='chat_product.html'">판매자 문의</button>
   </div>
-  <div style="width: 964px; height: 0px; left: 478px; top: 88px; position: absolute; border: 1px #838383 solid">
-  </div>
-  <div class="tab" id="detailsTab" onclick="showDetails()"
-    style="left: 550px; top: 25px; position: absolute; color: #838383; font-size: 32px; font-family: Poppins; font-weight: 700; word-wrap: break-word">
-    상세 설명</div>
-  <div class="tab" id="reviewsTab" onclick="showReviews()"
-    style="left: 860px; top: 25px; position: absolute; color: #838383; font-size: 32px; font-family: Poppins; font-weight: 700; word-wrap: break-word">
-    리뷰(99+)</div>
-  <div class="tab" id="sellerTab" onclick="alert('판매자 문의 화면으로 이동합니다!'); location.href='chat_product.html';"
-    style="left: 1170px; top: 25px; position: absolute; color: #838383; font-size: 32px; font-family: Fenix; font-weight: 700; word-wrap: break-word">
-    판매자 문의</div>
 
-</div>
-
-<div id="detailsContent" class="content active-content"
-  style="width: 1920px; height: 100%; position: relative; background: white">
-  <div
-    style="width: 50%; margin: 0 auto; font-size: 24px; font-family: Inter, sans-serif; font-weight: 300; text-align: center; line-height: 1.5; word-wrap: break-word; overflow-wrap: break-word; padding: 20px;">
-    수제 캔들입니다. 향 좋고 환경에도 좋습니다! 내용이 길어지면 자동으로 줄바꿈이 됩니다. 이 내용은 예시로 넣은 텍스트이며, 필요에 따라 더 긴 내용으로 바꿀 수 있습니다. Lorem ipsum
-    dolor
-    sit amet, consectetur adipiscing elit. Quisque ac diam nec erat fermentum volutpat. Aliquam erat volutpat.
+    <div id="detailsContent" class="tab-content active-content">
+        <div class="product-description">
+            수제 캔들입니다. 향 좋고 환경에도 좋습니다! 
+            <!-- 상세 설명 내용 -->
+             {{data.description}}
   </div>
 </div>
 
+    <div id="reviewsContent" class="tab-content">
+      <div class="review-section">
+           <!-- 리뷰 작성하기 버튼 -->
+<div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+  <a href="review.html" style="text-decoration: none;">
+      <button style="width: 200px; height: 60px; background-color: #A4C1AE; color: black; font-size: 16px; font-family: Inter; font-weight: 700; border: none; border-radius: 5px; cursor: pointer;">
+          리뷰 작성하기
+      </button>
+  </a>
+</div>
 
-<div id="reviewsContent" class="content"
-  style="width: 1920px; height: 600px; position: relative; top: 50px; background: white">
-  <div id="reviewsContainer" style="margin-top: 20px; width: 50%; height: 100%; margin-left: auto; margin-right: auto;">
+        
+        <!-- 리뷰 요약 정보 -->
+
+          <div class="review-summary">
+              <div class="average-rating">
+                  <div class="rating-number">4.8</div>
+                  <div class="stars-container">
+                      <span>★★★★★</span>
+                  </div>
+                  <div class="total-reviews">리뷰 99+개</div>
   </div>
 </div>
 
+          <!-- 리뷰 목록 -->
+          <div id="reviewsContainer">
+              <!-- 리뷰들이 여기에 동적으로 추가됨 -->
+          </div>
+  
+          <!-- 리뷰 작성 버튼 -->
+          <button class="write-review-btn" onclick="location.href='review.html'">
+              ✎
+          </button>
+      </div>
+  </div>
+</div>
 <script src="path/to/main.js"></script>
 {% endblock section %}
-

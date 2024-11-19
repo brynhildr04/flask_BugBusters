@@ -1,0 +1,57 @@
+{% extends 'header.html' %}
+{% block check %}
+<input type="checkbox" id="switch" class="switch-input" onclick="location.href='main_service.html'">
+{% endblock check %}
+
+{% block section %}
+<div class="all-products-container">
+    <h1 class="page-title">전체 상품</h1>
+
+    {% include 'nav_product.html' %}
+
+    {% if total > 0 %}
+    <p>상품 리스트 -- 현재까지 {{total}}개 등록됨</p>
+
+    <!--상품 보이기-->
+    <div class="products-grid">
+        <!--첫 번째 열-->
+        {% for key, value in row1 %}
+        <a href="/view_detail/{{key}}" class="product-card" style="cursor:pointer">
+            <div class="product-image"><img src="static/images/{{value.img_path}}"></div>
+            <div class="product-info">
+                <h3># {{value.category}}</h3>
+                <p class="product-name">{{key}}</p>
+                <!--<p class="product-price">{{value.price}}</p>--><!--상품 등록 탭에 가격이 없음... 실화?-->
+            </div>
+        </a>
+        {% endfor %}
+        <!--두 번쨰 열-->
+        {% for key, value in row2 %}
+        <a href="'/view_detail/{{key}}';" class="product-card">
+            <div class="product-image"><img src="static/images/{{value.img_path}}"></div>
+            <div class="product-info">
+                <h3># {{value.category}}</h3>
+                <p class="product-name">{{key}}</p>
+                <!--<p class="product-price">{{value.price}}</p>--><!--상품 등록 탭에 가격이 없음... 실화?-->
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+
+    <!--페이지네이션-->
+    <div class="pagination">
+        <div class="page-nation">
+            <ul>
+                <li>
+                    {% for i in range(page_count)%}
+                    <a href="{{url_for('view_list', page=i)}}" color="black">{{i}}</a>
+                    {% endfor %}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    {% else %}
+    <p>등록된 상품이 없습니다</p>
+    {% endif %}
+    {% endblock section %}
