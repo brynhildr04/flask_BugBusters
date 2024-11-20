@@ -416,10 +416,18 @@ hr {
 
 /*회원가입*/
 
+#signup {
+    margin-bottom: 10px; /* 제목과 테이블 사이 간격 */
+}
+
+hr {
+    margin: 10px 0; /* 수평선 위아래 간격 줄이기 */
+}
+
 /*회원가입 테이블*/
 #signup_table{
     width: 100%;
-    margin:20px 0;
+    margin:0;
 }
 
 #signup_table th{
@@ -427,6 +435,23 @@ hr {
     padding-right: 20px;
     width: 100px;
 }
+
+.row.signup {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding-top: 20px;
+}
+
+.column.middle.signup {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
 
 /*입력 필드 라벨*/
 .data_name {
@@ -438,8 +463,8 @@ hr {
 /* 입력 필드 */
 .data_input.signup {
     width: 100%;
-    height: 48px;
-    padding: 0 16px;
+    height: 40px;
+    padding: 0 12px;
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 16px;
@@ -454,9 +479,9 @@ hr {
 }
 
 .data_input.email {
-    width: 47%;
+    width: 40%;
     height: 48px;
-    padding: 0 16px;
+    padding: 0 12px;
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 16px;
@@ -472,8 +497,8 @@ hr {
 
 .data_input.date {
     width: 28%;
-    height: 48px;
-    padding: 0 16px;
+    height: 40px;
+    padding: 0 12px;
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 16px;
@@ -485,6 +510,11 @@ hr {
     border-color: #006633;
     background-color: white;
     outline: none;
+}
+
+#signup_table tr {
+    margin: 0; /* 행 간 간격 제거 */
+    padding: 0; /* 행 내부 간격 제거 */
 }
 
 /* 회원가입 버튼 */
