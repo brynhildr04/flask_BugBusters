@@ -1,0 +1,199 @@
+[33mcommit 95c55fd9db472c0d181c8e547d14bc19dcb49fcd[m
+Author: brynhildr04 <blackbeanleaves@ewhain.net>
+Date:   Thu Nov 7 23:21:11 2024 +0900
+
+    241107 박수민 수정
+
+ delete mode 100644 templates/footer.html
+
+[33mcommit cbac931808e75b4d85b2f8ab230d750f9a4f7813[m
+Author: horokkk <smurfystrawberry@gmail.com>
+Date:   Thu Nov 7 17:25:52 2024 +0900
+
+    Delete profile.html
+
+ delete mode 100644 templates/profile.html
+
+[33mcommit 82461bd28cd291990a10f4ed9addd7283172f9e5[m
+Author: horokkk <smurfystrawberry@gmail.com>
+Date:   Thu Nov 7 17:25:49 2024 +0900
+
+    Delete index.html
+
+ delete mode 100644 templates/index.html
+
+[33mcommit 6be286e401912fc80bc49df156c785f9b9f0e74d[m
+Author: horokkk <smurfystrawberry@gmail.com>
+Date:   Thu Nov 7 17:25:44 2024 +0900
+
+    Delete home.html
+
+ delete mode 100644 templates/home.html
+
+[33mcommit 7f9c211d6e59b4cf43dce1fc17a2b06d1249d742[m
+Author: horokkk <smurfystrawberry@gmail.com>
+Date:   Thu Nov 7 17:25:38 2024 +0900
+
+    Delete cart.html
+
+ delete mode 100644 templates/cart.html
+
+[33mcommit 4856eefede45a24eca1b3071e3c3ee08571d5b46[m
+Author: horokkk <smurfystrawberry@gmail.com>
+Date:   Thu Nov 7 17:25:34 2024 +0900
+
+    Delete 상품등록하기.css
+
+ delete mode 100644 "static/\354\203\201\355\222\210\353\223\261\353\241\235\355\225\230\352\270\260.css"
+
+[33mcommit c6b7dc282e7d156344de2c97d9b10bc030684871[m
+Author: horokkk <smurfystrawberry@gmail.com>
+Date:   Thu Nov 7 17:25:29 2024 +0900
+
+    Delete 상품등록결과.css
+
+ delete mode 100644 "static/\354\203\201\355\222\210\353\223\261\353\241\235\352\262\260\352\263\274.css"
+
+[33mcommit 9a795c93e9ecde78e90e5ac28498697a2412b38e[m
+Author: horokkk <smurfystrawberry@gmail.com>
+Date:   Thu Nov 7 17:25:10 2024 +0900
+
+    Delete result.html
+
+ delete mode 100644 templates/result.html
+
+[33mcommit d836d222e07011b9eaf1e05acf60d648947e4d23[m
+Author: horokkk <smurfystrawberry@gmail.com>
+Date:   Thu Nov 7 16:44:15 2024 +0900
+
+    Delete cart.html
+
+ delete mode 100644 templates/cart.html
+
+[33mcommit e54ac06d96554b0188383dce94bf6747e0e3fa9c[m
+Author: horokkk <smurfystrawberry@gmail.com>
+Date:   Thu Nov 7 16:44:04 2024 +0900
+
+    Delete home.html
+
+ delete mode 100644 templates/home.html
+
+[33mcommit 152c6e93a7d89f276c7898eca559b04a7aaddb7f[m
+Author: horokkk <smurfystrawberry@gmail.com>
+Date:   Thu Nov 7 16:44:01 2024 +0900
+
+    Delete index.html
+
+ delete mode 100644 templates/index.html
+
+[33mcommit ade93dc2e1b6239c2e8ca944ccaf96b4c4cd24c7[m
+Author: horokkk <smurfystrawberry@gmail.com>
+Date:   Thu Nov 7 16:43:55 2024 +0900
+
+    Delete profile.html
+
+ delete mode 100644 templates/profile.html
+
+[33mcommit ff3de6c9ec4a6c8da4f3f8490fd25c6e9c1c71ec[m
+Author: horokkk <smurfystrawberry@gmail.com>
+Date:   Thu Nov 7 16:43:44 2024 +0900
+
+    Delete result.html
+
+ delete mode 100644 templates/result.html
+
+[33mcommit 912e0fe4146e79b1f9c46a87f56d724cb34528c9[m
+Author: horokkk <smurfystrawberry@gmail.com>
+Date:   Thu Nov 7 02:52:36 2024 +0900
+
+    Delete purchase.html
+
+ delete mode 100644 templates/purchase.html
+
+[33mcommit acb248adc74be333e757f8e80393f494216db837[m
+Author: 박소윤 <anjelica0414@ewhain.net>
+Date:   Thu Nov 7 00:28:32 2024 +0900
+
+    Moved files to new locations
+
+ delete mode 100644 "\354\203\201\355\222\210\353\223\261\353\241\235\352\262\260\352\263\274.css"
+ delete mode 100644 "\354\203\201\355\222\210\353\223\261\353\241\235\352\262\260\352\263\274.html"
+ delete mode 100644 "\354\203\201\355\222\210\353\223\261\353\241\235\355\225\230\352\270\260.css"
+ delete mode 100644 "\354\203\201\355\222\210\353\223\261\353\241\235\355\225\230\352\270\260.html"
+
+[33mcommit 487e6a81bf79993521b893f923f756026a50d8ed[m[33m ([m[1;31morigin/parksoyoon[m[33m)[m
+Author: 박소윤 <anjelica0414@ewhain.net>
+Date:   Wed Nov 6 23:02:04 2024 +0900
+
+    파일 위치 변경 반영 및 업데이트
+
+ delete mode 100644 static/style.css
+ delete mode 100644 templates/cart.html
+ delete mode 100644 templates/home.html
+ delete mode 100644 templates/index.html
+ delete mode 100644 templates/profile.html
+ delete mode 100644 templates/result.html
+
+[33mcommit cba680804b682e77a374011def02954d31c65388[m
+Author: brynhildr04 <blackbeanleaves@ewhain.net>
+Date:   Wed Nov 6 20:01:11 2024 +0900
+
+    header와 footer 수정
+
+ delete mode 100644 "static/images/\354\212\244\355\201\254\353\246\260\354\203\267 2024-10-15 195253.png"
+ delete mode 100644 "static/images/\354\212\244\355\201\254\353\246\260\354\203\267 2024-10-15 195457.png"
+ delete mode 100644 "static/images/\354\212\244\355\201\254\353\246\260\354\203\267 2024-10-15 195630.png"
+ delete mode 100644 "static/images/\354\272\224\353\223\244.jpeg"
+ delete mode 100644 templates/home.html
+
+[33mcommit 52cd095c5883f6602994bb30e644e4f247867622[m
+Author: 박소윤 <anjelica0414@ewhain.net>
+Date:   Wed Nov 6 16:45:10 2024 +0900
+
+    html 파일 추가
+
+ delete mode 100644 "templates/\355\217\264\353\215\224\354\203\235\354\204\261\354\232\251 \355\214\214\354\235\274"
+
+[33mcommit 84d896a87a3a196e1c2b0bcf0641975f5bc12e4f[m[33m ([m[1;31morigin/revert-1-gP03[m[33m)[m
+Author: brynhildr04 <blackbeanleaves@ewhain.net>
+Date:   Mon Nov 4 00:57:09 2024 +0900
+
+    Revert "G p03"
+
+ delete mode 100644 __pycache__/app.cpython-312.pyc
+ delete mode 100644 "static/images/\354\212\244\355\201\254\353\246\260\354\203\267 2024-10-15 195253.png"
+ delete mode 100644 "static/images/\354\212\244\355\201\254\353\246\260\354\203\267 2024-10-15 195457.png"
+ delete mode 100644 "static/images/\354\212\244\355\201\254\353\246\260\354\203\267 2024-10-15 195630.png"
+ delete mode 100644 static/main.js
+ delete mode 100644 static/style.css
+ delete mode 100644 templates/cart.html
+ delete mode 100644 templates/home.html
+ delete mode 100644 templates/index.html
+ delete mode 100644 templates/profile.html
+ delete mode 100644 templates/result.html
+
+[33mcommit cdb64a02df944e74c520eef9c8e5acad5806db78[m[33m ([m[1;31morigin/gP03[m[33m)[m
+Author: brynhildr04 <blackbeanleaves@ewhain.net>
+Date:   Tue Oct 22 16:54:37 2024 +0900
+
+    gP2 complete
+
+ delete mode 100644 "templates/\355\217\264\353\215\224\354\203\235\354\204\261\354\232\251 \355\214\214\354\235\274"
+
+[33mcommit c56975e87c87dcc8695d22bd59ffb9e54b1c6559[m
+Author: brynhildr04 <blackbeanleaves@ewhain.net>
+Date:   Tue Oct 22 15:48:31 2024 +0900
+
+    Delete static/images
+    
+    불필요한 파일 삭제
+
+ delete mode 100644 static/images
+
+[33mcommit 3f750c5c0313ec3262d26d71a3e51a9dd58ea104[m
+Author: brynhildr04 <blackbeanleaves@ewhain.net>
+Date:   Tue Oct 22 15:22:21 2024 +0900
+
+    image file commit
+
+ delete mode 100644 static/images
