@@ -448,6 +448,30 @@ function submitReview() {
     window.location.href = "review_detail.html";
 }
 
+
+//장바구니 삭제버튼
+function deleteItem(button) {
+    // 현재 버튼과 연결된 cart-item을 삭제
+    const cartItem = button.closest('.cart-item');
+    cartItem.remove();
+    
+    // 장바구니 총 금액 업데이트
+    updateGrandTotal();
+}
+
+function updateGrandTotal() {
+    let grandTotal = 0;
+    const itemTotals = document.querySelectorAll('.item-total');
+    
+    // 모든 아이템의 총 금액 합산
+    itemTotals.forEach(item => {
+        grandTotal += parseInt(item.textContent.replace(/,/g, ''), 10);
+    });
+    
+    // 총 금액 업데이트
+    document.getElementById('grandTotal').textContent = grandTotal.toLocaleString() + '원';
+}
+
 //박수민 js
 function pwSending(){
     var msg=document.getElementById("findPW_msg");

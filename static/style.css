@@ -1864,3 +1864,16 @@ footer {
         margin: 10px 0 0 0;
     }
 }
+
+.delete-btn {
+    background-color: #CDECDB;
+    color: black;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin-left: 10px;
+}
+.delete-btn:hover {
+    background-color: #00462A;
+}
