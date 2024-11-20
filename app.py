@@ -55,9 +55,10 @@ def view_service():
     return render_template("main_service.html")
 
 #장바구니
-@application.route("/cart.html")
+@application.route("/cart_product.html")
 def view_cart():
-    return render_template("cart.html")
+    return render_template("cart_product.html")
+
 
 #마이페이지
 @application.route("/profile.html")
@@ -114,6 +115,10 @@ def view_chat_service():
 def view_purchase_service():
     return render_template('purchase_service.html')
 
+@application.route('/purchase_product.html')
+def view_purchase_product():
+    return render_template('purchase_product.html')
+
 #리뷰 작성 페이지
 @application.route("/review.html")
 def review_write():
@@ -123,6 +128,17 @@ def review_write():
 @application.route("/review_detail.html")
 def view_review_detail():
     return render_template("review_detail.html")
+
+#전체 상품 조회 페이지
+@application.route("/all_product.html")
+def view_all_products():
+    return render_template("all_product.html")
+
+#전체 서비스 조회 페이지
+@application.route("/all_service.html")
+def view_all_services():
+    return render_template("all_service.html")
+
 
 #회원가입 백엔드 연결
 @application.route("/signup_post", methods=['POST'])
@@ -141,6 +157,7 @@ def register_user():
 def reg_item_submit_post():
     data = {
         "title": request.form.get("title", ""),
+        "price": request.form.get("price", ""),
         "product_type": request.form.get("product_type", ""),
         "category": request.form.get("category", ""),
         "description": request.form.get("description", "")
