@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='main.js') }}" defer></script>
+</head>
+
+<body>
+    <div class="all-products-container" width="100%" style="margin: 0px">
+        {% if total > 0 %}
+        <p>리뷰 리스트 -- 현재까지 {{total}}개 등록됨</p>
+        <!--상품 보이기-->
+            <!--첫 번째 열-->
+            {% for key, value in row1 %}
+            <button onclick="window.top.location.href='/review_detail/{{value.name}}/{{key}}';" class="product-card" style="cursor:pointer; width: 100%">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <span class="reviewer-name">{{value.name}}</span>
+                        <span class="review-date">{{value.date}}</span>
+                    </div>
+                    <div class="review-rating">
+                        {% set rate=value.rate | int %}
+                        {% for i in range(rate) %}
+                        ★
+                        {% endfor %}
+                        {% for i in range(5-rate) %}
+                        ☆
+                        {% endfor %}
+                    </div>
+                </div>
+                <!--추가하는 코드가 없음<div class="review-purchase-info">
+                    구매 수량: ${reviewData.items}개
+                </div>-->
+                <div class="review-content">{{value.review}}</div>
+            </button>
+            {% endfor %}
+            <!--두 번쨰 열-->
+            {% for key, value in row2 %}
+            <button onclick="window.top.location.href='/review_detail/{{value.name}}/{{key}}';" class="product-card" style="cursor:pointer; width: 100%">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <span class="reviewer-name">{{value.name}}</span>
+                        <span class="review-date">{{value.date}}</span>
+                    </div>
+                    <div class="review-rating">
+                        {% set rate=value.rate | int %}
+                        {% for i in range(rate) %}
+                        ★
+                        {% endfor %}
+                        {% for i in range(5-rate) %}
+                        ☆
+                        {% endfor %}
+                    </div>
+                </div>
+                <!--추가하는 코드가 없음<div class="review-purchase-info">
+                    구매 수량: ${reviewData.items}개
+                </div>-->
+                <div class="review-content">{{value.review}}</div>
+            </button>
+            {% endfor %}
+            {% for key, value in row3 %}
+            <button onclick="window.top.location.href='/review_detail/{{value.name}}/{{key}}';" class="product-card" style="cursor:pointer; width: 100%">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <span class="reviewer-name">{{value.name}}</span>
+                        <span class="review-date">{{value.date}}</span>
+                    </div>
+                    <div class="review-rating">
+                        {% set rate=value.rate | int %}
+                        {% for i in range(rate) %}
+                        ★
+                        {% endfor %}
+                        {% for i in range(5-rate) %}
+                        ☆
+                        {% endfor %}
+                    </div>
+                </div>
+                <!--추가하는 코드가 없음<div class="review-purchase-info">
+                    구매 수량: ${reviewData.items}개
+                </div>-->
+                <div class="review-content">{{value.review}}</div>
+            </button>
+            {% endfor %}
+
+        <!--페이지네이션-->
+        <div class="pagination" style="margin: 0px">
+            <div class="page-nation">
+                <ul>
+                    <li>
+                        {% for i in range(page_count)%}
+                        <a href="{{url_for('view_list', page=i)}}" color="black">{{i}}</a>
+                        {% endfor %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+</body>
+{% endif %}
+</html>

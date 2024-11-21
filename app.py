@@ -1,16 +1,14 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, session
+from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify
 from database import DBhandler
 import hashlib
 import os
 import sys
+from datetime import datetime
 
 application = Flask(__name__)
 application.config["SECRET_KEY"]="sosohanewhamarket"
 application.config['UPLOAD_FOLDER'] = 'static/images'
 DB=DBhandler()
-@application.route("/cart.html")
-def 임시():
-    return render_template("cart.html")
 
 #메인 홈화면
 @application.route("/")
@@ -90,15 +88,40 @@ def view_purchase_service():
 def view_purchase_product():
     return render_template('purchase_product.html')
 
+#지금 상황이 좀 꼬였는데, view_detail에서 바로 review.html로 넘어가버려서 404가 뜨는 중 
 #리뷰 작성 페이지
-@application.route("/review.html")
-def review_write():
-    return render_template("review.html")
+@application.route("/reg_review_init/<name>/")
+def reg_review_init(name):
+    #로그인 했는지 확인
+    if(session.get('id')==None):
+        flash("로그인이 필요합니다!")
+        return render_template("login.html")
+    else:
+        return render_template("review.html", name=name)
 
-#리뷰 상세보기 페이지
-@application.route("/review_detail.html")
-def view_review_detail():
-    return render_template("review_detail.html")
+#작성된 리뷰 백엔드로 넘겨주기
+@application.route("/reg_review", methods=['POST'])
+def reg_review():
+    data=request.form
+    image_file=request.files["file"]
+    image_file.save("static/images/{}".format(image_file.filename))
+    user_id=session.get('id')
+    date=str(datetime.today().year)+"."+str(datetime.today().month)+"."+str(datetime.today().day)+"."
+    DB.reg_review(data, image_file.filename, user_id, date)
+    return redirect(url_for('view_review'))
+
+#리뷰 상세보기 페이지 (전체 페이지 버전)
+@application.route("/review_detail/<name>/")
+def view_review_detail(name):
+    data=DB.get_review_byname(str(name))
+    return render_template("review_detail.html", name=name, data=data)
+
+#리뷰 상세보기 페이지 (iframe 버전)
+@application.route("/review_detail/<name>/<key>/")
+def view_itemReview_detail(name, key):
+    data=DB.get_review_bykey(str(name), str(key))
+    return render_template("review_detail.html", name=key, data=data)
+
 
 #전체 상품 조회 페이지
 @application.route("/all_product.html")
@@ -191,6 +214,80 @@ def view_list():
         page_count=int((item_counts/per_page)+1), #페이지 개수
         total=item_counts
         )
+
+#데이터베이스에서 리뷰 가져오기 (전체) 이건 제출용
+@application.route("/all_review")
+def view_review():
+    page = request.args.get("page", 0, type=int)
+    per_page=8
+    per_row=4
+    row_count=int(per_page/per_row)
+    start_idx=per_page*page
+    end_idx=per_page*(page+1)
+    data = DB.get_reviews() #read the table
+    item_counts = len(data)
+    data = dict(list(data.items())[start_idx:end_idx])
+    tot_count = len(data)
+    for i in range(row_count):#last row
+        if (i == row_count-1) and (tot_count%per_row != 0):
+            locals()['data_{}'.format(i)] = dict(list(data.items())[i*per_row:])
+        else: 
+            locals()['data_{}'.format(i)] = dict(list(data.items())[i*per_row:(i+1)*per_row])
+    return render_template(
+        "/all_review.html",
+        datas=data.items(),
+        row1=locals()['data_0'].items(),
+        row2=locals()['data_1'].items(),
+        limit=per_page,
+        page=page,
+        page_count=int((item_counts/per_page)+1),
+        total=item_counts)
+
+#데이터베이스에서 리뷰 가져오기 (상품별)
+@application.route("/<name>/all_item_review")
+def view_product_review(name): 
+    page = request.args.get("page", 0, type=int)
+    per_page=3
+    per_row=1
+    row_count=int(per_page/per_row)
+    start_idx=per_page*page
+    end_idx=per_page*(page+1)
+    data = DB.get_review_byItemName(name) #read the table
+    item_counts = len(data)
+    data = dict(list(data.items())[start_idx:end_idx])
+    tot_count = len(data)
+
+    for i in range(row_count):#last row
+        if (i == row_count-1) and (tot_count%per_row != 0):
+            locals()['data_{}'.format(i)] = dict(list(data.items())[i*per_row:])
+        else: 
+            locals()['data_{}'.format(i)] = dict(list(data.items())[i*per_row:(i+1)*per_row])
+    return render_template(
+        "/all_item_review.html",
+        datas=data.items(),
+        row1=locals()['data_0'].items(),
+        row2=locals()['data_1'].items(),
+        row3=locals()['data_2'].items(),
+        limit=per_page,
+        page=page,
+        page_count=int((item_counts/per_page)+1),
+        total=item_counts)
+
+#좋아요 기능 백엔드 연결
+@application.route('/show_heart/<name>/', methods=['GET'])
+def show_heart(name):
+    my_heart = DB.get_heart_byname(session['id'],name)
+    return jsonify({'my_heart': my_heart})
+ 
+@application.route('/like/<name>/', methods=['POST'])
+def like(name):
+    my_heart = DB.update_heart(session['id'],'Y',name)
+    return jsonify({'msg': '좋아요 완료!'})
+@application.route('/unlike/<name>/', methods=['POST'])
+def unlike(name):
+    my_heart = DB.update_heart(session['id'],'N',name)
+    return jsonify({'msg': '안좋아요 완료!'})
+
 
 #동적 라우팅
 @application.route('/dynamicurl/<varible_name>/')

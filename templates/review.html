@@ -15,42 +15,47 @@
     <div class="container">
         <h2 id="review_h2">리뷰 작성</h2>
         <hr style="border: none; border-top: 1px solid #ddd; margin: 10px 0;">
-
-        <div class="rating-container">
-            <p>이 서비스 어때요?</p>
+        <form class="mb-3" name="myform" id="myform" method="post" action="/reg_review" enctype="multipart/form-data">
+            <!--별점: css 적용이 안됐음!!!!! 수정할 것-->
+            <div class="rating-container">
+                <p>별점을 선택해 주세요</p>
+                <fieldset> 
+                    <input class="star" type="radio" name="reviewStar" value="5" id="rate1"><label for="rate1">★</label>
+                    <input class="star" type="radio" name="reviewStar" value="4" id="rate2"><label for="rate2">★</label>
+                    <input class="star" type="radio" name="reviewStar" value="3" id="rate3"><label for="rate3">★</label>
+                    <input class="star" type="radio" name="reviewStar" value="2" id="rate4"><label for="rate4">★</label>
+                    <input class="star" type="radio" name="reviewStar" value="1" id="rate5"><label for="rate5">★</label>
+                </fieldset>
+                <!-- 회색 네모 박스 -->
+                <div class="gray-box" id="imagePreviewContainer"></div>
+            </div>
+            <!--사진 첨부-->
+            <div class="image-upload-container">
+                <img id="imagePreview" alt="사진 미리보기">
+                <input type="file" id="image" name="file" accept="image/*" onchange="previewImage(event)"
+                    class="file-button">
+            </div>
+            <!--상품-->
             <div>
-                <span class="star" onclick="setRating(1)">★</span>
-                <span class="star" onclick="setRating(2)">★</span>
-                <span class="star" onclick="setRating(3)">★</span>
-                <span class="star" onclick="setRating(4)">★</span>
-                <span class="star" onclick="setRating(5)">★</span>
-                <span id="starText">(5)</span>
+                <input type="text" name="name" id="name" value="{{name}}" placeholder="{{name}}"><br><br>
+            </div>
+            <!--제목-->
+            <div>
+                <input type="text" id="title" name="title"  value="" maxlength="50" placeholder="제목 (50자 이내)">
+            </div>
+            <!--상세리뷰-->
+            <div>
+                <textarea id="content" type="text" name="reviewContents" maxlength="500" placeholder="내용 (500자 이내)"></textarea>
             </div>
 
-            <!-- 회색 네모 박스 -->
-            <div class="gray-box" id="imagePreviewContainer"></div>
+            <!--이건 뭐지
+            <input type="hidden" id="rating" value="5">-->
 
-        </div>
-
-        <div class="image-upload-container">
-            <img id="imagePreview" alt="사진 미리보기">
-            <input type="file" id="image" name="image" accept="image/*" onchange="previewImage(event)"
-                class="file-button">
-        </div>
-
-        <div>
-            <input type="text" id="title" maxlength="50" placeholder="제목 (50자 이내)">
-        </div>
-
-        <div>
-            <textarea id="content" maxlength="500" placeholder="내용 (500자 이내)"></textarea>
-        </div>
-
-        <input type="hidden" id="rating" value="5">
-
-        <div id="submit_div">
-            <button class="submit-button" onclick="submitReview()">작성 완료</button>
-        </div>
+            <!--제출 버튼-->
+            <div id="submit_div">
+                <input type="submit" class="submit-button"  value="작성완료">
+            </div>
+        </form>
     </div>
 </div>
 <script src="path/to/main.js"></script>
