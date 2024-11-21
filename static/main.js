@@ -376,6 +376,65 @@ function addMessage(text, sender) {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
+function addBotOptions() {
+    const chatMessages = document.getElementById("chatMessages");
+
+    const optionsDiv = document.createElement("div");
+    optionsDiv.classList.add("message", "bot");
+
+    const options = [
+        "1. 배송 문의",
+        "2. 취소 및 환불 문의",
+        "3. 교환 및 반품 문의",
+        "4. 기타 문의"
+    ];
+
+    options.forEach((option, index) => {
+        const button = document.createElement("button");
+        button.textContent = option;
+        button.onclick = () => sendMessage(true, option);
+        button.style.display = "block";
+        button.style.margin = "5px 0";
+        button.style.padding = "8px";
+        button.style.border = "1px solid #00462A";
+        button.style.borderRadius = "5px";
+        button.style.backgroundColor = "#CDECDB";
+        button.style.color = "#00462A";
+        button.style.cursor = "pointer";
+        optionsDiv.appendChild(button);
+    });
+
+    chatMessages.appendChild(optionsDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function handleBotResponse(userChoice) {
+    let response;
+    switch (userChoice) {
+        case "1. 배송 문의":
+            response = "배송에 관한 문의는 [배송 조회 페이지](#)를 확인하세요.";
+            break;
+        case "2. 취소 및 환불 문의":
+            response = "취소 및 환불 절차는 [환불 정책](#) 페이지에서 확인할 수 있습니다.";
+            break;
+        case "3. 교환 및 반품 문의":
+            response = "교환 및 반품 관련 안내는 [교환/반품 안내](#)를 확인하세요.";
+            break;
+        case "4. 기타 문의":
+            response = "기타 문의는 고객센터로 연락 바랍니다.";
+            break;
+        default:
+            response = "죄송합니다. 정확히 선택해주세요.";
+    }
+
+    addMessage(response, "bot");
+
+    // 다시 옵션 출력
+    setTimeout(() => {
+        addBotOptions();
+    }, 1000);
+}
+
 //소윤님 js
  // 카테고리 옵션 목록
  const categories = {
