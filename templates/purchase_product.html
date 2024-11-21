@@ -1,40 +1,77 @@
-
-{% extends "header.html" %}
+{% extends "header.html" %} 
 {% block check %}
-<input type="checkbox" id="switch" class="switch-input" onclick="location.href='main_service.html'">
-{% endblock check %}
+{% endblock check %} 
+
 {% block section %}
 {% include 'nav_product.html' %}
-<section id="purchase_r">
-<div class="container">
-    <h3>주문 내역 확인</h3>
 
-    <!-- 상품 박스 -->
-    <div class="product-box" id="product1" data-price="10000">
-        <div class="product-details">
-            <img src="https://via.placeholder.com/60" alt="상품 이미지">
-            <div class="product-info">
-                <h4>상품명</h4>
-                <p>가격: 10,000원</p>
-                <div class="quantity-control">
-                    <button onclick="decreaseQuantity1('quantity1', 10000)">-</button>
-                    <span id="quantity1">1</span>
-                    <button onclick="increaseQuantity1('quantity1', 10000)">+</button>
-                </div>
-            </div>
-        </div>
-        <span class="remove-btn" onclick="removeProduct1('product1')">x</span>
-    </div>
+<section id="purchase_r" class="section">
+   <div class="container">
+       <h3>주문 내역 확인</h3>
 
-    <div class="finalprice">
-        <h3>최종 결제 금액 : </h3>
-        <span class="product-price" id="finalPrice1"> 원</span>
-    </div>
+       <div id="product1" class="product-box" data-price="10000">
+           <div class="product-details">
+               <img src="https://via.placeholder.com/60" alt="상품 이미지">
 
-    <!-- 결제하기 버튼 -->
-    <button class="checkout-btn" onclick="redirectToPayment()">결제하기</button>
+               <div class="product-info">
+                   <h4>상품명</h4>
+                   <p>가격: 10,000원</p>
 
-</div>
-<script src="path/to/main.js"></script>
+                   <div class="quantity-control">
+                       <button onclick="decrementQuantity('quantity1')">-</button>
+                       <span id="quantity1">1</span>
+                       <button onclick="incrementQuantity('quantity1')">+</button>
+                   </div>
+               </div>
+           </div>
+
+           <button class="remove-btn" onclick="removeProduct('product1')">x</button>
+       </div>
+
+       <div class="finalprice">
+           <h3>최종 결제 금액 : </h3>
+           <span class="product-price" id="finalPrice1"> 원</span>
+       </div>
+
+       <form action="/payment" method="POST">
+        <input type="hidden" name="amount" id="finalPrice" value="">
+        <button type="submit" class="checkout-btn">결제하기</button>
+    </form>
+   </div>
 </section>
+
+<script>
+function updateTotalPrice() {
+   const quantity = parseInt(document.getElementById('quantity1').textContent);
+   const price = parseInt(document.getElementById('product1').dataset.price);
+   const total = quantity * price;
+   document.getElementById('finalPrice1').textContent = total.toLocaleString() + ' 원';
+   document.getElementById('finalPrice').value = total;
+}
+
+function incrementQuantity(id) {
+   const elem = document.getElementById(id);
+   elem.textContent = parseInt(elem.textContent) + 1;
+   updateTotalPrice();
+}
+
+function decrementQuantity(id) {
+   const elem = document.getElementById(id);
+   const currentValue = parseInt(elem.textContent);
+   if (currentValue > 1) {
+       elem.textContent = currentValue - 1;
+       updateTotalPrice();
+   }
+}
+
+function removeProduct(id) {
+   document.getElementById(id).remove();
+   document.getElementById('finalPrice1').textContent = '0 원';
+   document.getElementById('finalPrice').value = 0;
+}
+
+// 초기 가격 설정
+updateTotalPrice();
+</script>
+
 {% endblock section %}

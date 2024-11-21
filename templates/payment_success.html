@@ -1,0 +1,38 @@
+{% extends "header.html" %}
+{% block section %}
+
+<div class="container mt-5">
+    <div class="payment-success-box text-center">
+        <h2 class="mb-4">결제가 완료되었습니다</h2>
+        
+        <div class="payment-details">
+            <p>주문번호: {{ order_id }}</p>
+            <p>결제금액: {{ amount }}원</p>
+            <p>결제키: {{ payment_key }}</p>
+        </div>
+
+        <div class="mt-4">
+            <a href="{{ url_for('hello') }}" class="btn btn-primary">홈으로 돌아가기</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .payment-success-box {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 2rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f8f9fa;
+    }
+    
+    .payment-details {
+        margin: 2rem 0;
+        padding: 1rem;
+        background: white;
+        border-radius: 4px;
+    }
+</style>
+
+{% endblock %}
