@@ -127,24 +127,28 @@ function continueShopping() {
 window.onload = showDetails(); //첫 화면에서 기본은 상품 상세로 설정
 
 /*******chat js*******/
-function sendMessage() {
-    const input = document.getElementById("userInput");
-    const message = input.value.trim();
-
-    if (message === "") return;
-
+function sendMessage(isButton = false, message = "") {
     const chatMessages = document.getElementById("chatMessages");
 
-    // 사용자 메시지 추가
-    addMessage(message, "user");
+    if (!isButton) {
+        const input = document.getElementById("userInput");
+        message = input.value.trim();
+        if (message === "") return;
+        addMessage(message, "user");
+        input.value = "";
+    } else {
+        addMessage(message, "user");
+    }
 
-    // 예제 봇 응답
+    // 자동 응답 봇 처리
     setTimeout(() => {
-        addMessage("안녕하세요! 판매자입니다! 무엇을 도와드릴까요?", "bot");
+        if (!isButton) {
+            addBotOptions();
+        } else {
+            handleBotResponse(message);
+        }
     }, 500);
 
-    // 입력 필드 초기화
-    input.value = "";
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
@@ -165,6 +169,73 @@ function addMessage(text, sender) {
 
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
+
+function addBotOptions() {
+    const chatMessages = document.getElementById("chatMessages");
+
+    const optionsDiv = document.createElement("div");
+    optionsDiv.classList.add("message", "bot");
+
+    // 안내 멘트 추가
+    const guideMessage = document.createElement("p");
+    guideMessage.textContent = "안녕하세요! 판매자입니다. 문의사항을 선택해주세요.";
+    guideMessage.style.marginBottom = "10px"; // 버튼과 간격
+    optionsDiv.appendChild(guideMessage);
+
+    const options = [
+        "1. 배송 문의",
+        "2. 취소 및 환불 문의",
+        "3. 교환 및 반품 문의",
+        "4. 기타 문의"
+    ];
+
+    options.forEach((option, index) => {
+        const button = document.createElement("button");
+        button.textContent = option;
+        button.onclick = () => sendMessage(true, option);
+        button.style.display = "block";
+        button.style.margin = "5px 0";
+        button.style.padding = "8px";
+        button.style.border = "1px solid #00462A";
+        button.style.borderRadius = "5px";
+        button.style.backgroundColor = "#CDECDB";
+        button.style.color = "#00462A";
+        button.style.cursor = "pointer";
+        optionsDiv.appendChild(button);
+    });
+
+    chatMessages.appendChild(optionsDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function handleBotResponse(userChoice) {
+    let response;
+    switch (userChoice) {
+        case "1. 배송 문의":
+            response = "배송은 5~7일 내로 시작될 예정입니다. 배송이 시작되면 문자 드리겠습니다.";
+            break;
+        case "2. 취소 및 환불 문의":
+            response = "주문 취소는 발송 시작 전에 가능합니다. 환불 문의는 판매자와의 상담 후에 해주시기 바랍니다.";
+            break;
+        case "3. 교환 및 반품 문의":
+            response = "교환 및 반품은 상품이 사용되지 않은 상태, 온전하게 보전된 상태에서만 가능합니다.";
+            break;
+        case "4. 기타 문의":
+            response = "기타 문의 사항은 아래의 Q&A 게시판을 이용해주시기 바랍니다.";
+            break;
+        default:
+            response = "죄송합니다. 정확히 선택해주세요.";
+    }
+
+    addMessage(response, "bot");
+
+    // 다시 옵션 출력
+    setTimeout(() => {
+        addBotOptions();
+    }, 1000);
+}
+
+
 
 //소윤님 js
 // 카테고리 옵션 목록

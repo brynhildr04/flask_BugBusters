@@ -89,6 +89,10 @@ def view_purchase_product():
     return render_template('purchase_product.html')
 
 #지금 상황이 좀 꼬였는데, view_detail에서 바로 review.html로 넘어가버려서 404가 뜨는 중 
+@application.route('/question_submit.html')
+def view_question_submit():
+    return render_template('question_submit.html')
+
 #리뷰 작성 페이지
 @application.route("/reg_review_init/<name>/")
 def reg_review_init(name):
