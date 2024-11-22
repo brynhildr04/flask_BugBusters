@@ -6,13 +6,50 @@
 {% include 'nav_service.html' %}
 <body>
     <div class="qa-container">
-        <h2 class="qa-header">질문 등록</h2>
-        <form id="questionForm">
-            <label for="questionInput">질문:</label>
-            <textarea id="questionInput" rows="5" style="width: 100%; margin-bottom: 10px;" required></textarea>
+        <h2 class="qa-header">게시물 등록</h2>
+        <form id="postForm">
+            <!-- 게시물 제목 -->
+            <label for="postTitle">제목:</label>
+            <input type="text" id="postTitle" style="width: 100%; margin-bottom: 10px;" required />
+
+            <!-- 질문/답변 선택 -->
+            <label for="postType">유형:</label>
+            <select id="postType" style="width: 100%; margin-bottom: 10px;" required>
+                <option value="question">질문</option>
+                <option value="answer">답변</option>
+            </select>
+
+            <!-- 게시물 내용 -->
+            <label for="postContent">내용:</label>
+            <textarea id="postContent" rows="5" style="width: 100%; margin-bottom: 10px;" required></textarea>
+
+            <!-- 등록 버튼 -->
             <button type="submit" class="qa-actions">등록하기</button>
         </form>
     </div>
+
+    <script>
+        document.getElementById("postForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const title = document.getElementById("postTitle").value.trim();
+            const type = document.getElementById("postType").value;
+            const content = document.getElementById("postContent").value.trim();
+
+            if (!title || !content) {
+                alert("모든 필드를 입력해주세요!");
+                return;
+            }
+
+            // 새로운 게시물 추가
+            const newPost = { title, type, content };
+            localStorage.setItem("newPost", JSON.stringify(newPost)); // 로컬 스토리지에 임시 저장
+
+            alert("게시물 등록이 완료되었습니다!");
+            location.href = "{{ url_for('view_chat_service') }}"; // chat_service.html로 이동
+        });
+    </script>
 </body>
 {% endblock section %}
+
 
