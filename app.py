@@ -169,6 +169,7 @@ def logout_user():
 def reg_item_submit_post():
     data = {
         "title": request.form.get("title", ""),
+        "price": request.form.get("price", ""),
         "product_type": request.form.get("product_type", ""),
         "category": request.form.get("category", ""),
         "description": request.form.get("description", "")
