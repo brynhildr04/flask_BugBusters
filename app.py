@@ -125,6 +125,8 @@ def view_itemReview_detail(name, key):
 
 #전체 상품 조회 페이지
 @application.route("/all_product.html")
+def view_all_products():
+    return render_template("all_product.html")
 
 
 #전체 서비스 조회 페이지
@@ -290,10 +292,26 @@ def unlike(name):
     return jsonify({'msg': '안좋아요 완료!'})
 
 
+#검색화면
+@application.route('/search', methods=['GET'])
+def search():
+    query = request.args.get('query', '')  # 검색어 가져오기
+    results = [{'name': query, 'img_path': 'default.jpg'}] if query else []  # 임시 검색 결과
+    total = len(results)  # 검색 결과 개수
+
+    items_per_page = 10  # 한 페이지에 표시할 항목 수
+    page_count = (total // items_per_page) + (1 if total % items_per_page > 0 else 0)  # 페이지 수 계산
+
+    return render_template('search.html', query=query, total=total, products=results, page_count=page_count)
+
+
+
+
+
 #동적 라우팅
 @application.route('/dynamicurl/<varible_name>/')
 def DynamicUrl(varible_name):
     return str(varible_name)
 
-if __name__=="__main__":
+if __name__ == "__main__":
     application.run(host='0.0.0.0', debug=True)
