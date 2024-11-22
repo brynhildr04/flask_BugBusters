@@ -164,7 +164,7 @@ def logout_user():
     session.clear()
     return redirect(url_for('view_list')) #교수님 수업 파일은 상품 리스트가 home 인데 우리는 홈화면이 따로 있으니까... hello()로 고쳐야 할 수도
 
-#제품등록 백엔드 연결
+#제품등록 백엔드 연결 #지금 누가 등록했는지에 대한 게 없는데, 만약 추가해야 한다면 로그인이 반드시 필요하다는 것
 @application.route("/submit_item_post", methods=['POST'])
 def reg_item_submit_post():
     data = {
