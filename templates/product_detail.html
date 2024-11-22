@@ -3,6 +3,57 @@
 <input type="checkbox" id="switch" class="switch-input" onclick="location.href='main_service.html'">
 {% endblock check %}
 {% block section %}
+<!--좋아요를 위한 javascript-->
+<script>
+    function showHeart() {
+        $.ajax({
+            type: 'GET',
+            url: '/show_heart/{{name}}/',
+            data: {},
+            success: function (response) {
+                let my_heart = response['my_heart'];
+                if (my_heart['interested'] == 'Y') {
+                    $("#heart").css("color", "red");
+                    $("#heart").attr("onclick", "unlike()");
+                }
+                else {
+                    $("#heart").css("color", "grey");
+                    $("#heart").attr("onclick", "like()");
+                }
+                //alert("showheart!")
+            }
+        });
+    }
+    function like() {
+        $.ajax({
+            type: 'POST',
+            url: '/like/{{name}}/',
+            data: {
+                interested: "Y"
+            },
+            success: function (response) {
+                alert(response['msg']);
+                window.location.reload()
+            }
+        });
+    }
+    function unlike() {
+        $.ajax({
+            type: 'POST',
+            url: '/unlike/{{name}}/',
+            data: {
+                interested: "N"
+            },
+            success: function (response) {
+                alert(response['msg']);
+                window.location.reload()
+            }
+        });
+    }
+    $(document).ready(function () {
+        showHeart();
+    });
+</script>
 {% include 'nav_product.html' %}
 <div class="product-detail-container">
     <!-- 상품 이미지 섹션 -->
@@ -10,44 +61,42 @@
         <div id="slider" class="slider-container">
             <button class="slider-button prev" id="prev">&lt;</button>
             <div class="slider-content">
-  <img src="/static/images/image1.png" alt="이미지 1" class="slide active">
-  <img src="/static/images/image2.png" alt="이미지 2" class="slide">
-  <img src="/static/images/image3.png" alt="이미지 3" class="slide">
-  <img src="/static/images/image4.png" alt="이미지 4" class="slide">
-  <img src="/static/images/image5.png" alt="이미지 5" class="slide">
+                <img src="../../static/images/{{data.img_path}}" alt="이미지 1" class="slide active">
             </div>
             <button class="slider-button next" id="next">&gt;</button>
         </div>
-</div>
+    </div>
 
     <!-- 상품 정보 섹션 -->
     <div class="product-info-section">
         <div class="product-category">
-            <span class="category-path">제품 ></span>
-            <span class="category-current">식품</span>
-  </div>
+            <span class="category-path">{{data.product_type}} ></span>
+            <span class="category-current">{{data.category}}</span>
+        </div>
 
-        <h1 class="product-title">Item Example</h1>
+        <h1 class="product-title">{{data.title}}</h1>
 
         <div class="product-rating">
             <span class="stars">★★★★★</span>
             <span class="rating-score">(5)</span>
             <span class="review-count">리뷰(99+)</span>
-  </div>
+        </div>
 
         <div class="product-price">
-            <span class="price">10,000원</span>
-  </div>
+            <span class="price">10,000원</span> <!--상품 등록 화면에서 가격 입력받아야 함...-->
+        </div>
 
         <div class="quantity-selector">
             <label for="quantity">수량:</label>
             <input type="number" id="quantity" name="quantity" min="1" max="9" value="1">
-  </div>
+        </div>
 
         <div class="total-price">
             <span>Total</span>
-            <span class="total-amount">20,000원 (2개)</span>
-  </div>
+            <span class="total-amount">20,000원 (2개)</span> <!--여기도 마찬가지로-->
+        </div>
+        <!--좋아요 버튼-->
+        <i class="fa fa-heart" id="heart"></i>
 
         <div class="product-buttons">
             <button class="button cart-button" onclick="addToCart1(); location.href='cart_product.html';">
@@ -66,50 +115,53 @@
         <button class="tab active" id="detailsTab" onclick="showDetails()">상세 설명</button>
         <button class="tab" id="reviewsTab" onclick="showReviews()">리뷰(99+)</button>
         <button class="tab" id="sellerTab" onclick="location.href='chat_product.html'">판매자 문의</button>
-  </div>
+    </div>
 
     <div id="detailsContent" class="tab-content active-content">
         <div class="product-description">
-            수제 캔들입니다. 향 좋고 환경에도 좋습니다! 
+            수제 캔들입니다. 향 좋고 환경에도 좋습니다!
             <!-- 상세 설명 내용 -->
-  </div>
-</div>
+            {{data.description}}
+        </div>
+    </div>
 
     <div id="reviewsContent" class="tab-content">
-      <div class="review-section">
-           <!-- 리뷰 작성하기 버튼 -->
-<div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
-  <a href="review.html" style="text-decoration: none;">
-      <button style="width: 200px; height: 60px; background-color: #A4C1AE; color: black; font-size: 16px; font-family: Inter; font-weight: 700; border: none; border-radius: 5px; cursor: pointer;">
-          리뷰 작성하기
-      </button>
-  </a>
-</div>
+        <div class="review-section">
+            <!-- 리뷰 작성하기 버튼 -->
+            <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+                <button
+                    style="width: 200px; height: 60px; background-color: #A4C1AE; color: black; font-size: 16px; font-family: Inter; font-weight: 700; border: none; border-radius: 5px; cursor: pointer;"
+                    onclick="location.href='/reg_review_init/{{name}}'">
+                    리뷰 작성하기
+                </button>
 
-        
-        <!-- 리뷰 요약 정보 -->
+            </div>
 
-          <div class="review-summary">
-              <div class="average-rating">
-                  <div class="rating-number">4.8</div>
-                  <div class="stars-container">
-                      <span>★★★★★</span>
-                  </div>
-                  <div class="total-reviews">리뷰 99+개</div>
-  </div>
-</div>
 
-          <!-- 리뷰 목록 -->
-          <div id="reviewsContainer">
-              <!-- 리뷰들이 여기에 동적으로 추가됨 -->
-          </div>
-  
-          <!-- 리뷰 작성 버튼 -->
-          <button class="write-review-btn" onclick="location.href='review.html'">
-              ✎
-          </button>
-      </div>
-  </div>
+            <!-- 리뷰 요약 정보 --><!--이거 빼자 구현하기 너무 귀찮다
+            <div class="review-summary"> 
+                <div class="average-rating">
+                    <div class="rating-number">4.8</div>
+                    <div class="stars-container">
+                        <span>★★★★★</span>
+                    </div>
+                    <div class="total-reviews">리뷰 99+개</div>
+                </div>
+            </div>-->
+
+            <!-- 리뷰 목록 -->
+            <div id="reviewsContainer">
+                <!-- 리뷰들이 여기에 동적으로 추가됨 -->
+                <iframe src="/{{name}}/all_item_review" style="width: 100%; border: none;"
+                    title="Iframe for item review"></iframe>
+            </div>
+
+            <!-- 리뷰 작성 버튼 -->
+            <button class="write-review-btn" onclick="location.href='review.html'">
+                ✎
+            </button>
+        </div>
+    </div>
 </div>
 <script src="path/to/main.js"></script>
 {% endblock section %}

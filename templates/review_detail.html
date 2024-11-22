@@ -14,24 +14,28 @@
     <div id="review_detail_div">
         <h2 id="review_detail_h2">상품 리뷰 상세</h2>
 
-        <!-- 이미지 자리 표시 -->
-        <div id="review_detail_image"></div>
+        <!-- 이미지 자리 표시: 이미지가 크면 css가 다 깨지는거 수정해야함!!!!-->
+        <div id="review_detail_image"><img src="../../static/images/{{data.img_path}}"></div>
 
         <!-- 별점 및 사용자 정보 -->
         <div id="review_user_info">
-            <span id="user_star">★ ★ ★ ★ ★</span>
-            <span id="user_score">(5)</span>
-            <span id="user_id">anj*** | 2024.10.16.</span>
+            <span id="user_star">
+                {% set value=data.rate | int %} <!--jinja에서 type conversion-->
+                {% for i in range(value) %}
+                ★
+                {% endfor %}
+                {% for i in range(5-value) %}
+                ☆
+                {% endfor %}
+            </span>
+            <span id="user_score">({{data.rate}})</span>
+            <span id="user_id">{{data.user_id}} | {{data.date}}</span><!--여기는 사용자ID 만으로... 근데 로그인 안해도 리뷰쓸 수 있는데 이게 의미가 있나?-->
         </div>
 
         <!-- 리뷰 텍스트 -->
         <div class="revie_text">
-            <p id="review_title">캔들 완전 추천드려요!!!</p>
-            <p id="review_text">가족들에게 선물로 주려고 많이 샀습니다!!<br>
-                사용해본 캔들 중에 향이 가장 좋은 것 같아요~~<br>
-                녹을 때도 정말 예쁘게 녹아서 보고 있으면 힐링됩니다<br>
-                다른 향도 판매해주시면 바로 구매할게요!!!!<br>
-                너무 좋은 상품 만들어주셔서 감사합니다!</p>
+            <p id="review_title">{{data.title}}</p>
+            <p id="review_text">{{data.review}}
         </div>
     </div>
 </div>
