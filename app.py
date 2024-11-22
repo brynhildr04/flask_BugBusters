@@ -256,10 +256,14 @@ def view_product_review(name):
     start_idx=per_page*page
     end_idx=per_page*(page+1)
     data = DB.get_review_byItemName(name) #read the table
+    if(data==None):
+        return render_template(
+            "/all_item_review.html",
+            total=0
+        )
     item_counts = len(data)
     data = dict(list(data.items())[start_idx:end_idx])
     tot_count = len(data)
-
     for i in range(row_count):#last row
         if (i == row_count-1) and (tot_count%per_row != 0):
             locals()['data_{}'.format(i)] = dict(list(data.items())[i*per_row:])
