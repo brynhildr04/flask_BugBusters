@@ -13,6 +13,27 @@
         <button onclick="sendMessage()">보내기</button>
     </div>
 </div>
-<script src="path/to/main.js"></script>
 </section>
+
+<section id="qa_r">
+    <div class="qa-container">
+        <div class="qa-header">Q&A 게시판</div>
+        <div class="qa-actions">
+            <button onclick="location.href='question_submit.html'">질문 등록하기</button>
+        </div>
+        <div class="qa-list" id="qaList">
+            <!-- 예시 질문 -->
+            <div class="qa-item">
+                <div class="qa-question"><strong>Q:</strong> 배송은 얼마나 걸리나요?</div>
+                <div class="qa-answer"><strong>A:</strong> 평균적으로 5~7일이 소요됩니다.</div>
+            </div>
+            <div class="qa-item">
+                <div class="qa-question"><strong>Q:</strong> 환불은 어떻게 진행되나요?</div>
+                <div class="qa-answer"><strong>A:</strong> 발송 전 주문 취소 가능합니다. 발송 후에는 상담이 필요합니다.</div>
+            </div>
+            <!-- 실제 데이터는 JS로 로드 -->
+        </div>
+    </div>
+</section>
+
 {% endblock section %}

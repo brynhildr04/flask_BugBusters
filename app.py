@@ -90,6 +90,10 @@ def view_purchase_service():
 def view_purchase_product():
     return render_template('purchase_product.html')
 
+@application.route('/question_submit.html')
+def view_question_submit():
+    return render_template('question_submit.html')
+
 #리뷰 작성 페이지
 @application.route("/review.html")
 def review_write():

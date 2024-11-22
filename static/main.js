@@ -431,7 +431,7 @@ function handleBotResponse(userChoice) {
             response = "교환 및 반품은 상품이 사용되지 않은 상태, 온전하게 보전된 상태에서만 가능합니다.";
             break;
         case "4. 기타 문의":
-            response = "기타 문의 사항을 입력해주세요.";
+            response = "기타 문의 사항은 밑의 Q&A 게시판을 이용해주시기 바랍니다.";
             break;
         default:
             response = "죄송합니다. 정확히 선택해주세요.";
@@ -444,6 +444,60 @@ function handleBotResponse(userChoice) {
         addBotOptions();
     }, 1000);
 }
+
+//Q&A js
+const qaList = [
+    { question: "배송은 얼마나 걸리나요?", answer: "평균적으로 5~7일이 소요됩니다." },
+    { question: "환불은 어떻게 진행되나요?", answer: "발송 전 주문 취소 가능합니다. 발송 후에는 상담이 필요합니다." },
+];
+
+// Q&A 목록 로드
+function loadQA() {
+    const qaContainer = document.getElementById("qaList");
+    qaContainer.innerHTML = ""; // 기존 데이터 초기화
+    qaList.forEach((qa) => {
+        const qaItem = document.createElement("div");
+        qaItem.classList.add("qa-item");
+
+        const question = document.createElement("div");
+        question.classList.add("qa-question");
+        question.innerHTML = `<strong>Q:</strong> ${qa.question}`;
+
+        const answer = document.createElement("div");
+        answer.classList.add("qa-answer");
+        answer.innerHTML = `<strong>A:</strong> ${qa.answer}`;
+
+        qaItem.appendChild(question);
+        qaItem.appendChild(answer);
+        qaContainer.appendChild(qaItem);
+    });
+}
+
+// 초기화
+document.addEventListener("DOMContentLoaded", () => {
+    loadQA();
+});
+
+//질문 등록하기
+document.getElementById("questionForm").addEventListener("submit", (e) => {
+    e.preventDefault(); // 폼 제출 동작 방지
+    const question = document.getElementById("questionInput").value;
+
+    if (question.trim() === "") {
+        alert("질문을 입력하세요!"); // 빈 입력 방지
+        return;
+    }
+
+    // 새로운 질문을 Q&A 목록에 추가
+    qaList.push({ question, answer: "답변 대기 중입니다." });
+
+    // 사용자에게 알림
+    alert("질문이 성공적으로 등록되었습니다!");
+
+    // 메인 페이지로 리다이렉트
+    location.href = "path/to/chat_service.html"; // Flask에서 "/"는 chat_service.html 페이지로 연결
+});
+
 
 //소윤님 js
  // 카테고리 옵션 목록

@@ -420,6 +420,128 @@ hr {
     background-color: #004d26;
 }
 
+/*회원가입*/
+
+#signup {
+    margin-bottom: 10px; /* 제목과 테이블 사이 간격 */
+}
+
+hr {
+    margin: 10px 0; /* 수평선 위아래 간격 줄이기 */
+}
+
+/*회원가입 테이블*/
+#signup_table{
+    width: 100%;
+    margin:0;
+}
+
+#signup_table th{
+    text-align: left;
+    padding-right: 20px;
+    width: 100px;
+}
+
+.row.signup {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding-top: 20px;
+}
+
+.column.middle.signup {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+
+/*입력 필드 라벨*/
+.data_name {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+/* 입력 필드 */
+.data_input.signup {
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #f8f8f8;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.data_input.signup:focus {
+    border-color: #006633;
+    background-color: white;
+    outline: none;
+}
+
+.data_input.email {
+    width: 40%;
+    height: 48px;
+    padding: 0 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #f8f8f8;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.data_input.email:focus {
+    border-color: #006633;
+    background-color: white;
+    outline: none;
+}
+
+.data_input.date {
+    width: 28%;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #f8f8f8;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.data_input.date:focus {
+    border-color: #006633;
+    background-color: white;
+    outline: none;
+}
+
+#signup_table tr {
+    margin: 0; /* 행 간 간격 제거 */
+    padding: 0; /* 행 내부 간격 제거 */
+}
+
+/* 회원가입 버튼 */
+#signup_btn.submit_btn {
+    width: 450px;  /* 241108v1. 버튼 크기 조정 */
+    height: 48px;
+    background-color: #006633;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 20px auto;
+    display: block;     /* block 요소로 설정 */
+}
+
+#signup_btn.submit_btn:hover {
+    background-color: #004d26;
+}
 /* 하단 링크 */
 
 /* 하단 링크 테이블 추가 */
@@ -980,14 +1102,12 @@ footer {
     background-color: #f9f9f9;
     color: #000000;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    /* 세로 중앙 정렬 */
-    align-items: center;
-    /* 가로 중앙 정렬 */
-    padding-top: 20px;
+    flex-direction: column; /* 상하로 배치 */
+    align-items: center; /* 가로 중앙 정렬 */
+    padding: 20px;
     height: 100vh;
     margin: 0;
+    gap: 20px; /* h1과 content 간격 */
 }
 
 #upload_result h1 {
@@ -1003,6 +1123,21 @@ footer {
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+}
+
+#upload_result .product-info-container {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #000000;
+    display: flex;
+    flex-direction: row;
+    justify-content: center; /* 세로 중앙 정렬 */
+    align-items: center; /* 가로 중앙 정렬 */
+    gap: 20px; /*이미지와 텍스트 간격*/
+    padding-top: 20px;
+    height: 100vh;
+    margin: 0;
 }
 
 #upload_result .product-info {
@@ -1013,7 +1148,7 @@ footer {
     max-width: 821px;
     /* 고정 너비 대신 최대 너비 사용 */
     width: 100%;
-    text-align: center;
+    text-align: left;
 }
 
 #upload_result .product-info p {
@@ -1144,13 +1279,15 @@ footer {
 #chat_r {
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    align-items: flex-start; /* 화면 위쪽으로 정렬 */
+    height: 80vh; /* 전체 높이를 줄여 위로 이동 */
+    margin-bottom: 20px; /* Q&A와 간격 추가 */
 }
 
 #chat_r .chat-container {
+    margin-top: 100px; /* 페이지 상단에서 약간의 간격 */
     width: 700px;
-    height: 800px;
+    height: 500px; /* 높이를 줄여 Q&A가 더 가깝게 보이도록 조정 */
     max-width: 90%;
     background-color: #ffffff;
     border-radius: 10px;
@@ -1238,6 +1375,124 @@ footer {
 
 #chat_r .chat-input button:hover {
     background-color: #CDECDB;
+} 
+
+/********Q&A css**********/
+/* Q&A Section Styles */
+#qa_r {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Q&A도 위쪽 정렬 */
+    margin-top: -150px; /* 위 간격을 제거해 `#chat_r` 바로 밑으로 이동 */
+}
+
+.qa-container {
+    width: 700px;
+    height: 500px; /* Q&A 높이를 줄여 자연스러운 배치 */
+    max-width: 90%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.qa-header {
+    background-color: #00462A;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 5px 5px 0 0;
+}
+
+.qa-actions {
+    margin: 10px 0;
+    text-align: right;
+}
+
+.qa-actions button {
+    background-color: #00462A;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.qa-actions button:hover {
+    background-color: #CDECDB;
+    color: #00462A;
+}
+
+.qa-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.qa-item {
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.qa-question {
+    font-weight: bold;
+    color: #00462A;
+    margin-bottom: 5px;
+}
+
+.qa-answer {
+    font-style: italic;
+    color: #555;
+}
+
+/*******question_submit*******/
+#questionForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 가운데 정렬 */
+    justify-content: center;
+    width: 100%; /* 폼 전체 너비 */
+    max-width: 500px; /* 최대 너비 제한 */
+    margin: 100px; /* 위쪽에 여백 추가 (100px) */
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 질문 입력 텍스트 박스 */
+#questionInput {
+    width: 100%; /* 입력 박스 너비 */
+    padding: 10px; /* 텍스트 박스 안쪽 여백 */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    resize: none; /* 크기 조절 불가능 */
+}
+
+/* 등록하기 버튼 */
+#questionForm button.qa-actions {
+    margin-top: 15px; /* 버튼 위쪽 여백 */
+    background-color: #00462A;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#questionForm button.qa-actions:hover {
+    background-color: #CDECDB;
+    color: #00462A;
 }
 
 /********purchase css*******/
