@@ -140,6 +140,10 @@ def view_purchase_product():
     return render_template('purchase_product.html')
 
 #지금 상황이 좀 꼬였는데, view_detail에서 바로 review.html로 넘어가버려서 404가 뜨는 중 
+@application.route('/question_submit.html')
+def view_question_submit():
+    return render_template('question_submit.html')
+
 #리뷰 작성 페이지
 @application.route("/reg_review_init/<name>/")
 def reg_review_init(name):
@@ -176,6 +180,8 @@ def view_itemReview_detail(name, key):
 
 #전체 상품 조회 페이지
 @application.route("/all_product.html")
+def view_all_products():
+    return render_template("all_product.html")
 
 
 #전체 서비스 조회 페이지
@@ -215,7 +221,7 @@ def logout_user():
     session.clear()
     return redirect(url_for('view_list')) #교수님 수업 파일은 상품 리스트가 home 인데 우리는 홈화면이 따로 있으니까... hello()로 고쳐야 할 수도
 
-#제품등록 백엔드 연결
+#제품등록 백엔드 연결 #지금 누가 등록했는지에 대한 게 없는데, 만약 추가해야 한다면 로그인이 반드시 필요하다는 것
 @application.route("/submit_item_post", methods=['POST'])
 def reg_item_submit_post():
     data = {
@@ -305,10 +311,14 @@ def view_product_review(name):
     start_idx=per_page*page
     end_idx=per_page*(page+1)
     data = DB.get_review_byItemName(name) #read the table
+    if(data==None):
+        return render_template(
+            "/all_item_review.html",
+            total=0
+        )
     item_counts = len(data)
     data = dict(list(data.items())[start_idx:end_idx])
     tot_count = len(data)
-
     for i in range(row_count):#last row
         if (i == row_count-1) and (tot_count%per_row != 0):
             locals()['data_{}'.format(i)] = dict(list(data.items())[i*per_row:])
@@ -341,13 +351,26 @@ def unlike(name):
     return jsonify({'msg': '안좋아요 완료!'})
 
 
+#검색화면
+@application.route('/search', methods=['GET'])
+def search():
+    query = request.args.get('query', '')  # 검색어 가져오기
+    results = [{'name': query, 'img_path': 'default.jpg'}] if query else []  # 임시 검색 결과
+    total = len(results)  # 검색 결과 개수
+
+    items_per_page = 10  # 한 페이지에 표시할 항목 수
+    page_count = (total // items_per_page) + (1 if total % items_per_page > 0 else 0)  # 페이지 수 계산
+
+    return render_template('search.html', query=query, total=total, products=results, page_count=page_count)
+
+
+
+
+
 #동적 라우팅
 @application.route('/dynamicurl/<varible_name>/')
 def DynamicUrl(varible_name):
     return str(varible_name)
 
-if __name__=="__main__":
+if __name__ == "__main__":
     application.run(host='0.0.0.0', debug=True)
-
-
-
