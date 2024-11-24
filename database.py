@@ -59,3 +59,92 @@ class DBhandler:
             if value['id'] == id_string:
                 return False
             return True
+    
+    def find_user(self, id_, pw_):
+        users=self.db.child("user").get()
+        target_value=[]
+        for res in users.each():
+            value=res.val()
+            if value['id']==id_ and value['pw']==pw_:
+                return True
+        return False
+    
+    def get_items(self):
+        items=self.db.child("item").get().val()
+        return items 
+    
+    #상품 이름으로 item 테이블에서 정보 가져오기
+    def get_item_byname(self, name):
+        items = self.db.child("item").get()
+        target_value=""
+        print("###########",name)
+        for res in items.each():
+            key_value = res.key()
+            if key_value == name:
+                target_value=res.val()
+        return target_value
+    
+    #리뷰작성 화면
+    def reg_review(self, data, img_path, user_id, date):
+        review_info ={
+            "name": data['name'],
+            "title": data['title'],
+            "rate": data['reviewStar'],
+            "review": data['reviewContents'],
+            "img_path": img_path,
+            "user_id": user_id,
+            "date": date
+        }  
+        self.db.child("item").child(data['name']).child('review').push(review_info)
+        self.db.child("review").child(data['name']).set(review_info)
+        return True
+
+    def get_reviews(self):
+        reviews=self.db.child("review").get().val() #이건 상품 구분 없이 모든 리뷰 가져올 떄 사용하는 코드
+        return reviews
+    
+    #리뷰 이름으로 review 테이블에서 정보 가져오기
+    def get_review_byname(self, name):
+        reviews = self.db.child("review").get()
+        target_value=""
+        print("###########",name)
+        for res in reviews.each():
+            key_value = res.key()
+            if key_value == name:
+                target_value=res.val()
+        return target_value
+    
+    def get_review_byItemName(self, name):
+        reviews=self.db.child("item").child(name).child("review").get().val()
+        return reviews
+
+    #리뷰 키값으로 review 테이블에서 정보 가져오기
+    def get_review_bykey(self, name, key):
+        reviews=self.db.child("item").child(name).child("review").get()
+        target_value=""
+        for res in reviews.each():
+            key_value = res.key()
+            if key_value == key:
+                target_value=res.val()
+        return target_value
+    
+    #좋아요 한 결과 db에 저장
+    def get_heart_byname(self, uid, name):
+        hearts = self.db.child("heart").child(uid).get()
+        target_value=""
+        if hearts.val() == None:
+            return target_value
+        
+        for res in hearts.each():
+            key_value = res.key()
+        
+            if key_value == name:
+                target_value=res.val()
+        return target_value
+        
+    def update_heart(self, user_id, isHeart, item):
+        heart_info ={
+            "interested": isHeart
+        }
+        self.db.child("heart").child(user_id).child(item).set(heart_info)
+        return True
