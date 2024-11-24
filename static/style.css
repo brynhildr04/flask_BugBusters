@@ -325,9 +325,8 @@
 /* 241108v1. 신우림이 주석달고 추가하였음. (제거, 너비설정, 좌우여백추가) */
 .row {
     display: flex;
-    justify-content: center;
-    max-width: 1200px;
-    margin: 40px auto;
+    justify-content: center; /* 자식 요소 수평 중앙 정렬 */
+    align-items: center; /* 자식 요소 수직 중앙 정렬 */
 }
 
 .column.side {
@@ -336,15 +335,16 @@
 }
 
 .column.middle {
-    flex: 0 1 600px;
-    /* 최대 너비 설정 */
+    flex: 0 1 600px; /* 중간 열의 유연한 크기 설정 */
     background: white;
     padding: 40px;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    margin: 0 20px;
-    /* 좌우 여백 추가 */
+    margin: 0 auto; /* 컨테이너 자체 수평 중앙 정렬 */
+    text-align: center; /* 내부 요소 중앙 정렬 */
 }
+
+
 
 /* 로그인 타이틀 */
 #login {
@@ -363,8 +363,8 @@ hr {
 
 /* 로그인 테이블 */
 #login_table {
-    width: 100%;
-    margin: 20px 0;
+    margin: 0 auto; /* 테이블 자체 중앙 정렬 */
+    width: 100%; /* 필요시 조정 가능 */
 }
 
 #login_table th {
@@ -397,11 +397,12 @@ hr {
     background-color: white;
     outline: none;
 }
+.button-container {
+    text-align: center; /* 버튼 중앙 정렬 */
+}
 
-/* 로그인 버튼 */
 #login_btn.submit_btn {
     width: 450px;
-    /* 241108v1. 버튼 크기 조정 */
     height: 48px;
     background-color: #006633;
     color: white;
@@ -410,11 +411,15 @@ hr {
     font-size: 16px;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.3s;
-    margin: 20px auto;
-    display: block;
-    /* block 요소로 설정 */
+    position: relative; /* 부모 요소 기준 */
+    left: 50%; /* 화면의 가로축 중앙으로 이동 */
+    transform: translateX(-50%); /* 중심을 정확히 가로 중앙에 맞춤 */
+    margin-top: 20px; /* 기존 세로 위치 조정 (필요시 수정) */
 }
+
+
+
+
 
 #login_btn.submit_btn:hover {
     background-color: #004d26;
@@ -662,7 +667,10 @@ hr {
     /* side column 제거 */
 }
 
+
 .column.middle {
+    position: relative; /* 자식 요소의 위치 기준 */
+    text-align: center; /* 버튼 및 다른 요소가 중앙 정렬되도록 설정 */
     flex: 0 1 600px;
     /* 최대 너비 설정 */
     background: white;
@@ -1173,17 +1181,10 @@ footer {
     font-weight: bold;
 }
 
-/********aboutus css*******/
-#aboutus_r * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Noto Sans KR', sans-serif;
-}
 
 /********aboutus css*******/
 #aboutus_r * {
-    margin: 0;
+    margin: 40px;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Noto Sans KR', sans-serif;
@@ -1209,19 +1210,12 @@ footer {
 }
 
 #aboutus_r .about-title {
-    font-size: 32px;
-    margin-bottom: 10px;
+    font-size: 36px;
+    margin-bottom: 20px;
+    padding-top: 20px;
     color: #333;
     position: relative;
     display: inline-block;
-}
-
-#aboutus_r .title-underline {
-    width: 964px;
-    /* 길이를 964px로 변경 */
-    height: 1px;
-    background-color: #000;
-    margin: 0 auto 30px;
 }
 
 #aboutus_r .logo-title-container {
@@ -1253,11 +1247,11 @@ footer {
 }
 
 #aboutus_r .description {
-    font-size: 24px;
+    font-size: 28px;
     line-height: 1.6;
     color: #666;
     margin: 0 auto;
-    max-width: 800px;
+    max-width: 1000px;
     word-break: keep-all;
 }
 
@@ -1561,6 +1555,7 @@ footer {
 }
 
 #purchase_r .quantity-control {
+    font-size: 20px;
     display: flex;
     align-items: center;
     margin-top: 5px;
@@ -1587,11 +1582,9 @@ footer {
 }
 
 #purchase_r .finalprice {
-    position: fixed;
-    right: 710px;
-    bottom: 250px;
     background-color: #f9f9f9;
-    padding: 10px;
+    padding-left: 10px;
+    margin-bottom: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -1622,7 +1615,7 @@ footer {
     padding: 10px;
     background-color: #00462A;
     color: white;
-    font-size: 16px;
+    font-size: 20px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
