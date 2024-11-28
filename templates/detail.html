@@ -1,7 +1,4 @@
 {% extends "header.html" %}
-{% block check %}
-<input type="checkbox" id="switch" class="switch-input" onclick="location.href='main_service.html'">
-{% endblock check %}
 {% block section %}
 <!--좋아요를 위한 javascript-->
 <script>
@@ -54,7 +51,13 @@
         showHeart();
     });
 </script>
+
+{% if session['status']=="product" %}
 {% include 'nav_product.html' %}
+{% else %}
+{% include 'nav_service.html' %}
+{% endif %}
+
 <div class="product-detail-container">
     <!-- 상품 이미지 섹션 -->
     <div class="product-images">
@@ -77,13 +80,21 @@
         <h1 class="product-title">{{data.title}}</h1>
 
         <div class="product-rating">
-            <span class="stars">★★★★★</span>
-            <span class="rating-score">(5)</span>
-            <span class="review-count">리뷰(99+)</span>
+            <span class="stars">
+                {% set rate=data.rate | int %}
+                {% for i in range(rate) %}
+                ★
+                {% endfor %}
+                {% for i in range(5-rate) %}
+                ☆
+                {% endfor %}
+            </span>
+            <span class="rating-score">({{data.rate}})</span>
+            <span class="review-count">리뷰({{data.rateNum}})</span>
         </div>
 
         <div class="product-price">
-            <span class="price">10,000원</span> <!--상품 등록 화면에서 가격 입력받아야 함...-->
+            <span class="price">{{data.price}}</span> <!--상품 등록 화면에서 가격 입력받아야 함...-->
         </div>
 
         <div class="quantity-selector">
@@ -93,7 +104,7 @@
 
         <div class="total-price">
             <span>Total</span>
-            <span class="total-amount">20,000원 (2개)</span> <!--여기도 마찬가지로-->
+            <span class="total-amount">{{data.price}}원 (2개)</span> <!--여기는 jquery 사용하면 된다고 함-->
         </div>
         <!--좋아요 버튼-->
         <i class="fa fa-heart" id="heart"></i>
@@ -119,7 +130,6 @@
 
     <div id="detailsContent" class="tab-content active-content">
         <div class="product-description">
-            수제 캔들입니다. 향 좋고 환경에도 좋습니다!
             <!-- 상세 설명 내용 -->
             {{data.description}}
         </div>

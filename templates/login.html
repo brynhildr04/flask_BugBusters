@@ -1,4 +1,7 @@
 {% extends "header.html" %}
+{% block header %}
+{% endblock header %}
+
 {% block section %}
 {% with mesg = get_flashed_messages() %}
 {% if mesg !=[] %}
@@ -55,3 +58,6 @@
     <div class="column side"></div>
 </div>
 {% endblock section %}
+
+{% block footer %}
+{% endblock footer %}

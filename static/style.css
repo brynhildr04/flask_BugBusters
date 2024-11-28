@@ -13,7 +13,7 @@
     align-items: center;
     padding: 1rem 2rem;
     background: white;
-    position: fixed;
+ /*position: fixed 삭제. 얘가 자꾸 아래 애들을 잡아먹음*/
     width: 100%;
     top: 0;
     z-index: 1000;
@@ -332,7 +332,6 @@
 
 .column.side {
     display: none;
-    /* side column 제거 */
 }
 
 .column.middle {
