@@ -2,6 +2,11 @@
 <!--상품 등록에 가격 등록하는게 없음... 어쩌지?-->
 {% extends "header.html" %}
 {% block section %}
+{% with mesg = get_flashed_messages() %}
+{% if mesg !=[] %}
+<script>alert("{{ mesg[0] }}")</script>
+{% endif %}
+{% endwith %}
 <section id="ps_upload">
     <div class="container">
         <h2>상품 등록</h2>
@@ -9,11 +14,13 @@
         <form action="/submit_item_post" method="POST" enctype="multipart/form-data">
             <label for="title">제목 (20자 이내)</label>
             <input type="text" id="title" name="title" maxlength="20" required>
+            <label for="price">가격 (원)</label>
+            <input type="text" id="price" name="price" required>
 
             <div class="dropdowns">
                 <div class="dropdown">
-                        <select id="product_type" name="product_type" onchange="updateCategoryOptions()">
-                        <option value="product">제품</option>
+                        <select id="product_type" name="product_type" onchange="updateCategoryOptions(this)">
+                        <option value="product" selected>제품</option>
                         <option value="service">서비스</option>
                     </select>
                 </div>

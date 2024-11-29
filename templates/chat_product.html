@@ -3,7 +3,11 @@
 <input type="checkbox" id="switch" class="switch-input" onclick="location.href='main_service.html'">
 {% endblock check %}
 {% block section %}
+{% if session['status']=="product" %}
 {% include 'nav_product.html' %}
+{% else %}
+{% include 'nav_service.html' %}
+{% endif %}
 <section id="chat_r">
 <div class="chat-container">
     <div class="chat-header">판매자 문의 채팅</div>

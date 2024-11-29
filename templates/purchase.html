@@ -1,9 +1,11 @@
 {% extends "header.html" %}
-{% block check %}
-<input type="checkbox" id="switch" class="switch-input" checked onclick="location.href='http://127.0.0.1:5000'">
-{% endblock check %}
+
 {% block section %}
+{% if session['status']=="product" %}
+{% include 'nav_product.html' %}
+{% else %}
 {% include 'nav_service.html' %}
+{% endif %}
 <section id="purchase_r">
 <div class="container">
     <h3>주문 내역 확인</h3>

@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="ko">
 
-
 <head>
     {% block head %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ewha Market Project</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="{{ url_for('static', filename='main.js') }}" defer></script>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     {% endblock head %}
 </head>
 
-
 <body>
+    {% block header %} <!--header가 필요 없는 파일은 없앨 수 있게-->
     <header class="header">
         <div class="logo-section">
             <div class="logo">
@@ -21,12 +22,14 @@
                 <span class="logo-text">소소한 이화</span>
             </div>
             <div class="toggle-switch">
-                {% block check %}
-                <input type="checkbox" id="switch" class="switch-input" onclick="location.href='{{ url_for('view_service') }}'">
-                {% endblock check %}
+                {% if session['status']=="service" %}
+                <input type="checkbox" id="switch" class="switch-input" checked>
+                {% else %}
+                <input type="checkbox" id="switch" class="switch-input">
+                {% endif %}
                 <label for="switch" class="switch-label">
-                    <span class="switch-option left">제품</span>
-                    <span class="switch-option right">서비스</span>
+                    <span class="switch-option left" id="switch-left">제품</span>
+                    <span class="switch-option right" id="switch-right">서비스</span>
                 </label>
             </div>
         </div>
@@ -38,23 +41,26 @@
                 </button>
             </form>
         </div>
-        
+
 
 
         <!-- 241107v1. 여기 다시 설정 필요합니다!!!!-->
         <div class="header-icons">
             <a href="상품등록하기.html" class="register-btn">제품 등록하기</a>
-            <a href="http://127.0.0.1:5000" class="icon-btn"><img src="/static/images/home.svg" alt="Home"></a>
+            <a href="main.html" class="icon-btn"><img src="/static/images/home.svg" alt="Home"></a>
             {% if session['id'] %}
-            <a href="profile.html"><img src="/static/images/profile.svg" alt="Profile"></a><b>{{session['id']}}님</b><a href ="/logout">logout</a>
+            <a href="profile.html"><img src="/static/images/profile.svg" alt="Profile"></a><b>{{session['id']}}님</b><a
+                href="/logout">logout</a>
             {% else %}
             <a href="login.html" class="icon-btn"><img src="/static/images/profile.svg" alt="Profile"></a>
             {% endif %}
-            <a href="cart_product.html" class="icon-btn"><img src="/static/images/cart.svg" alt="Cart"></a>
+            <a href="cart.html" class="icon-btn"><img src="/static/images/cart.svg" alt="Cart"></a>
         </div>
     </header>
+    {% endblock header %}
     {% block section %}
     {% endblock section %}
+    {% block footer %} <!--footer 필요 없는 파일은 지울 수 있게-->
     <footer>
         <div class="footer-content">
             <div class="footer-logo">
@@ -66,8 +72,9 @@
             <!--http full name으로 추가하기 !!!!!!!-->
             <div class="footer-links">
                 <a href="aboutus.html">About Us</a>
+                <!--여기 교체 필요
                 <a href="http://127.0.0.1:5000">제품</a>
-                <a href="main_service.html">서비스</a>
+                <a href="main_service.html">서비스</a>-->
 
             </div>
         </div>
@@ -78,6 +85,7 @@
 
         </div>
     </footer>
+    {% endblock footer %}
 </body>
-
+<script src="path/to/main.js"></script>
 </html>
