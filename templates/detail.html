@@ -124,7 +124,7 @@
 <div class="product-tabs">
     <div class="tab-buttons">
         <button class="tab active" id="detailsTab" onclick="showDetails()">상세 설명</button>
-        <button class="tab" id="reviewsTab" onclick="showReviews()">리뷰(99+)</button>
+        <button class="tab" id="reviewsTab" onclick="showReviews()">리뷰({{data.rateNum}})</button>
         <button class="tab" id="sellerTab" onclick="location.href='chat_product.html'">판매자 문의</button>
     </div>
 
@@ -148,16 +148,24 @@
             </div>
 
 
-            <!-- 리뷰 요약 정보 --><!--이거 빼자 구현하기 너무 귀찮다
+            <!-- 리뷰 요약 정보 -->
             <div class="review-summary"> 
                 <div class="average-rating">
-                    <div class="rating-number">4.8</div>
+                    <div class="rating-number">{{data.rate}}</div>
                     <div class="stars-container">
-                        <span>★★★★★</span>
+                        <span>
+                            {% set rate=data.rate | int %}
+                            {% for i in range(rate) %}
+                            ★
+                            {% endfor %}
+                            {% for i in range(5-rate) %}
+                            ☆
+                            {% endfor %}
+                        </span>
                     </div>
-                    <div class="total-reviews">리뷰 99+개</div>
+                    <div class="total-reviews">리뷰 {{data.rateNum}}개</div>
                 </div>
-            </div>-->
+            </div>
 
             <!-- 리뷰 목록 -->
             <div id="reviewsContainer">

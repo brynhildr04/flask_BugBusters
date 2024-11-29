@@ -17,6 +17,7 @@ class DBhandler:
             "description": data['description'],
             "rate": data['rate'],
             "rateNum": data['rateNum'],
+            "price": data['price'],
             "img_path": img_path
         }
         self.db.child("item").child(name).set(item_info) #db에 등록하는 과정
@@ -71,6 +72,47 @@ class DBhandler:
     def get_items(self):
         items=self.db.child("item").get().val()
         return items 
+    
+    #제품/서비스 각각 전체 체품 가져오기
+    def get_items_byproductType(self, category):
+        items=self.db.child("item").get()
+        target_value=[]
+        target_key=[]
+        if(category=="product" or category=="service"):
+            for res in items.each():
+                value=res.val()
+                key_value=res.key()
+                if(value['product_type']==category):
+                    target_value.append(value)
+                    target_key.append(key_value)
+        else:
+            for res in items.each():
+                value=res.val()
+                key_value=res.key()
+                if(value['category']==category):
+                    target_value.append(value)
+                    target_key.append(key_value)
+
+        print("######target_value", target_value)
+        new_dict={}
+        for k, v in zip(target_key, target_value):
+            new_dict[k]=v
+        return new_dict
+    
+    #카테고리별 제품 가져오기
+    def get_items_byCategory(self, data, cate):
+        target_value=[]
+        target_key=[]
+        for res in data.each():
+            value=res.val()
+            key_value=res.key()
+            if(value['category']==cate):
+                target_value.append(value)
+                target_key.append(key_value)
+        new_dict={}
+        for k, v in zip(target_key, target_value):
+            new_dict[k]=v
+        return new_dict
     
     #상품 이름으로 item 테이블에서 정보 가져오기
     def get_item_byname(self, name):

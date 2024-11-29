@@ -3,6 +3,7 @@ from database import DBhandler
 import hashlib
 import os
 import sys
+import math
 from datetime import datetime
 
 application = Flask(__name__)
@@ -193,11 +194,18 @@ def view_list():
     row_count=int(per_page/per_row)
     start_idx=per_page*page #page 인덱스로 start_idx, end_idx 생성
     end_idx=per_page*(page+1)
-    data=DB.get_items()
-    item_counts = len(data) #한 페이지에 start_idx, end_idx 만큼 읽어오기
-    data = dict(list(data.items())[start_idx:end_idx])
-    tot_count=len(data)
 
+    product_type=session['status']
+    data=DB.get_items_byproductType(product_type)
+
+    item_counts = len(data) #한 페이지에 start_idx, end_idx 만큼 읽어오기
+    data = dict(sorted(data.items(), key=lambda x: x[0], reverse=False))
+    item_counts=len(data)
+    if item_counts<=per_page:
+        data=dict(list(data.items())[:item_counts])
+    else:
+        data=dict(list(data.items())[start_idx:end_idx])
+    tot_count=len(data)
     for i in range(row_count):
         if(i==row_count-1) and (tot_count%per_row!=0):
             locals()['data_{}'.format(i)] = dict(list(data.items())[i*per_row:])
@@ -210,8 +218,44 @@ def view_list():
         row2=locals()['data_1'].items(),
         limit=per_page,
         page=page, #현재 페이지 인덱스
-        page_count=int((item_counts/per_page)+1), #페이지 개수
+        page_count=int(math.ceil((item_counts/per_page)+1)), #페이지 개수
         total=item_counts
+        )
+#카테고리별 제품 가져오기
+@application.route("/list/<category>")
+def view_list_category(category):
+    page=request.args.get("page", 0, type=int) #페이지 인덱스 클릭할 때마다 get으로 받아옴
+    per_page=8 #한 화면에 상품 8개
+    per_row=4 #한 열에는 상품 4개
+    row_count=int(per_page/per_row)
+    start_idx=per_page*page #page 인덱스로 start_idx, end_idx 생성
+    end_idx=per_page*(page+1)
+
+    data=DB.get_items_byproductType(category)
+
+    item_counts = len(data) #한 페이지에 start_idx, end_idx 만큼 읽어오기
+    data = dict(sorted(data.items(), key=lambda x: x[0], reverse=False))
+    item_counts=len(data)
+    if item_counts<=per_page:
+        data=dict(list(data.items())[:item_counts])
+    else:
+        data=dict(list(data.items())[start_idx:end_idx])
+    tot_count=len(data)
+    for i in range(row_count):
+        if(i==row_count-1) and (tot_count%per_row!=0):
+            locals()['data_{}'.format(i)] = dict(list(data.items())[i*per_row:])
+        else:
+            locals()['data_{}'.format(i)] = dict(list(data.items())[i*per_row:(i+1)*per_row])
+    return render_template (
+        "/all.html",
+        datas=data.items(),
+        row1=locals()['data_0'].items(),
+        row2=locals()['data_1'].items(),
+        limit=per_page,
+        page=page, #현재 페이지 인덱스
+        page_count=int(math.ceil((item_counts/per_page)+1)), #페이지 개수
+        total=item_counts,
+        category=category
         )
 
 #데이터베이스에서 리뷰 가져오기 (전체) 이건 제출용

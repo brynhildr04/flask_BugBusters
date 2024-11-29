@@ -583,13 +583,14 @@ hr {
 /* All Product 영역 */
 .all-products-container {
     max-width: 1158px;
-    margin: 120px auto 0;
+    margin: 40px auto 0;
     padding: 0 20px;
 }
 
 .page-title {
     font-size: 24px;
     font-weight: bold;
+    margin-top: 20px;
     margin-bottom: 20px;
     text-align: center;
 }
