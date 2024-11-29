@@ -1,3 +1,4 @@
+from datetime import datetime
 import pyrebase
 import json
 class DBhandler:
@@ -148,3 +149,48 @@ class DBhandler:
         }
         self.db.child("heart").child(user_id).child(item).set(heart_info)
         return True
+    
+    #질문 등록 밑 데이터 가져오기
+    # 질문 목록 가져오기
+    def get_qa_posts(self):
+        try:
+            return self.db.child("qaPosts").get().val()
+        except Exception as e:
+            print("Firebase에서 질문 목록을 가져오는 중 오류 발생:", e)
+            return None
+
+    # 질문 추가
+    def add_qa_post(self, title, content, post_type="question"):
+        try:
+            post_id = self.db.child("qaPosts").push({
+                "title": title,
+                "content": content,
+                "type": post_type,
+                "createdAt": datetime.datetime.now().isoformat()
+            })["name"]  # Firebase에서 생성된 고유 ID 반환
+            return post_id
+        except Exception as e:
+            print("Firebase에 질문 저장 중 오류 발생:", e)
+            return None
+
+    # 특정 질문 가져오기
+    def get_post_by_id(self, post_id):
+        try:
+            post = self.db.child("qaPosts").child(post_id).get().val()
+            return post
+        except Exception as e:
+            print(f"Firebase에서 ID {post_id}의 질문을 가져오는 중 오류 발생:", e)
+            return None
+
+    # 모든 질문 가져오기
+    def get_all_posts(self):
+        try:
+            posts = self.db.child("qaPosts").get().val()
+            if posts:
+                # Firebase 데이터는 사전 형태로 반환되므로, 리스트로 변환
+                return [{"id": key, **value} for key, value in posts.items()]
+            return []
+        except Exception as e:
+            print("Firebase에서 모든 질문을 가져오는 중 오류 발생:", e)
+            return []
+

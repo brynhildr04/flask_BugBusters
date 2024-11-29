@@ -22,58 +22,8 @@
             <button onclick="location.href='question_submit.html'">게시물 등록하기</button>
         </div>
         <div class="qa-list" id="qaList">
-            <!-- 게시물은 JS에서 동적으로 추가 -->
+            <!-- Firebase에서 동적으로 데이터 로드 -->
         </div>
     </div>
 </section>
-
-<script>
-    const qaPosts = JSON.parse(localStorage.getItem("qaPosts")) || [];
-
-    // Q&A 게시물 로드
-    function loadQA() {
-        const qaList = document.getElementById("qaList");
-        qaList.innerHTML = ""; // 기존 데이터 초기화
-
-        qaPosts.forEach((post, index) => {
-            const qaItem = document.createElement("div");
-            qaItem.classList.add("qa-item");
-
-            // 제목 표시
-            const title = document.createElement("div");
-            title.classList.add("qa-question");
-            title.innerHTML = `<strong>${post.type === "question" ? "Q" : "A"}:</strong> ${post.title}`;
-            title.style.cursor = "pointer";
-            title.addEventListener("click", () => toggleContent(index));
-
-            // 내용 (초기에는 숨김)
-            const content = document.createElement("div");
-            content.classList.add("qa-answer");
-            content.style.display = "none"; // 숨김 처리
-            content.innerHTML = post.content;
-
-            qaItem.appendChild(title);
-            qaItem.appendChild(content);
-            qaList.appendChild(qaItem);
-        });
-    }
-
-    // 내용 토글
-    function toggleContent(index) {
-        const qaList = document.getElementById("qaList").children;
-        const content = qaList[index].querySelector(".qa-answer");
-        content.style.display = content.style.display === "none" ? "block" : "none";
-    }
-
-    // 초기화
-    document.addEventListener("DOMContentLoaded", () => {
-        const newPost = JSON.parse(localStorage.getItem("newPost"));
-        if (newPost) {
-            qaPosts.push(newPost);
-            localStorage.setItem("qaPosts", JSON.stringify(qaPosts));
-            localStorage.removeItem("newPost"); // 임시 저장 제거
-        }
-        loadQA();
-    });
-</script>
 {% endblock section %}

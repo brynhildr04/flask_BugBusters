@@ -1,0 +1,33 @@
+{% extends "header.html" %}
+{% block check %}
+<input type="checkbox" id="switch" class="switch-input" checked onclick="location.href='http://127.0.0.1:5000'">
+{% endblock check %}
+{% block section %}
+{% include 'nav_service.html' %}
+
+<section id="question_detail">
+    <div class="detail-container">
+        <h1 class="detail-header">질문 상세</h1>
+
+        <!-- 질문 제목 -->
+        <div class="detail-title">
+            <h2>{{ post.title }}</h2>
+        </div>
+
+        <!-- 질문 작성 날짜 -->
+        <div class="detail-meta">
+            <span>작성 날짜: {{ post.createdAt }}</span>
+        </div>
+
+        <!-- 질문 내용 -->
+        <div class="detail-content">
+            <p>{{ post.content }}</p>
+        </div>
+
+        <!-- 질문 관련 액션 (예: 수정, 삭제) -->
+        <div class="detail-actions">
+            <button onclick="location.href='/chat_service.html'">목록으로 돌아가기</button>
+        </div>
+    </div>
+</section>
+{% endblock section %}

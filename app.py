@@ -1,18 +1,20 @@
 from flask import (Flask, render_template, request, flash, redirect, 
-                  url_for, session, jsonify, jsonify)
+                  url_for, session, jsonify)
 from database import DBhandler
 import hashlib
 import os
 import sys
-from datetime import datetime
 import requests
 import base64  # 추가
+from datetime import datetime
+from flask_cors import CORS
+
 
 application = Flask(__name__)
 application.config["SECRET_KEY"]="sosohanewhamarket"
 application.config['UPLOAD_FOLDER'] = 'static/images'
 DB=DBhandler()
-
+CORS(application)
 
 # 결제창 관련 (Toss API 활용 by 신우림)
 @application.route('/payment', methods=['GET', 'POST'])
@@ -127,10 +129,6 @@ def view_aboutus():
 def view_chat_product():
     return render_template('chat_product.html')
 
-@application.route('/chat_service.html')
-def view_chat_service():
-    return render_template('chat_service.html')
-
 @application.route('/purchase_service.html')
 def view_purchase_service():
     return render_template('purchase_service.html')
@@ -139,11 +137,61 @@ def view_purchase_service():
 def view_purchase_product():
     return render_template('purchase_product.html')
 
-#지금 상황이 좀 꼬였는데, view_detail에서 바로 review.html로 넘어가버려서 404가 뜨는 중 
+#질문 게시판 게시물 작성하기
 @application.route('/question_submit.html')
 def view_question_submit():
     return render_template('question_submit.html')
 
+# 질문 등록 처리
+@application.route('/add_question', methods=['POST'])
+def add_question():
+    title = data.get('title')
+    content = data.get('content')
+    password = data.get('password')  # 비밀번호 저장
+
+    if not title or not content or not password:
+        return jsonify({"error": "모든 필드를 입력해야 합니다."}), 400
+
+    try:
+        question_id = DB.add_qa_post(title, content, post_type="question")
+        print("질문 등록 성공:", question_id)
+        return jsonify({"message": "질문이 성공적으로 등록되었습니다.", "id": question_id}), 200
+    except Exception as e:
+        print("오류 발생:", e)
+        return jsonify({"error": str(e)}), 500
+
+# 질문 상세 페이지
+@application.route('/question_detail/<question_id>')
+def question_detail(question_id):
+    try:
+        post = DB.get_post_by_id(question_id)
+        if not post:
+            return render_template("404.html", error="해당 게시글을 찾을 수 없습니다."), 404
+        return render_template('question_detail.html', post=post)
+    except Exception as e:
+        print("오류 발생:", e)
+        return render_template("error.html", error="질문을 로드하는 중 문제가 발생했습니다."), 500
+
+# 질문 목록 로드
+@application.route('/get_questions', methods=['GET'])
+def get_questions():
+    try:
+        posts = DB.get_all_posts()
+        return jsonify(posts), 200
+    except Exception as e:
+        print("오류 발생:", e)
+        return jsonify({"error": str(e)}), 500
+
+# 질문 목록 페이지
+@application.route('/chat_service.html')
+def chat_service():
+    try:
+        posts = DB.get_all_posts()
+        return render_template('chat_service.html', posts=posts)
+    except Exception as e:
+        print("오류 발생:", e)
+        return render_template("error.html", error="게시판 데이터를 불러오는 중 문제가 발생했습니다."), 500
+    
 #리뷰 작성 페이지
 @application.route("/reg_review_init/<name>/")
 def reg_review_init(name):

@@ -1460,46 +1460,139 @@ footer {
 }
 
 /*******question_submit*******/
-#questionForm {
+/* 질문 등록 화면 스타일 */
+#question_submit {
     display: flex;
-    flex-direction: column;
-    align-items: center; /* 가운데 정렬 */
     justify-content: center;
-    width: 100%; /* 폼 전체 너비 */
-    max-width: 500px; /* 최대 너비 제한 */
-    margin: 100px; /* 위쪽에 여백 추가 (100px) */
-    padding: 20px;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+}
+
+.submit-container {
+    width: 400px;
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
 }
 
-/* 질문 입력 텍스트 박스 */
-#questionInput {
-    width: 100%; /* 입력 박스 너비 */
-    padding: 10px; /* 텍스트 박스 안쪽 여백 */
+.submit-header {
+    background-color: #00462A;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-size: 20px;
+    border-radius: 5px 5px 0 0;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 14px;
-    resize: none; /* 크기 조절 불가능 */
 }
 
-/* 등록하기 버튼 */
-#questionForm button.qa-actions {
-    margin-top: 15px; /* 버튼 위쪽 여백 */
+button#submitQuestion {
     background-color: #00462A;
     color: #fff;
     border: none;
     border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
+    padding: 10px;
+    width: 100%;
     font-size: 16px;
+    cursor: pointer;
 }
 
-#questionForm button.qa-actions:hover {
+button#submitQuestion:hover {
     background-color: #CDECDB;
     color: #00462A;
 }
+
+/*******qeustion_Detail css********/
+/*******question_detail*******/
+/* 질문 상세 화면 스타일 */
+#question_detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+}
+
+.detail-container {
+    width: 500px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.detail-header {
+    background-color: #00462A;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-size: 20px;
+    border-radius: 5px 5px 0 0;
+    margin-bottom: 15px;
+}
+
+.detail-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #00462A;
+    margin-bottom: 10px;
+}
+
+.detail-meta {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.detail-content {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.detail-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.detail-actions button {
+    background-color: #00462A;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.detail-actions button:hover {
+    background-color: #CDECDB;
+    color: #00462A;
+}
+
 
 /********purchase css*******/
 #purchase_r * {

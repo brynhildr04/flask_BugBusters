@@ -1,3 +1,5 @@
+console.log("JavaScript 파일 로드 확인");
+
 //민하님 js
 document.getElementById('quantity').addEventListener('input', function () {
     const quantity = parseInt(this.value, 10) || 0;
@@ -235,6 +237,114 @@ function handleBotResponse(userChoice) {
     }, 1000);
 }
 
+//질문 게시판 js
+// Firebase 데이터베이스 초기화
+const dbHandler = new DBhandler();
+
+// Q&A 게시물 로드
+async function loadQA() {
+    const qaList = document.getElementById("qaList");
+    qaList.innerHTML = ""; // 기존 데이터 초기화
+
+    try {
+        const response = await fetch('/get_questions');
+        const posts = await response.json();
+
+        if (response.ok && posts) {
+            Object.values(posts).forEach((post) => {
+                createPostElement(qaList, post);
+            });
+        } else {
+            qaList.innerHTML = "<p>등록된 질문이 없습니다.</p>";
+        }
+    } catch (error) {
+        console.error("Error loading Q&A posts:", error);
+        qaList.innerHTML = "<p>질문을 불러오는 중 문제가 발생했습니다.</p>";
+    }
+}
+
+// Q&A 게시물 추가
+function createPostElement(container, post) {
+    const qaItem = document.createElement("div");
+    qaItem.classList.add("qa-item");
+
+    // 제목 표시
+    const title = document.createElement("div");
+    title.classList.add("qa-question");
+    title.innerHTML = `<strong>${post.type === "question" ? "Q" : "A"}:</strong> ${post.title}`;
+    title.style.cursor = "pointer";
+
+    // 제목 클릭 시 상세 페이지로 이동
+    title.addEventListener("click", () => {
+        window.location.href = `/question_detail/${post.id}`;
+    });
+
+    // 날짜 표시
+    const date = document.createElement("div");
+    date.classList.add("qa-date");
+    date.textContent = new Date(post.createdAt).toLocaleString();
+
+    qaItem.appendChild(title);
+    qaItem.appendChild(date);
+    container.appendChild(qaItem);
+}
+
+// 질문 등록 처리
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("DOM 로드 확인");
+    const submitButton = document.getElementById("submitQuestion");
+    if (submitButton) {
+        console.log("등록 버튼이 연결되었습니다.");
+        submitButton.addEventListener("click", () => {
+            console.log("등록 버튼이 클릭되었습니다.");
+        });
+    } else {
+        console.error("등록 버튼을 찾을 수 없습니다.");
+    }
+});
+
+document.getElementById("submitQuestion").addEventListener("click", async () => {
+    console.log("등록 버튼 클릭됨");
+
+    const title = document.getElementById("title").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const content = document.getElementById("content").value.trim();
+
+    if (!title || !password || !content) {
+        alert("모든 필드를 입력해주세요.");
+        return;
+    }
+
+    const postData = { title, content, password };
+
+    try {
+        const response = await fetch('/add_question', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(postData)
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+            alert(result.message);
+            location.href = `/question_detail/${result.id}`;
+        } else {
+            alert(result.error || "질문 등록 중 문제가 발생했습니다.");
+        }
+    } catch (error) {
+        console.error("Error submitting question:", error);
+        alert("네트워크 오류가 발생했습니다.");
+    }
+});
+
+// chat_service.html에서 초기화
+document.addEventListener("DOMContentLoaded", () => {
+    if (document.getElementById("qaList")) {
+        loadQA(); // Q&A 목록 로드
+    }
+});
 
 
 //소윤님 js
