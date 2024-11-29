@@ -13,7 +13,7 @@
     align-items: center;
     padding: 1rem 2rem;
     background: white;
-    position: fixed;
+ /*position: fixed 삭제. 얘가 자꾸 아래 애들을 잡아먹음*/
     width: 100%;
     top: 0;
     z-index: 1000;
@@ -332,7 +332,6 @@
 
 .column.side {
     display: none;
-    /* side column 제거 */
 }
 
 .column.middle {
@@ -584,13 +583,14 @@ hr {
 /* All Product 영역 */
 .all-products-container {
     max-width: 1158px;
-    margin: 120px auto 0;
+    margin: 40px auto 0;
     padding: 0 20px;
 }
 
 .page-title {
     font-size: 24px;
     font-weight: bold;
+    margin-top: 20px;
     margin-bottom: 20px;
     text-align: center;
 }

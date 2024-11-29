@@ -1,3 +1,50 @@
+//스위치를 위한 js
+function showSwitch() {
+    $.ajax({
+        type: 'GET',
+        url: '/switch/{{id}}/',
+        data: {},
+        success: function (response) {
+            let status = response['status'];
+            if (status['status'] == "product") {
+                $("#switch").attr("onclick", "toService()");
+            }
+            else {
+                $("#switch").attr("onclick", "toProduct()");
+            }
+        }
+    });
+}
+function toService() {
+    $.ajax({
+        type: 'POST',
+        url: '/toService/{{id}}/',
+        data: {
+            status: "service"
+        },
+        success: function (response) {
+            alert(response['msg'])
+            window.location.reload();
+        }
+    });
+}
+function toProduct() {
+    $.ajax({
+        type: 'POST',
+        url: '/toProduct/{{id}}/',
+        data: {
+            status: "product"
+        },
+        success: function (response) {
+            alert(response['msg'])
+            window.location.reload();
+        }
+    });
+}
+$(document).ready(function () {
+    showSwitch();
+});
+
 //민하님 js
 document.getElementById('quantity').addEventListener('input', function () {
     const quantity = parseInt(this.value, 10) || 0;
@@ -239,14 +286,14 @@ function handleBotResponse(userChoice) {
 
 //소윤님 js
 // 카테고리 옵션 목록
-const categories = {
-    product: ["식품", "공예", "뷰티", "패션", "기타 제품", "제품 제작 의뢰"],
-    service: ["어학", "IT", "취미", "디자인", "첨삭", "생활", "기타"]
-};
 
 // 카테고리 옵션 업데이트 함수
-function updateCategoryOptions() {
-    const productType = document.getElementById("product_type").value; // 제품 유형 선택
+function updateCategoryOptions(obj) {
+    const categories = {
+        product: ["식품", "공예", "뷰티", "패션", "기타 제품", "제품 제작 의뢰"],
+        service: ["어학", "IT", "취미", "디자인", "첨삭", "생활", "기타"]
+    };
+    const productType = $(obj).val(); // 제품 유형 선택
     const categorySelect = document.getElementById("category"); // 카테고리 드롭다운
 
     // 기존 옵션 제거
@@ -260,7 +307,6 @@ function updateCategoryOptions() {
         categorySelect.appendChild(option);
     });
 }
-
 // 페이지가 처음 로드될 때 기본 카테고리 옵션 설정
 document.addEventListener("DOMContentLoaded", function () {
     updateCategoryOptions(); // 기본적으로 '제품' 카테고리를 설정
@@ -315,7 +361,7 @@ function deleteItem(button) {
     // 현재 버튼과 연결된 cart-item을 삭제
     const cartItem = button.closest('.cart-item');
     cartItem.remove();
-    
+
     // 장바구니 총 금액 업데이트
     updateGrandTotal();
 }
@@ -323,12 +369,12 @@ function deleteItem(button) {
 function updateGrandTotal() {
     let grandTotal = 0;
     const itemTotals = document.querySelectorAll('.item-total');
-    
+
     // 모든 아이템의 총 금액 합산
     itemTotals.forEach(item => {
         grandTotal += parseInt(item.textContent.replace(/,/g, ''), 10);
     });
-    
+
     // 총 금액 업데이트
     document.getElementById('grandTotal').textContent = grandTotal.toLocaleString() + '원';
 }

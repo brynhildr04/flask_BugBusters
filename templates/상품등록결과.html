@@ -4,11 +4,13 @@
     <h1>상품 등록 완료</h1>
     <div class="product-info-container">
     <div class="product-info">
+        <p><strong>판매자 아이디:</strong> {{ data.seller }}</p>
         <p><strong>제목:</strong> {{ data.title }}</p>
         <p><strong>가격(원):</strong>{{data.price}}</p>
         <p><strong>제품 유형:</strong> {{ data.product_type }}</p>
         <p><strong>카테고리:</strong> {{ data.category }}</p>
         <p><strong>내용:</strong> {{ data.description }}</p>
+        <p><strong>평점:</strong> {{ data.rate }}</p>
 
         {% if img_path %}
         <p><strong>첨부된 이미지:</strong></p>

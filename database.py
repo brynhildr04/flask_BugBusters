@@ -12,12 +12,12 @@ class DBhandler:
     def insert_item(self, name, data, img_path): #key:value 형식으로 저장된다
         item_info ={
             "seller": data['seller'],
-            "addr": data['addr'],
-            "email": data['email'],
+            "product_type": data['product_type'],
             "category": data['category'],
-            "card": data['card'],
-            "status": data['status'],
-            "phone": data['phone'],
+            "description": data['description'],
+            "rate": data['rate'],
+            "rateNum": data['rateNum'],
+            "price": data['price'],
             "img_path": img_path
         }
         self.db.child("item").child(name).set(item_info) #db에 등록하는 과정
@@ -72,6 +72,47 @@ class DBhandler:
     def get_items(self):
         items=self.db.child("item").get().val()
         return items 
+    
+    #제품/서비스 각각 전체 체품 가져오기
+    def get_items_byproductType(self, category):
+        items=self.db.child("item").get()
+        target_value=[]
+        target_key=[]
+        if(category=="product" or category=="service"):
+            for res in items.each():
+                value=res.val()
+                key_value=res.key()
+                if(value['product_type']==category):
+                    target_value.append(value)
+                    target_key.append(key_value)
+        else:
+            for res in items.each():
+                value=res.val()
+                key_value=res.key()
+                if(value['category']==category):
+                    target_value.append(value)
+                    target_key.append(key_value)
+
+        print("######target_value", target_value)
+        new_dict={}
+        for k, v in zip(target_key, target_value):
+            new_dict[k]=v
+        return new_dict
+    
+    #카테고리별 제품 가져오기
+    def get_items_byCategory(self, data, cate):
+        target_value=[]
+        target_key=[]
+        for res in data.each():
+            value=res.val()
+            key_value=res.key()
+            if(value['category']==cate):
+                target_value.append(value)
+                target_key.append(key_value)
+        new_dict={}
+        for k, v in zip(target_key, target_value):
+            new_dict[k]=v
+        return new_dict
     
     #상품 이름으로 item 테이블에서 정보 가져오기
     def get_item_byname(self, name):
@@ -148,3 +189,133 @@ class DBhandler:
         }
         self.db.child("heart").child(user_id).child(item).set(heart_info)
         return True
+    
+    #제품/서비스 상태 알아오기   
+    def get_status(self, uid):
+        status=self.db.child("status").child(uid).get().val()
+        return status
+    def update_status(self, user_id, changed):
+        status_info={
+            "status": changed
+        }
+        self.db.child("status").child(user_id).set(status_info)
+        return changed
+    
+    #제품 평점 업데이트 #이제 리뷰가 등록되면 평점 가져오는 코드 추가해야 함
+    def update_rate(self, name):
+        total=0
+        sum=0
+        item=self.db.child("item").child(name).child("review").get()
+        if(item.val()==None): return 0
+        for res in item.each():
+            total+=1
+            print(res, res.key(), res.val())
+            sum+=int(res.val()['rate'])
+        rate=round(sum/total,1)
+        self.db.child("item").child(name).child("rate").set(rate)
+        self.db.child("item").child(name).child("rateNum").set(total)
+        return total
+    
+     #### 여기서부터 장바구니 작업 내역 #####
+    def add_to_cart(self, user_id, item_name):
+        """장바구니에 상품 추가"""
+        try:
+            item_info = self.get_item_byname(item_name)
+            if not item_info:
+                return False
+        
+            cart = self.db.child("cart").child(user_id).child("items").child(item_name).get()
+            
+            if cart.val():
+                # 이미 장바구니에 있는 경우 -> 수량만 증가시키기
+                current_quantity = cart.val().get("quantity", 0)
+                cart_item = {
+                    "quantity": current_quantity + 1
+                }
+                self.db.child("cart").child(user_id).child("items").child(item_name).update(cart_item)
+            else:
+                # 새로운 상품 추가
+                cart_item = {
+                    "name": item_name,
+                    "price": item_info["price"],
+                    "quantity": 1,
+                    "product_type": item_info["product_type"],
+                    "img_path": item_info["img_path"],
+                    "added_date": datetime.now().strftime("%Y.%m.%d.")
+                }
+                self.db.child("cart").child(user_id).child("items").child(item_name).set(cart_item)
+            
+            # 장바구니 수량 다시 업데이트 하기
+            self._update_cart_total(user_id)
+            return True
+        except Exception as e:
+            print(f"장바구니 추가 실패: {e}")
+            return False
+
+    def remove_from_cart(self, user_id, item_name):
+        """장바구니에서 상품 제거"""
+        try:
+            self.db.child("cart").child(user_id).child("items").child(item_name).remove()
+            self._update_cart_total(user_id)
+            return True
+        except Exception as e:
+            print(f"장바구니 제거 실패: {e}")
+            return False
+
+    def update_cart_quantity(self, user_id, item_name, quantity):
+        """장바구니 상품 수량 업데이트"""
+        try:
+            if quantity < 1:
+                return False
+                
+            cart_item = self.db.child("cart").child(user_id).child("items").child(item_name).get()
+            if cart_item.val():
+                self.db.child("cart").child(user_id).child("items").child(item_name).update({
+                    "quantity": quantity
+                })
+                self._update_cart_total(user_id)
+                return True
+            return False
+        except Exception as e:
+            print(f"수량 업데이트 실패: {e}")
+            return False
+
+    def get_cart(self, user_id):
+        """장바구니 조회"""
+        try:
+            cart = self.db.child("cart").child(user_id).get()
+            return cart.val() if cart.val() else {"items": {}, "total_items": 0, "total_price": 0}
+        except Exception as e:
+            print(f"장바구니 조회 실패: {e}")
+            return None
+
+    def clear_cart(self, user_id):
+        """장바구니 비우기"""
+        try:
+            self.db.child("cart").child(user_id).remove()
+            return True
+        except Exception as e:
+            print(f"장바구니 비우기 실패: {e}")
+            return False
+
+    def _update_cart_total(self, user_id):
+        """장바구니 총계 업데이트 (내부 사용)"""
+        try:
+            cart = self.db.child("cart").child(user_id).child("items").get()
+            total_items = 0
+            total_price = 0
+            
+            if cart.val():
+                for item in cart.each():
+                    item_data = item.val()
+                    quantity = item_data.get("quantity", 0)
+                    price = float(item_data.get("price", 0))
+                    total_items += quantity
+                    total_price += quantity * price
+            
+            self.db.child("cart").child(user_id).update({
+                "total_items": total_items,
+                "total_price": total_price
+            })
+        except Exception as e:
+            print(f"총계 업데이트 실패: {e}")

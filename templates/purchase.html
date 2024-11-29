@@ -1,9 +1,23 @@
+<<<<<<< HEAD:templates/purchase_product.html
 {% extends "header.html" %} 
 {% block check %}
 {% endblock check %} 
+=======
+{% extends "header.html" %}
+>>>>>>> f539fc89ba6cee5f2a5e8d5e85dad89e4ffda9c1:templates/purchase.html
 
 {% block section %}
+{% if session['status']=="product" %}
 {% include 'nav_product.html' %}
+<<<<<<< HEAD:templates/purchase_product.html
+=======
+{% else %}
+{% include 'nav_service.html' %}
+{% endif %}
+<section id="purchase_r">
+<div class="container">
+    <h3>주문 내역 확인</h3>
+>>>>>>> f539fc89ba6cee5f2a5e8d5e85dad89e4ffda9c1:templates/purchase.html
 
 <section id="purchase_r" class="section">
    <div class="container">
