@@ -584,3 +584,141 @@ document.addEventListener('DOMContentLoaded', function () {
     // 초기 총액 계산
     updateGrandTotal();
 });
+
+
+// 장바구니 (백엔드랑 연결하는 부분들)
+function increaseQuantity(button, itemName) {
+    const quantitySpan = button.previousElementSibling;
+    let quantity = parseInt(quantitySpan.textContent);
+    quantity++;
+    
+    $.ajax({
+        type: 'POST',
+        url: `/update_cart_quantity/${itemName}`,
+        data: {
+            quantity: quantity
+        },
+        success: function(response) {
+            quantitySpan.textContent = quantity;
+            updateItemTotal(button.parentElement.parentElement);
+            updateGrandTotal();
+        },
+        error: function(error) {
+            alert('수량 업데이트에 실패했습니다.');
+        }
+    });
+}
+
+function decreaseQuantity(button, itemName) {
+    const quantitySpan = button.nextElementSibling;
+    let quantity = parseInt(quantitySpan.textContent);
+    if (quantity > 1) {
+        quantity--;
+        
+        $.ajax({
+            type: 'POST',
+            url: `/update_cart_quantity/${itemName}`,
+            data: {
+                quantity: quantity
+            },
+            success: function(response) {
+                quantitySpan.textContent = quantity;
+                updateItemTotal(button.parentElement.parentElement);
+                updateGrandTotal();
+            },
+            error: function(error) {
+                alert('수량 업데이트에 실패했습니다.');
+            }
+        });
+    }
+}
+
+function removeFromCart(itemName) {
+    if (confirm('이 상품을 장바구니에서 제거하시겠습니까?')) {
+        $.ajax({
+            type: 'POST',
+            url: `/remove_from_cart/${itemName}`,
+            success: function(response) {
+                window.location.reload();
+            },
+            error: function(error) {
+                alert('상품 제거에 실패했습니다.');
+            }
+        });
+    }
+}
+
+function addToCart(itemName) {
+    $.ajax({
+        type: 'POST',
+        url: `/add_to_cart/${itemName}`,
+        success: function(response) {
+            if (response.message) {
+                alert(response.message);
+            }
+        },
+        error: function(xhr) {
+            if (xhr.status === 401) {
+                if (confirm('로그인이 필요한 서비스입니다. 로그인 하시겠습니까?')) {
+                    window.location.href = '/login.html';
+                }
+            } else {
+                alert('장바구니 추가에 실패했습니다.');
+            }
+        }
+    });
+}
+
+function updateItemTotal(cartItem) {
+    const unitPrice = parseInt(cartItem.querySelector('.unit-price').textContent.replace(/,/g, ''));
+    const quantity = parseInt(cartItem.querySelector('.quantity').textContent);
+    const itemTotalElement = cartItem.querySelector('.item-total');
+    const total = unitPrice * quantity;
+    itemTotalElement.textContent = total.toLocaleString() + '원';
+}
+
+function updateGrandTotal() {
+    let grandTotal = 0;
+    $('.item-total').each(function() {
+        grandTotal += parseInt($(this).text().replace(/[^0-9]/g, ''));
+    });
+    $('#grandTotal').text(grandTotal.toLocaleString() + '원');
+
+    // 장바구니가 비었는지 확인
+    if ($('.cart-item').length === 0) {
+        $('#cartContainer').html('<p class="empty-cart">장바구니가 비어있습니다.</p>');
+        $('#purchasebutton').css({
+            'background-color': '#ccc',
+            'cursor': 'not-allowed'
+        });
+    }
+}
+
+function clearCart() {
+    if (confirm('장바구니를 비우시겠습니까?')) {
+        $.ajax({
+            type: 'POST',
+            url: '/clear_cart',
+            success: function(response) {
+                window.location.reload();
+            },
+            error: function(error) {
+                alert('장바구니 비우기에 실패했습니다.');
+            }
+        });
+    }
+}
+
+// 페이지 로드 시 실행되는 코드
+$(document).ready(function() {
+    updateGrandTotal();
+    
+    // 결제 버튼 클릭 이벤트
+    $('#purchasebutton').click(function() {
+        if ($('.cart-item').length === 0) {
+            alert('장바구니가 비어있습니다.');
+            return;
+        }
+        window.location.href = 'payment.html';
+    });
+});
