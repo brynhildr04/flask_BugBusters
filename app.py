@@ -22,9 +22,9 @@ def view_main():
     return render_template("main.html")
 
 #장바구니
-@application.route("/cart.html")
-def view_cart():
-    return render_template("cart.html")
+#@application.route("/cart.html")
+#def view_cart():
+#    return render_template("cart.html")
 
 
 #마이페이지
@@ -71,22 +71,28 @@ def view_payment():
 def view_aboutus():
     return render_template('aboutus.html')
 
-@application.route('/chat_product.html')
-def view_chat_product():
-    return render_template('chat_product.html')
+@application.route('/board_list.html')
+def view_board_list():
+    return render_template('board_list.html')
 
-@application.route('/chat_service.html')
-def view_chat_service():
-    return render_template('chat_service.html')
+@application.route('/board_write.html')
+def view_board_write():
+    return render_template('board_write.html')
+
+@application.route('/board_modify.html')
+def view_board_modify():
+    return render_template('board_modify.html')
+
+@application.route('/board_view.html')
+def view_board_view():
+    return render_template('board_view.html')
+
 
 @application.route('/purchase.html')
 def view_purchase_product():
     return render_template('purchase.html')
 
 #지금 상황이 좀 꼬였는데, view_detail에서 바로 review.html로 넘어가버려서 404가 뜨는 중 
-@application.route('/question_submit.html')
-def view_question_submit():
-    return render_template('question_submit.html')
 
 #리뷰 작성 페이지
 @application.route("/reg_review_init/<name>/")
