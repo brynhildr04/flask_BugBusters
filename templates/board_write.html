@@ -12,21 +12,17 @@
 <section id="board_write">
     <div class="qa-container">
         <h2 class="qa-header">게시물 등록</h2>
-        <form id="board_write_form">
+        <form id="board_write_form" name="board_write_form" method="post" action="/post_write">
             <!-- 게시물 제목 -->
             <label for="postTitle">제목:</label>
             <input type="text" name="postTitle" style="width: 100%; margin-bottom: 10px;" required />
-
-            <!-- 작성자 id -->
-            <label for="postId">작성자 ID:</label>
-            <input type="text" name="postId" style="width: 100%; margin-bottom: 10px;" required />
 
             <!-- 게시물 내용 -->
             <label for="postContent">내용:</label>
             <textarea name="postContent" rows="5" style="width: 100%; margin-bottom: 10px;" required></textarea>
 
             <!-- 등록 버튼 -->
-            <button type="submit" name="qa-actions">등록하기</button>
+            <button type="submit">등록하기</button>
         </form>
     </div>
 
@@ -35,77 +31,4 @@
 
 <script src="path/to/main.js"></script>
 </section>
-
-<script>
-const board_write_form = document.querySelector("#board_write_form");
-
-class Board {
-    constructor(indexNum, subjectStr, writerStr, contentStr) {
-        this.index = indexNum;
-        this.Subject = subjectStr;
-        this.Writer = writerStr;
-        this.Content = contentStr;
-        this.date = recordDate();
-        this.views = 0;
-    }
-
-    set Subject(value) {
-        if (value.length === 0) throw new Error("제목을 입력해주세요.");
-        this.postTitle = value;
-    }
-
-    set Writer(value) {
-        if (value.length === 0) throw new Error("작성자 Id를 입력해주세요.");
-        this.postId = value;
-    }
-
-    set Content(value) {
-        if (value.length === 0) throw new Error("내용을 입력해주세요.");
-        this.postContent = value;
-    }
-}
-
-const recordDate = () => {
-    const date = new Date();
-    const yyyy = date.getFullYear();
-    let mm = date.getMonth() + 1;
-    let dd = date.getDate();
-
-    mm = (mm > 9 ? "" : "0") + mm;
-    dd = (dd > 9 ? "" : "0") + dd;
-
-    const arr = [yyyy, mm, dd];
-
-    return arr.join("-");
-};
-
-const submitHandler = (e) => {
-    e.preventDefault();
-    const postTitle = e.target.postTitle.value;
-    const postId = e.target.postId.value;
-    const postContent = e.target.postContent.value;
-
-    try {
-        // boards 가져오기
-        const boardsObj = JSON.parse(localStorage.getItem("boards"));
-
-        // 객체 추가
-        const index = boardsObj.length;
-        const instance = new Board(index, postTitle, postId, postContent);
-        boardsObj.push(instance);
-
-        // boards 저장
-        const boardsStr = JSON.stringify(boardsObj);
-        localStorage.setItem("boards", boardsStr);
-        location.href = "/board_view.html?index=" + index;
-    } catch (e) {
-        // 예외 발생 시 메시지 출력
-        alert(e.message);
-        console.error(e);
-    }
-};
- 
-board_write_form.addEventListener("submit", submitHandler);  //폼 제출
-
-</script>
 {% endblock section %}

@@ -71,22 +71,63 @@ def view_payment():
 def view_aboutus():
     return render_template('aboutus.html')
 
-@application.route('/board_list.html')
-def view_board_list():
-    return render_template('board_list.html')
-
+#게시판 작성 페이지
 @application.route('/board_write.html')
 def view_board_write():
     return render_template('board_write.html')
 
-@application.route('/board_modify.html')
-def view_board_modify():
-    return render_template('board_modify.html')
+#작성된 게시판 게시글 백엔드로 넘겨주기
+@application.route("/post_write", methods=["POST"])
+def post_write():
+    # 데이터 가져오기
+    data = {
+        "name": session.get("id"),  # 작성자 이름
+        "postTitle": request.form.get("postTitle"),  # 게시물 제목
+        "postContent": request.form.get("postContent")  # 게시물 내용
+    }
+    user_id = session.get("id")  # 로그인된 사용자 ID
+    if not user_id:
+        flash("로그인이 필요합니다!")
+        return redirect(url_for("login"))
+
+    date = f"{datetime.today().year}.{datetime.today().month}.{datetime.today().day}."
+
+    # 데이터 저장
+    key = DB.save_post(data, user_id, date)
+    if key:
+        flash("게시글이 저장되었습니다!")
+        return redirect(url_for("view_board_list"))
+    else:
+        flash("게시글 저장에 실패했습니다.")
+        return redirect(url_for("view_board_write"))
+    
+@application.route("/board_list.html")
+def view_board_list():
+    posts = DB.get_all_posts()
+    print(f"Posts to display: {posts}")  # 디버깅 메시지
+    return render_template("board_list.html", posts=posts)
+
+
+
+@application.route("/post_detail/<name>/<key>")
+def view_post_detail(name, key):
+    DB.increment_views(name, key)  # 조회수 증가
+    post = DB.get_post_by_key(name, key)
+    if post:
+        return render_template("board_view.html", post=post)
+    else:
+        flash("해당 게시글을 찾을 수 없습니다.")
+        return redirect(url_for("view_board_list"))
+    
+
 
 @application.route('/board_view.html')
 def view_board_view():
     return render_template('board_view.html')
 
+@application.route('/board_modify.html')
+def view_board_modify():
+    return render_template('board_modify.html')
 
 @application.route('/purchase.html')
 def view_purchase_product():

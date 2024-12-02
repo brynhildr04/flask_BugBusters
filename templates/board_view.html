@@ -10,21 +10,17 @@
 {% endif %}
 
 <section id="board_view">
-    <div class="board_view_container">
-        <h2 class="board_view_header">작성한 게시글</h2>
-        <form id="board_view_form">
-            <!-- 게시물 제목 -->
-            <div id="postTitle" style="width: 100%; margin-bottom: 10px;">제목 : </div>
-
-            <!-- 작성자 id -->
-            <div id="postId" style="width: 100%; margin-bottom: 10px;">작성자 : </div>
-            
-            <div id="date" style="width: 100%; margin-bottom: 10px;">작성일 : </div>
-
-            <!-- 게시물 내용 -->
-            <div id="postContent" rows="5" style="width: 100%; margin-bottom: 10px;">내용 : </div>
-        </form>
-    </div>
+    <h2>{{ name }}님의 게시글</h2>
+    {% if post %}
+        <h2>{{ post.title }}</h2>
+        <p>작성자: {{ post.name }}</p>
+        <p>작성 날짜: {{ post.date }}</p>
+        <div>
+            {{ post.content }}
+        </div>
+    {% else %}
+        <p>게시글 데이터를 불러올 수 없습니다.</p>
+    {% endif %}
 
     <!-- 수정 버튼 -->
     <button id="modify">수정하기</button>
@@ -32,38 +28,12 @@
     <!-- 삭제 버튼 -->
     <button id="delete">삭제하기</button>
         
-    <button type="button" onclick="location.href='board_list.html'">뒤로가기</button>
+    <button type="button" onclick="location.href='/board_list.html'">뒤로가기</button>
 
     <script src="path/to/main.js"></script>
 </section>
 
 <script>
-const boardsStr = localStorage.getItem("boards");
-const boardsObj = JSON.parse(boardsStr);
-
-const idx = location.search;
-const index = idx.split("=")[1];
-const board = boardsObj[index];
-
-const beforeUrl = document.referrer;
-
-const viewCount = (beforeUrl) => {
-    if (beforeUrl.split("/").pop() === "board_list.html") {
-        board.views++;
-        const viewCountStr = JSON.stringify(boardsObj);
-        localStorage.setItem("boards", viewCountStr);
-    }
-};
-
-viewCount(beforeUrl);
-
-const board_view_form = document.querySelectorAll("#board_view_form > div");
-
-for (let i = 0; i < board_view_form.length; i++) {
-    const id = board_view_form[i].id;
-    board_view_form[i].innerHTML += " " + board[id];
-}
-
 const modifyBtn = document.querySelector("#modify");
 
 const modifyBtnHandler = (e) => {

@@ -215,3 +215,68 @@ class DBhandler:
         self.db.child("item").child(name).child("rate").set(rate)
         self.db.child("item").child(name).child("rateNum").set(total)
         return total
+    
+    # 게시글 저장
+    def save_post(self, data, user_id, date):
+        post_info = {
+            "name": data["name"],         # 작성자 이름
+            "title": data["postTitle"],   # 게시물 제목
+            "content": data["postContent"],  # 게시물 내용
+            "user_id": user_id,           # 작성자 ID
+            "date": date,                 # 작성 날짜
+            "views": 0                    # 초기 조회수
+        }
+        # Firebase에 게시글 저장 및 고유 키 반환
+        key = self.db.child("post").child(data["name"]).push(post_info).get("name")
+        print(f"Post saved with key: {key}")  # 디버깅 메시지
+        return key
+
+    
+    # 고유 키로 특정 게시글 가져오기
+    def get_post_by_key(self, name, key):
+        try:
+            # Firebase에서 고유 키를 기반으로 특정 게시글 가져오기
+            post = self.db.child("post").child(name).child(key).get()
+            return post.val() if post.val() else None
+        except Exception as e:
+            print(f"Error fetching post by key: {e}")
+            return None
+        
+    # 모든 게시글 목록 가져오기
+    def get_all_posts(self):
+        try:
+            posts = self.db.child("post").get()
+            result = []
+            if posts.each():
+                for user_posts in posts.each():  # 각 사용자의 게시글
+                    for key, post in user_posts.val().items():
+                        post["key"] = key  # 게시글 고유 키 추가
+                        post["name"] = user_posts.key()  # 작성자 추가
+                        result.append(post)
+            print(f"Fetched posts: {result}")  # 디버깅 메시지
+            return result
+        except Exception as e:
+            print(f"Error fetching posts: {e}")
+            return []
+
+
+    # 특정 게시글 조회수 증가
+    def increment_views(self, name, key):
+        try:
+            post = self.db.child("post").child(name).child(key).get()
+            if post.val():
+                current_views = post.val().get("views", 0)
+                self.db.child("post").child(name).child(key).update({"views": current_views + 1})
+        except Exception as e:
+            print(f"Error updating views: {e}")
+        
+
+
+
+
+    
+    
+
+
+
+
