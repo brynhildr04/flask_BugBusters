@@ -74,24 +74,16 @@ class DBhandler:
         return items 
     
     #제품/서비스 각각 전체 체품 가져오기
-    def get_items_byproductType(self, category):
+    def get_items_byproductType(self, product_type):
         items=self.db.child("item").get()
         target_value=[]
         target_key=[]
-        if(category=="product" or category=="service"):
-            for res in items.each():
-                value=res.val()
-                key_value=res.key()
-                if(value['product_type']==category):
-                    target_value.append(value)
-                    target_key.append(key_value)
-        else:
-            for res in items.each():
-                value=res.val()
-                key_value=res.key()
-                if(value['category']==category):
-                    target_value.append(value)
-                    target_key.append(key_value)
+        for res in items.each():
+            value=res.val()
+            key_value=res.key()
+            if(value['product_type']==product_type):
+                target_value.append(value)
+                target_key.append(key_value)
 
         print("######target_value", target_value)
         new_dict={}
@@ -215,3 +207,40 @@ class DBhandler:
         self.db.child("item").child(name).child("rate").set(rate)
         self.db.child("item").child(name).child("rateNum").set(total)
         return total
+    
+    #카트
+    def get_cart(self, uid):
+        items=self.db.child("cart").child(uid).get().val()
+        return items
+    def add_to_cart(self, uid, data):
+        quantity=int(data['quantity'])
+        price=int(self.db.child("item").child(data['name']).child("price").get().val())
+        total=quantity*price
+        cart_info={
+            "quantity": quantity,
+            "price": price,
+            "total": total,
+            "img_path": self.db.child("item").child(data['name']).child("img_path").get().val()
+        }
+        self.db.child("cart").child(uid).child(data['name']).set(cart_info)
+        return 1
+    def calc_total(self, uid):
+        items=self.db.child("cart").child(uid).get()
+        total=0
+        if(items.val()==None): return total
+        for res in items.each():
+            total+=res.val()['total']
+        return total
+    def remove_item(self, uid, name):
+        self.db.child("cart").child(uid).child(name).remove()
+        return 1
+    def update_quantity(self, uid, name, changed):
+        price=int(self.db.child("item").child(name).child("price").get().val())
+        total=price*int(changed)
+        self.db.child("cart").child(uid).child(name).update({"quantity": changed})
+        self.db.child("cart").child(uid).child(name).update({"total": total})
+        return self.db.child("cart").child(uid).child(name).get().val()
+    def clear_cart(self, uid):
+        self.db.child("cart").child(uid).remove()
+        return 0
+        

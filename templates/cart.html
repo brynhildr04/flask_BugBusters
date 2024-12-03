@@ -5,58 +5,126 @@
 <title>Ewha Market Project</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='minha_style.css') }}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{{ url_for('static', filename='main.js') }}" defer></script>
 {% endblock head %}
 
 {% block section %}
+<!--카트를 위한 javascript-->
+<script>
+    function updateQuantity(op, itemName) {
+        var quantity=document.getElementById("quantity").firstChild.nodeValue
+        if(op=='-') quantity--;
+        else quantity++;
+        $.ajax({
+            type: 'POST',
+            url: `/update_cart_quantity/${itemName}`,
+            data: {
+                quantity: quantity
+            },
+            success: function (response) {
+                var quantity=parseInt(response['data']['quantity']);
+                var item_total=parseInt(response['data']['total']);
+                var total=parseInt(response['total'])
+                $("#quantity").html( quantity.toLocaleString('ko-KR'));
+                $("#item-total").html(item_total.toLocaleString('ko-KR'));
+                $("#grandTotal").html(total.toLocaleString('ko-KR'));
+                alert(response['message']);//이거 나중에 삭제해도 되는 코드
+            },
+            error: function (error) {
+                alert('수량 업데이트에 실패했습니다.');
+            }
+        });
+    }
+
+    function removeFromCart(itemName) {
+        if (confirm('이 상품을 장바구니에서 제거하시겠습니까?')) {
+            $.ajax({
+                type: 'POST',
+                url: `/remove_from_cart/${itemName}`,
+                success: function (response) {
+                    alert(response['message']);
+                    window.location.href = "{{url_for('view_cart')}}";
+                },
+                error: function (error) {
+                    alert('상품 제거에 실패했습니다.');
+                }
+            });
+        }
+    }
+    function clearCart() {
+        if (confirm('장바구니를 비우시겠습니까?')) {
+            $.ajax({
+                type: 'GET',
+                url: '/clear_cart',
+                data: {},
+                success: function (response) {
+                    alert(response['message']);
+                    window.location.href = "{{url_for('view_cart')}}";
+                },
+                error: function (error) {
+                    alert('장바구니 비우기에 실패했습니다.');
+                }
+            });
+        }
+    }
+    $(document).ready(function () {
+        $("#clear-cart-btn").click(function () {
+            clearCart();
+        });
+        // $("#delete-btn").click(function () {
+        //     removeFromCart();
+        // });
+    });
+</script>
 <section id="cart_r">
-<div id="cartbody">
-    <h1>장바구니</h1>
-    
-    {% with messages = get_flashed_messages() %}
+    <div id="cartbody">
+        <h1>장바구니</h1>
+
+        {% with messages = get_flashed_messages() %}
         {% if messages %}
-            {% for message in messages %}
-                <div class="alert">{{ message }}</div>
-            {% endfor %}
+        {% for message in messages %}
+        <div class="alert">{{ message }}</div>
+        {% endfor %}
         {% endif %}
-    {% endwith %}
-    
-    <div id="cartContainer">
-        {% if cart and cart.items %}
-            {% for item_name, item in cart.items.items() %}
+        {% endwith %}
+
+        <div id="cartContainer">
+            {% if cart %}
+            {% for key, value in cart.items() %}
             <div class="cart-item">
-                <img src="{{ url_for('static', filename='images/' + item.img_path) }}" alt="{{ item.name }}">
+                <img src="{{ url_for('static', filename='images/' + value['img_path']) }}" alt="{{ key }}">
                 <div class="cart-details">
-                    <p><strong>{{ item.name }}</strong></p>
-                    <p>개당 가격: <span class="unit-price">{{ "{:,}".format(item.price) }}</span>원</p>
+                    <p><strong>{{ key }}</strong></p>
+                    <p>개당 가격: <span class="unit-price">{{ "{:,}".format(value['price']) }}</span>원</p>
                 </div>
                 <div class="quantity-control">
-                    <span class="quantity-btn" onclick="decreaseQuantity(this, '{{ item_name }}')">-</span>
-                    <span class="quantity">{{ item.quantity }}</span>
-                    <span class="quantity-btn" onclick="increaseQuantity(this, '{{ item_name }}')">+</span>
+                    <span class="quantity-btn" id="decrease-btn" onclick="updateQuantity('-', '{{ key }}')">-</span>
+                    <span class="quantity" id="quantity">{{ value['quantity'] }}</span>
+                    <span class="quantity-btn" id="increase-btn" onclick="updateQuantity('+', '{{ key }}')">+</span>
                 </div>
                 <div class="total-price">
-                    총 금액: <span class="item-total">{{ "{:,}".format(item.price * item.quantity) }}</span>원
-                    <button class="delete-btn" onclick="removeFromCart('{{ item_name }}')">X</button>
+                    총 금액: <span class="item-total" id="item-total">{{ "{:,}".format(value['total']) }}</span>원
+                    <button class="delete-btn" id="delete-btn" onclick="removeFromCart('{{ key }}')">X</button>
                 </div>
             </div>
             {% endfor %}
-            
+
             <div class="grand-total">
-                장바구니 총 금액: <span id="grandTotal">{{ "{:,}".format(cart.total_price) }}</span>원
+                장바구니 총 금액: <span id="grandTotal">{{ "{:,}".format(total_price) }}</span>원
             </div>
 
             <div class="cart-buttons">
                 <div id="purchasebutton" onclick="checkout()">구매하기</div>
-                <button class="clear-cart-btn" onclick="clearCart()">장바구니 비우기</button>
+                <button class="clear-cart-btn" id="clear-cart-btn">장바구니 비우기</button>
             </div>
-        {% else %}
+            {% else %}
             <div class="empty-cart">
                 <p>장바구니가 비어있습니다.</p>
-                <a href="/list" class="continue-shopping">쇼핑 계속하기</a>
+                <a href="{{url_for('view_list')}}" class="continue-shopping">쇼핑 계속하기</a>
             </div>
-        {% endif %}
+            {% endif %}
+        </div>
     </div>
-</div>
 </section>
 {% endblock section %}

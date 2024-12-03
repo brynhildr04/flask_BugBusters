@@ -21,12 +21,6 @@ def hello():
 def view_main():
     return render_template("main.html")
 
-#장바구니
-@application.route("/cart.html")
-def view_cart():
-    return render_template("cart.html")
-
-
 #마이페이지
 @application.route("/profile.html")
 def view_profile():
@@ -122,12 +116,6 @@ def view_itemReview_detail(name, key):
     data=DB.get_review_bykey(str(name), str(key))
     return render_template("review_detail.html", name=key, data=data)
 
-
-#전체 상품 조회 페이지
-@application.route("/all.html")
-def view_all_products():
-    return render_template("all.html")
-
 #회원가입 백엔드 연결
 @application.route("/signup_post", methods=['POST'])
 def register_user():
@@ -148,8 +136,8 @@ def login_user():
     pw_hash=hashlib.sha256(pw.encode('utf-8')).hexdigest()
     if DB.find_user(id_, pw_hash):
         session['id']=id_
-        session['status']="product" #처음 로그인하면 product를 기본으로 설정
-        return redirect(url_for('view_list')) #교수님 수업 파일은 상품 리스트가 home 인데 우리는 홈화면이 따로 있으니까... hello()로 고쳐야 할 수도
+        session['status']=DB.get_status(id_) #처음 로그인하면 product를 기본으로 설정
+        return redirect(url_for('view_main')) #교수님 수업 파일은 상품 리스트가 home 인데 우리는 홈화면이 따로 있으니까... hello()로 고쳐야 할 수도
     else:
         flash("아이디/패스워드가 일치하지 않습니다!")
         return render_template("login.html")
@@ -379,65 +367,35 @@ if __name__ == "__main__":
 # 여기서부터 장바구니!!!!!!!
 @application.route("/cart.html")
 def view_cart():
-    if 'id' not in session:
-        flash("로그인이 필요합니다!")
-        return redirect(url_for('login'))
     cart = DB.get_cart(session['id'])
-    return render_template("cart.html", cart=cart)
+    if (cart!=None): cart = dict(list(cart.items())[:])
+    total=DB.calc_total(session['id'])
+    return render_template("cart.html", cart=cart, total_price=total)
 
 # 장바구니 관련 새로운 routes 추가
 @application.route("/add_to_cart/<item_name>", methods=['POST'])
 def add_to_cart(item_name):
-    if 'id' not in session:
-        return jsonify({"error": "로그인이 필요합니다."}), 401
-    
-    success = DB.add_to_cart(session['id'], item_name)
-    if success:
-        flash("장바구니에 추가되었습니다.")
-        return jsonify({"message": "장바구니에 추가되었습니다."})
-    return jsonify({"error": "장바구니 추가 실패"}), 400
+    data={
+        "name": item_name,
+        "quantity": request.form.get('quantity', "")
+    }
+    print(data)
+    success = DB.add_to_cart(session['id'], data)
+    return redirect(url_for('view_cart'))
 
 @application.route("/remove_from_cart/<item_name>", methods=['POST'])
 def remove_from_cart(item_name):
-    if 'id' not in session:
-        return jsonify({"error": "로그인이 필요합니다."}), 401
-    
-    success = DB.remove_from_cart(session['id'], item_name)
-    if success:
-        flash("상품이 장바구니에서 제거되었습니다.")
-        return jsonify({"message": "상품이 장바구니에서 제거되었습니다."})
-    return jsonify({"error": "장바구니 제거 실패"}), 400
+    DB.remove_item(session['id'], item_name)
+    return jsonify({"message": "상품이 장바구니에서 제거되었습니다."})
 
 @application.route("/update_cart_quantity/<item_name>", methods=['POST'])
 def update_cart_quantity(item_name):
-    if 'id' not in session:
-        return jsonify({"error": "로그인이 필요합니다."}), 401
-    
-    quantity = request.form.get('quantity', type=int)
-    if not quantity or quantity < 1:
-        return jsonify({"error": "올바른 수량을 입력해주세요."}), 400
-    
-    success = DB.update_cart_quantity(session['id'], item_name, quantity)
-    if success:
-        return jsonify({"message": "수량이 업데이트되었습니다."})
-    return jsonify({"error": "수량 업데이트 실패"}), 400
+    quantity = request.form.get('quantity', type=int)    
+    data=DB.update_quantity(session['id'], item_name, quantity)
+    total=DB.calc_total(session['id'])
+    return jsonify({"message": "수량이 업데이트되었습니다.", "data": data, "total": total})
 
-@application.route("/clear_cart", methods=['POST'])
+@application.route("/clear_cart", methods=['GET'])
 def clear_cart():
-    if 'id' not in session:
-        return jsonify({"error": "로그인이 필요합니다."}), 401
-    
-    success = DB.clear_cart(session['id'])
-    if success:
-        flash("장바구니가 비워졌습니다.")
-        return jsonify({"message": "장바구니가 비워졌습니다."})
-    return jsonify({"error": "장바구니 비우기 실패"}), 400
-
-# JavaScript용 장바구니 조회 API
-@application.route("/api/cart", methods=['GET'])
-def get_cart():
-    if 'id' not in session:
-        return jsonify({"error": "로그인이 필요합니다."}), 401
-    
-    cart = DB.get_cart(session['id'])
-    return jsonify(cart)
+    DB.clear_cart(session['id'])
+    return jsonify({"message": "장바구니가 비워졌습니다."})

@@ -46,13 +46,13 @@
 
         <!-- 241107v1. 여기 다시 설정 필요합니다!!!!-->
         <div class="header-icons">
-            <a href="상품등록하기.html" class="register-btn">제품 등록하기</a>
-            <a href="main.html" class="icon-btn"><img src="/static/images/home.svg" alt="Home"></a>
+            <p onclick="location.href='상품등록하기.html'" class="register-btn">제품 등록하기</p>
+            <img class="icon-btn" src="/static/images/home.svg" alt="Home">
             {% if session['id'] %}
-            <a href="profile.html"><img src="/static/images/profile.svg" alt="Profile"></a><b>{{session['id']}}님</b><a
+            <img src="/static/images/profile.svg" alt="Profile" onclick="location.href='profile.html'"><b>{{session['id']}}님</b><a
                 href="/logout">logout</a>
             {% else %}
-            <a href="login.html" class="icon-btn"><img src="/static/images/profile.svg" alt="Profile"></a>
+            <img src="/static/images/profile.svg" alt="Profile" class="icon-btn" onclick="location.href='login.html'">
             {% endif %}
             <a href="cart.html" class="icon-btn"><img src="/static/images/cart.svg" alt="Cart"></a>
         </div>
@@ -87,5 +87,4 @@
     </footer>
     {% endblock footer %}
 </body>
-<script src="path/to/main.js"></script>
 </html>
