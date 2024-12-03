@@ -10,9 +10,9 @@
 {% endif %}
 
 <section id="board_list">
-    <h2>Q&A 게시판</h2>
+    <h2>{{ name }} Q&A 게시판</h2>
     <div>
-        <a href="board_write.html"><button>작성하기</button></a>
+        <a href="/board_write/{{ name }}/"><button>작성하기</button></a>
     </div>
     <div>
         <table>
@@ -38,7 +38,7 @@
                         <tr>
                             <td>{{ loop.index }}</td>
                             <td class="title">
-                                <a href="/post_detail/{{ value['item_name'] }}/{{ key }}">{{ value['title'] }}</a>
+                                <a href="/post_detail/{{ name }}/{{ key }}">{{ value['title'] }}</a>
                             </td>
                             <td>{{ value['name'] }}</td>
                             <td>{{ value['date'] }}</td>

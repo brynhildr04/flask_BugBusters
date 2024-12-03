@@ -247,40 +247,66 @@ class DBhandler:
     
     # 게시글 저장
     def save_post(self, data, user_id, date):
-        
         post_info = {
             "id": user_id,
-            "item_name": data['item_name'],
-            "name": data["writer"],         # 작성자 이름 #가져오기 너무 빡센데
-            "title": data["postTitle"],   # 게시물 제목
-            "content": data["postContent"],  # 게시물 내용
-            "date": date,                 # 작성 날짜
-            "views": 0                    # 초기 조회수
+            "name": data.get("writer", "unknown_writer"),  # 안전한 접근
+            "psw":data.get("psw", "No Psw"),
+            "title": data.get("postTitle", "No Title"),   # 게시물 제목 기본값
+            "content": data.get("postContent", ""),       # 게시물 내용 기본값
+            "date": date,                                 # 작성 날짜
+            "views": 0                                    # 초기 조회수
         }
+        item_name = data.get("name", "unknown_item")  # 상품 이름 기본값
         try:
-            # Firebase 경로 수정: post/{user_id}/{post_id}
-            self.db.child("post").child(data['item_name']).push(post_info)
-            return data['item_name']
+            post_key = self.db.child("post").child(item_name).push(post_info)["name"]
+            return item_name, post_key
         except Exception as e:
             print(f"Error saving post: {e}")
-            return None
-    
+            return None, None
+
     # 특정 제품 하위의 게시글 가져오기
     def get_post_by_name(self, item_name):
         post_ref = self.db.child("post").child(item_name).get().val()
+        if post_ref is None:  # Firebase에서 데이터가 없으면
+            print(f"No posts found for item: {item_name}")  # 디버깅 메시지
+            return {}  # 빈 딕셔너리 반환
         return post_ref
 
     # 특정 게시글 가져오기
     def get_post_by_key(self, item_name, key):
-        post=self.db.child("post").child(item_name).child(key).get().val()
+        post = self.db.child("post").child(item_name).child(key).get().val()
+        if not post:
+            print(f"No post found for item: {item_name}, key: {key}")
+            return None
         return post
 
     # 특정 게시글 조회수 증가
-    def increment_views(self, user_id, key):
-        post = self.db.child("post").child(user_id).child(key).get().val()  # 올바른 경로
-        updated_views=int(post['views'])+1
-        self.db.child("post").child(user_id).child(key).update({"views": updated_views})  # 조회수 업데이트
+    def increment_views(self, item_name, key):
+        post = self.db.child("post").child(item_name).child(key).get().val()
+        if not post:
+            print(f"No post found for item: {item_name}, key: {key}")
+            return 0  # 기본 조회수 반환
+        updated_views = int(post.get('views', 0)) + 1
+        self.db.child("post").child(item_name).child(key).update({"views": updated_views})
         return updated_views
+
+    def update_post(self, item_name, key, new_data): 
+        try: 
+            self.db.child("post").child(item_name).child(key).update(new_data) 
+            return True 
+        except Exception as e: 
+            print(f"Error updating post: {e}") 
+            return False
+        
+    def delete_post(self, item_name, key):
+        try:
+            self.db.child("post").child(item_name).child(key).remove()
+            print(f"Post {key} under {item_name} deleted successfully.")
+            return True
+        except Exception as e:
+            print(f"Error deleting post: {e}")
+            return False
+
 
 
 

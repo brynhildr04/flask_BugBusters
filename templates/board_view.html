@@ -28,34 +28,38 @@
     <!-- 삭제 버튼 -->
     <button id="delete">삭제하기</button>
         
-    <button type="button" onclick="location.href='/board_list.html'">뒤로가기</button>
+    <button type="button" onclick="location.href='/board_list/{{ item_name }}/'">뒤로가기</button>
 
     <script src="path/to/main.js"></script>
 </section>
 
-<script>
-const modifyBtn = document.querySelector("#modify");
-
-const modifyBtnHandler = (e) => {
-    location.href = "/board_modify.html?index=" + idx;
-};
-
-modifyBtn.addEventListener("click", modifyBtnHandler);
-
-//삭제하기 버튼
-const deleteBtn = document.querySelector("#delete");
-
-const deleteBtnHandler = (e) => {
-    boardsObj.splice(index, 1);
-    for(let i=0; i < boardsObj.length; i++){
-        boardsObj[i].index=i;
+<script> 
+const modifyBtn = document.querySelector("#modify"); 
+modifyBtn.addEventListener("click", () => { 
+    const password = prompt("비밀번호를 입력하세요:"); 
+    if (password) { 
+        const item_name = "{{ item_name }}"; 
+        const post_key = "{{ key }}"; // 게시글의 고유 ID 
+        location.href = `/board_modify/${item_name}/${post_key}?password=${password}`; } 
     }
+);
 
-    const setBoardsStr = JSON.stringify(boardsObj);
-    localStorage.setItem("boards", setBoardsStr);
-    location.href = "/board_list.html";
-};
-
-deleteBtn.addEventListener("click", deleteBtnHandler);
+const deleteBtn = document.querySelector("#delete"); 
+deleteBtn.addEventListener("click", async () => { 
+    const password = prompt("비밀번호를 입력하세요:"); 
+    if (password) { 
+        const item_name = "{{ item_name }}"; 
+        const post_key = "{{ key }}"; // 게시글의 고유 ID 
+        const response = await fetch(`/delete_post/${item_name}/${post_key}?password=${password}`, { 
+            method: 'DELETE' 
+        }); 
+        if (response.ok) { 
+            alert("게시물이 삭제되었습니다."); 
+            location.href = `/board_list/${item_name}`; 
+            } else { 
+                alert("비밀번호가 일치하지 않습니다."); 
+            } 
+    } 
+});
 </script>
 {% endblock section %}
