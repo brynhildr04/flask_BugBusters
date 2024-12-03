@@ -1,0 +1,61 @@
+{% extends "header.html" %}
+{% block check %}
+<input type="checkbox" id="switch" class="switch-input" onclick="location.href='main_service.html'">
+{% endblock check %}
+{% block section %}
+{% if session['status']=="product" %}
+{% include 'nav_product.html' %}
+{% else %}
+{% include 'nav_service.html' %}
+{% endif %}
+
+<section id="board_view">
+    <h2>{{ post['item_name'] }}에 대한 게시글</h2>
+    {% if post %}
+        <h2>{{ post['title'] }}</h2>
+        <p>작성자: {{ post['name'] }}</p>
+        <p>작성 날짜: {{ post.date }}</p>
+        <div>
+            {{ post['content'] }}
+        </div>
+    {% else %}
+        <p>게시글 데이터를 불러올 수 없습니다.</p>
+    {% endif %}
+
+    <!-- 수정 버튼 -->
+    <button id="modify">수정하기</button>
+
+    <!-- 삭제 버튼 -->
+    <button id="delete">삭제하기</button>
+        
+    <button type="button" onclick="location.href='/board_list.html'">뒤로가기</button>
+
+    <script src="path/to/main.js"></script>
+</section>
+
+<script>
+const modifyBtn = document.querySelector("#modify");
+
+const modifyBtnHandler = (e) => {
+    location.href = "/board_modify.html?index=" + idx;
+};
+
+modifyBtn.addEventListener("click", modifyBtnHandler);
+
+//삭제하기 버튼
+const deleteBtn = document.querySelector("#delete");
+
+const deleteBtnHandler = (e) => {
+    boardsObj.splice(index, 1);
+    for(let i=0; i < boardsObj.length; i++){
+        boardsObj[i].index=i;
+    }
+
+    const setBoardsStr = JSON.stringify(boardsObj);
+    localStorage.setItem("boards", setBoardsStr);
+    location.href = "/board_list.html";
+};
+
+deleteBtn.addEventListener("click", deleteBtnHandler);
+</script>
+{% endblock section %}

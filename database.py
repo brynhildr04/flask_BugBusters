@@ -243,4 +243,57 @@ class DBhandler:
     def clear_cart(self, uid):
         self.db.child("cart").child(uid).remove()
         return 0
+    
+    
+    # 게시글 저장
+    def save_post(self, data, user_id, date):
         
+        post_info = {
+            "id": user_id,
+            "item_name": data['item_name'],
+            "name": data["writer"],         # 작성자 이름 #가져오기 너무 빡센데
+            "title": data["postTitle"],   # 게시물 제목
+            "content": data["postContent"],  # 게시물 내용
+            "date": date,                 # 작성 날짜
+            "views": 0                    # 초기 조회수
+        }
+        try:
+            # Firebase 경로 수정: post/{user_id}/{post_id}
+            self.db.child("post").child(data['item_name']).push(post_info)
+            return data['item_name']
+        except Exception as e:
+            print(f"Error saving post: {e}")
+            return None
+    
+    # 특정 제품 하위의 게시글 가져오기
+    def get_post_by_name(self, item_name):
+        post_ref = self.db.child("post").child(item_name).get().val()
+        return post_ref
+
+    # 특정 게시글 가져오기
+    def get_post_by_key(self, item_name, key):
+        post=self.db.child("post").child(item_name).child(key).get().val()
+        return post
+
+    # 특정 게시글 조회수 증가
+    def increment_views(self, user_id, key):
+        post = self.db.child("post").child(user_id).child(key).get().val()  # 올바른 경로
+        updated_views=int(post['views'])+1
+        self.db.child("post").child(user_id).child(key).update({"views": updated_views})  # 조회수 업데이트
+        return updated_views
+
+
+
+
+
+        
+
+
+
+
+    
+    
+
+
+
+

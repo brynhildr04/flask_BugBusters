@@ -1,0 +1,86 @@
+{% extends "header.html" %}
+{% block check %}
+<input type="checkbox" id="switch" class="switch-input" onclick="location.href='main_service.html'">
+{% endblock check %}
+{% block section %}
+{% if session['status']=="product" %}
+{% include 'nav_product.html' %}
+{% else %}
+{% include 'nav_service.html' %}
+{% endif %}
+<section id="board_modify">
+    <div class="board_modify_container">
+        <h2 class="board_modify_m">게시물 수정</h2>
+        <form id="board_modify_form">
+            <!-- 게시물 제목 -->
+            <label for="postTitle">제목:</label>
+            <input type="text" name="postTitle" style="width: 100%; margin-bottom: 10px;" required />
+
+            <!-- 작성자 id -->
+            <label for="postId">작성자 ID:</label>
+            <input type="text" name="postId" style="width: 100%; margin-bottom: 10px;" required />
+
+            <!-- 게시물 내용 -->
+            <label for="postContent">내용:</label>
+            <textarea name="postContent" rows="5" style="width: 100%; margin-bottom: 10px;" required></textarea>
+
+            <!-- 등록 버튼 -->
+            <button type="submit" name="end_modify">수정완료</button>
+        </form>
+    </div>
+    <button type="button" id="back">뒤로가기</button>
+    <script src="path/to/main.js"></script>
+</section>
+
+<script>
+const modifyFrm = document.querySelector("#board_modify_form");
+const modifyFrmList = document.querySelectorAll("#board_modify_form > div");
+const idx = location.search;
+const index = location.search.split("=")[1];
+const boardsObj = JSON.parse(localStorage.getItem("boards"));
+const board = boardsObj[index];
+
+for (let i = 0; i < modifyFrmList.length; i++) {
+    const element = modifyFrmList[i].childNodes[1];
+    const id = element.name;
+    element.value = board[id];
+}
+
+const isEmpty = (postTitle, postId, postContent) => {
+    if (postTitle.length == 0) throw new Error("제목을 입력해주세요");
+    if (postId.length == 0) throw new Error("작성자를 입력해주세요");
+    if (PostContent.length == 0) throw new Error("내용을 입력해주세요");
+};
+
+const modifyHandler = (e) => {
+    e.preventDefault();
+    const postTitle = e.target.postTitle.value;
+    const postId = e.target.postId.value;
+    const postContent = e.target.postContent.value;
+
+    try {
+        isEmpty(postTitle, postId, postContent);
+        board.postTitle = postTitle;
+        board.postId = postId;
+        board.postContent = postContent;
+
+        const boardsStr = JSON.stringify(boardsObj);
+        localStorage.setItem("boards", boardsStr);
+        location.href = "/board_view.html" + idx;
+    } catch (e) {
+        alert(e.message);
+        console.error(e);
+    }
+};
+
+const backBtn = document.querySelector("#back");
+
+const backBtnHandler = (e) => {
+    location.href = document.referrer;
+};
+
+modifyFrm.addEventListener("submit", modifyHandler);
+backBtn.addEventListener("click", backBtnHandler);
+</script>
+
+{% endblock section %}

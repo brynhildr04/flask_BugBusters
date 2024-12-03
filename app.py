@@ -60,6 +60,7 @@ def view_product_detail(name):
 def view_register():
     return render_template("상품등록하기.html")
 
+
 # kimjiyoon의 추가 페이지 라우트들
 @application.route('/payment.html')
 def view_payment():
@@ -69,22 +70,55 @@ def view_payment():
 def view_aboutus():
     return render_template('aboutus.html')
 
-@application.route('/chat_product.html')
-def view_chat_product():
-    return render_template('chat_product.html')
 
-@application.route('/chat_service.html')
-def view_chat_service():
-    return render_template('chat_service.html')
+#게시판 작성 페이지
+@application.route('/board_write/<name>/')
+def view_board_write(name):
+    writer=session['name']
+    return render_template('board_write.html', name=name, writer=writer)
+
+#작성된 게시판 게시글 백엔드로 넘겨주기
+@application.route("/post_write", methods=["POST"])
+def post_write():
+    data = request.form
+    user_id = session['id']
+    date = f"{datetime.today().year}.{datetime.today().month}.{datetime.today().day}."
+    key = DB.save_post(data, user_id, date)
+    return redirect(url_for("view_board_list", item_name=key))  # 리디렉션으로 이동
+
+#제품에 대한 게시글 리스트 보여주기
+@application.route("/board_list/<item_name>/")
+def view_board_list(item_name):
+    posts = DB.get_post_by_name(item_name) 
+    posts = dict(list(posts.items())[:])
+    print(posts)  # 디버깅 메시지
+    return render_template("board_list.html", posts=posts)
+
+#제품 상세 페이지 보기
+@application.route("/post_detail/<item_name>/<key>")
+def view_post_detail(item_name, key):
+    # 조회수 증가
+    updated_views = DB.increment_views(item_name, key)
+        
+     # 게시글 데이터 가져오기
+    post = DB.get_post_by_key(item_name, key)
+    if post:
+        return render_template("board_view.html", post=post)
+
+    
+@application.route('/board_view.html')
+def view_board_view():
+    return render_template('board_view.html')
+
+@application.route('/board_modify.html')
+def view_board_modify():
+    return render_template('board_modify.html')
 
 @application.route('/purchase.html')
 def view_purchase_product():
     return render_template('purchase.html')
 
 #지금 상황이 좀 꼬였는데, view_detail에서 바로 review.html로 넘어가버려서 404가 뜨는 중 
-@application.route('/question_submit.html')
-def view_question_submit():
-    return render_template('question_submit.html')
 
 #리뷰 작성 페이지
 @application.route("/reg_review_init/<name>/")
@@ -141,6 +175,8 @@ def login_user():
     if DB.find_user(id_, pw_hash):
         session['id']=id_
         session['status']="product" #처음 로그인하면 product를 기본으로 설정
+        data=DB.get_user(session['id'])
+        session['name']=data['name']
         return redirect(url_for('view_main')) #교수님 수업 파일은 상품 리스트가 home 인데 우리는 홈화면이 따로 있으니까... hello()로 고쳐야 할 수도
     else:
         flash("아이디/패스워드가 일치하지 않습니다!")
