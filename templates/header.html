@@ -42,22 +42,22 @@
         </div>
 
         <div class="header-icons">
-            <a class="register-btn" onclick="location.href='상품등록하기.html'">제품 등록하기</a>
-            <a class="icon-btn" onclick="location.href='main.html'">
+            <a class="register-btn" onclick="location.href='/상품등록하기.html'">제품 등록하기</a>
+            <a class="icon-btn" onclick="location.href='/main.html'">
                 <img src="/static/images/home.svg" alt="Home">
             </a>
             {% if session['id'] %}
-            <a onclick="location.href='profile.html'">
+            <a onclick="location.href='/profile.html'">
                 <img src="/static/images/profile.svg" alt="Profile">
             </a>
             <b>{{session['id']}}님</b>
             <a onclick="location.href='/logout'">logout</a>
             {% else %}
-            <a class="icon-btn" onclick="location.href='login.html'">
+            <a class="icon-btn" onclick="location.href='/login.html'">
                 <img src="{{ url_for('static', filename='images/profile.svg') }}" alt="Profile">
             </a>
             {% endif %}
-            <a class="icon-btn" onclick="location.href='cart.html'">
+            <a class="icon-btn" onclick="location.href='/cart.html'">
                 <img src="/static/images/cart.svg" alt="Cart">
             </a>
         </div>

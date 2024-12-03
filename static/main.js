@@ -2,11 +2,11 @@
 function showSwitch() {
     $.ajax({
         type: 'GET',
-        url: '/switch/{{id}}/',
+        url: '/switch',
         data: {},
         success: function (response) {
             let status = response['status'];
-            if (status['status'] == "product") {
+            if (status == "product") {
                 $("#switch").attr("onclick", "toService()");
             }
             else {
@@ -18,26 +18,26 @@ function showSwitch() {
 function toService() {
     $.ajax({
         type: 'POST',
-        url: '/toService/{{id}}/',
+        url: '/toService',
         data: {
             status: "service"
         },
         success: function (response) {
             alert(response['msg'])
-            window.location.reload();
+            window.location.href="/list";
         }
     });
 }
 function toProduct() {
     $.ajax({
         type: 'POST',
-        url: '/toProduct/{{id}}/',
+        url: '/toProduct',
         data: {
             status: "product"
         },
         success: function (response) {
             alert(response['msg'])
-            window.location.reload();
+            window.location.href="/list";
         }
     });
 }

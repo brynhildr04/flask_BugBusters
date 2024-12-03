@@ -92,7 +92,8 @@ class DBhandler:
         return new_dict
     
     #카테고리별 제품 가져오기
-    def get_items_byCategory(self, data, cate):
+    def get_items_byCategory(self, cate):
+        data=self.db.child("item").get()
         target_value=[]
         target_key=[]
         for res in data.each():
@@ -181,17 +182,6 @@ class DBhandler:
         }
         self.db.child("heart").child(user_id).child(item).set(heart_info)
         return True
-    
-    #제품/서비스 상태 알아오기   
-    def get_status(self, uid):
-        status=self.db.child("status").child(uid).get().val()
-        return status
-    def update_status(self, user_id, changed):
-        status_info={
-            "status": changed
-        }
-        self.db.child("status").child(user_id).set(status_info)
-        return changed
     
     #제품 평점 업데이트 #이제 리뷰가 등록되면 평점 가져오는 코드 추가해야 함
     def update_rate(self, name):

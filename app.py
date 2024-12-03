@@ -14,6 +14,7 @@ DB=DBhandler()
 #첫화면
 @application.route("/")
 def hello():
+    session['status']="product"
     return render_template("aboutus.html")
 
 #메인 홈화면
@@ -136,7 +137,7 @@ def login_user():
     pw_hash=hashlib.sha256(pw.encode('utf-8')).hexdigest()
     if DB.find_user(id_, pw_hash):
         session['id']=id_
-        session['status']=DB.get_status(id_) #처음 로그인하면 product를 기본으로 설정
+        session['status']="product" #처음 로그인하면 product를 기본으로 설정
         return redirect(url_for('view_main')) #교수님 수업 파일은 상품 리스트가 home 인데 우리는 홈화면이 따로 있으니까... hello()로 고쳐야 할 수도
     else:
         flash("아이디/패스워드가 일치하지 않습니다!")
@@ -146,6 +147,7 @@ def login_user():
 @application.route("/logout")
 def logout_user():
     session.clear()
+    session['status']="product"
     return redirect("aboutus.html") #교수님 수업 파일은 상품 리스트가 home 인데 우리는 홈화면이 따로 있으니까... hello()로 고쳐야 할 수도
 
 #제품등록 백엔드 연결 #지금 누가 등록했는지에 대한 게 없는데, 만약 추가해야 한다면 로그인이 반드시 필요하다는 것
@@ -219,7 +221,7 @@ def view_list_category(category):
     start_idx=per_page*page #page 인덱스로 start_idx, end_idx 생성
     end_idx=per_page*(page+1)
 
-    data=DB.get_items_byproductType(category)
+    data=DB.get_items_byCategory(category)
 
     item_counts = len(data) #한 페이지에 start_idx, end_idx 만큼 읽어오기
     data = dict(sorted(data.items(), key=lambda x: x[0], reverse=False))
@@ -324,20 +326,20 @@ def unlike(name):
     return jsonify({'msg': '안좋아요 완료!'})
 
 #스위치
-@application.route('/switch/<id>/', methods=['GET'])
-def show_switch(id):
-    status =DB.get_status(session['id'])
+@application.route('/switch', methods=['GET'])
+def show_switch():
+    status=session['status']
     print("showSwtich: ", session['status'])
     return jsonify({'status':status})
-@application.route('/toService/<id>/', methods=['POST'])
-def toService(id):
-    status=DB.update_status(session['id'], "service")
+@application.route('/toService', methods=['POST'])
+def toService():
+    status="service"
     session['status']=status
     print("toService: "+session['status'])
     return jsonify({'msg':'서비스로'})
-@application.route('/toProduct/<id>/', methods=['POST'])
-def toProduct(id):
-    status=DB.update_status(session['id'], "product")
+@application.route('/toProduct', methods=['POST'])
+def toProduct():
+    status="product"
     session['status']=status
     print("toProduct: "+session['status'])
     return jsonify({'msg': '제품으로'})
@@ -364,7 +366,7 @@ if __name__ == "__main__":
     application.run(host='0.0.0.0', debug=True)
 
 
-# 여기서부터 장바구니!!!!!!!
+#장바구니 보기
 @application.route("/cart.html")
 def view_cart():
     cart = DB.get_cart(session['id'])
@@ -372,7 +374,7 @@ def view_cart():
     total=DB.calc_total(session['id'])
     return render_template("cart.html", cart=cart, total_price=total)
 
-# 장바구니 관련 새로운 routes 추가
+# 장바구니에 제품 추가
 @application.route("/add_to_cart/<item_name>", methods=['POST'])
 def add_to_cart(item_name):
     data={
@@ -382,19 +384,19 @@ def add_to_cart(item_name):
     print(data)
     success = DB.add_to_cart(session['id'], data)
     return redirect(url_for('view_cart'))
-
+#장바구니에서 제품 제거
 @application.route("/remove_from_cart/<item_name>", methods=['POST'])
 def remove_from_cart(item_name):
     DB.remove_item(session['id'], item_name)
     return jsonify({"message": "상품이 장바구니에서 제거되었습니다."})
-
+#장바구니에서 수량 변화
 @application.route("/update_cart_quantity/<item_name>", methods=['POST'])
 def update_cart_quantity(item_name):
     quantity = request.form.get('quantity', type=int)    
     data=DB.update_quantity(session['id'], item_name, quantity)
     total=DB.calc_total(session['id'])
     return jsonify({"message": "수량이 업데이트되었습니다.", "data": data, "total": total})
-
+#장바구니 비우기
 @application.route("/clear_cart", methods=['GET'])
 def clear_cart():
     DB.clear_cart(session['id'])
