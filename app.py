@@ -25,8 +25,11 @@ def view_main():
 #마이페이지
 @application.route("/profile.html")
 def view_profile():
-    data=DB.find_user
-    return render_template("profile.html")
+    data=DB.get_user(session['id'])
+    if(data==None):
+        return render_template("login.html")
+    heart=DB.get_heart_byId(session['id'])
+    return render_template("profile.html", data=data, heart=heart)
 
 #로그인
 @application.route("/login.html")
@@ -156,7 +159,7 @@ def reg_item_submit_post():
     data = {
         "seller": session['id'],
         "title": request.form.get("title", ""),
-        "price": request.form.get("price", ""),
+        "price": request.form.get("price", type=int),
         "product_type": request.form.get("product_type", ""),
         "category": request.form.get("category", ""),
         "description": request.form.get("description", ""),
@@ -208,7 +211,7 @@ def view_list():
         row2=locals()['data_1'].items(),
         limit=per_page,
         page=page, #현재 페이지 인덱스
-        page_count=int(math.ceil((item_counts/per_page)+1)), #페이지 개수
+        page_count=int(math.ceil((item_counts/per_page))), #페이지 개수
         total=item_counts
         )
 #카테고리별 제품 가져오기
@@ -243,12 +246,12 @@ def view_list_category(category):
         row2=locals()['data_1'].items(),
         limit=per_page,
         page=page, #현재 페이지 인덱스
-        page_count=int(math.ceil((item_counts/per_page)+1)), #페이지 개수
+        page_count=int(math.ceil((item_counts/per_page))), #페이지 개수
         total=item_counts,
         category=category
         )
 
-#데이터베이스에서 리뷰 가져오기 (전체) 이건 제출용
+#데이터베이스에서 리뷰 가져오기 (전체) 이건 제출용 #이거 조만간 삭제해야 할 거 같은데 금요일에 보여드리고 삭제하든 말든 해야지
 @application.route("/all_review")
 def view_review():
     page = request.args.get("page", 0, type=int)
@@ -273,7 +276,7 @@ def view_review():
         row2=locals()['data_1'].items(),
         limit=per_page,
         page=page,
-        page_count=int((item_counts/per_page)+1),
+        page_count=int(math.ceil((item_counts/per_page))),
         total=item_counts)
 
 #데이터베이스에서 리뷰 가져오기 (상품별)
@@ -301,13 +304,14 @@ def view_product_review(name):
             locals()['data_{}'.format(i)] = dict(list(data.items())[i*per_row:(i+1)*per_row])
     return render_template(
         "/all_item_review.html",
+        name=name,
         datas=data.items(),
         row1=locals()['data_0'].items(),
         row2=locals()['data_1'].items(),
         row3=locals()['data_2'].items(),
         limit=per_page,
         page=page,
-        page_count=int((item_counts/per_page)+1),
+        page_count=int(math.ceil((item_counts/per_page))),
         total=item_counts)
 
 #좋아요 기능 백엔드 연결

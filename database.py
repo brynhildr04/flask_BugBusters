@@ -35,7 +35,6 @@ class DBhandler:
             "bmonth": data['bmonth'],
             "bday": data['bday'],
             "pw": pw,
-            #"pw_check":  pw,
             "phoneNum": data['phoneNum'],
             "address": data['address'],
             "agreed": data['agreed']
@@ -68,6 +67,13 @@ class DBhandler:
             if value['id']==id_ and value['pw']==pw_:
                 return True
         return False
+    def get_user(self, id_):
+        users=self.db.child("user").get()
+        for res in users.each():
+            value=res.val()
+            if(value['id']==id_):
+                return res.val()
+        return None
     
     def get_items(self):
         items=self.db.child("item").get().val()
@@ -175,13 +181,17 @@ class DBhandler:
             if key_value == name:
                 target_value=res.val()
         return target_value
-        
     def update_heart(self, user_id, isHeart, item):
         heart_info ={
             "interested": isHeart
         }
         self.db.child("heart").child(user_id).child(item).set(heart_info)
         return True
+    
+    #좋아요 목록 가져오기
+    def get_heart_byId(self, uid):
+        hearts=self.db.child("heart").child(uid).get().val()
+        return hearts
     
     #제품 평점 업데이트 #이제 리뷰가 등록되면 평점 가져오는 코드 추가해야 함
     def update_rate(self, name):

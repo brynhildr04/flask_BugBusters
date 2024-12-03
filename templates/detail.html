@@ -47,9 +47,24 @@
             }
         });
     }
+    /*총 가격 변경을 위한 javajscript*/
+    function changeTotal() {
+        var quantity = $("#quantity").val();
+        var price = "{{data.price}}";
+        price = parseInt(price, 10);
+        var total = quantity * price;
+        total=total.toLocaleString('ko-KR')+"원";
+        $("#total-amount").html(total);
+    }
+
     $(document).ready(function () {
         showHeart();
+        $("#quantity").change(function () {
+            changeTotal();
+        });
     });
+
+
 </script>
 
 {% if session['status']=="product" %}
@@ -104,7 +119,7 @@
 
             <div class="total-price">
                 <span>Total</span>
-                <span class="total-amount" id="total-amount">{{data.price}}원</span> <!--여기는 jquery 사용하면 된다고 함-->
+                <span class="total-amount" id="total-amount">{{ "{:,}".format(data.price | int) }}원</span> <!--여기는 jquery 사용하면 된다고 함-->
             </div>
             <!--좋아요 버튼-->
             <i class="fa fa-heart" id="heart"></i>
