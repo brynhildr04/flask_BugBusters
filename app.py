@@ -79,48 +79,66 @@ def view_board_write():
 #작성된 게시판 게시글 백엔드로 넘겨주기
 @application.route("/post_write", methods=["POST"])
 def post_write():
-    # 데이터 가져오기
     data = {
-        "name": session.get("id"),  # 작성자 이름
-        "postTitle": request.form.get("postTitle"),  # 게시물 제목
-        "postContent": request.form.get("postContent")  # 게시물 내용
+        "name": session.get("id"),
+        "postTitle": request.form.get("postTitle"),
+        "postContent": request.form.get("postContent")
     }
-    user_id = session.get("id")  # 로그인된 사용자 ID
+    user_id = session.get("id")
     if not user_id:
         flash("로그인이 필요합니다!")
         return redirect(url_for("login"))
 
     date = f"{datetime.today().year}.{datetime.today().month}.{datetime.today().day}."
-
-    # 데이터 저장
     key = DB.save_post(data, user_id, date)
+
     if key:
         flash("게시글이 저장되었습니다!")
-        return redirect(url_for("view_board_list"))
+        new_post = {
+            "key": key,
+            "name": data["name"],
+            "title": data["postTitle"],
+            "content": data["postContent"],
+            "date": date,
+            "views": 0
+        }
+        # 바로 새 게시글을 목록으로 반영
+        posts = [new_post] + session.get("posts", [])
+        session["posts"] = posts  # 세션에 저장
+        return redirect(url_for("view_board_list"))  # 리디렉션으로 이동
     else:
         flash("게시글 저장에 실패했습니다.")
         return redirect(url_for("view_board_write"))
-    
+
 @application.route("/board_list.html")
 def view_board_list():
     posts = DB.get_all_posts()
-    print(f"Posts to display: {posts}")  # 디버깅 메시지
+    print(f"Posts for list: {posts}")  # 디버깅 메시지
     return render_template("board_list.html", posts=posts)
 
 
 
-@application.route("/post_detail/<name>/<key>")
-def view_post_detail(name, key):
-    DB.increment_views(name, key)  # 조회수 증가
-    post = DB.get_post_by_key(name, key)
-    if post:
-        return render_template("board_view.html", post=post)
-    else:
-        flash("해당 게시글을 찾을 수 없습니다.")
+@application.route("/post_detail/<user_id>/<post_id>")
+def view_post_detail(user_id, post_id):
+    try:
+        # 조회수 증가
+        updated_views = DB.increment_views(user_id, post_id)
+        print(f"Updated views for post: {updated_views}")
+        
+        # 게시글 데이터 가져오기
+        post = DB.get_post_by_key(user_id, post_id)
+        if post:
+            return render_template("board_view.html", post=post)
+        else:
+            flash("해당 게시글을 찾을 수 없습니다.")
+            return redirect(url_for("view_board_list"))
+    except Exception as e:
+        print(f"Error in post_detail route: {e}")
+        flash("오류가 발생했습니다.")
         return redirect(url_for("view_board_list"))
+
+
     
-
-
 @application.route('/board_view.html')
 def view_board_view():
     return render_template('board_view.html')

@@ -226,22 +226,29 @@ class DBhandler:
             "date": date,                 # 작성 날짜
             "views": 0                    # 초기 조회수
         }
-        # Firebase에 게시글 저장 및 고유 키 반환
-        key = self.db.child("post").child(data["name"]).push(post_info).get("name")
-        print(f"Post saved with key: {key}")  # 디버깅 메시지
-        return key
-
+        try:
+            # Firebase 경로 수정: post/{user_id}/{post_id}
+            key = self.db.child("post").child(user_id).push(post_info).get("name")
+            print(f"Post saved under post/{user_id} with key: {key}")
+            return key
+        except Exception as e:
+            print(f"Error saving post: {e}")
+            return None
     
     # 고유 키로 특정 게시글 가져오기
-    def get_post_by_key(self, name, key):
+    def get_post_by_key(self, user_id, post_id):
         try:
-            # Firebase에서 고유 키를 기반으로 특정 게시글 가져오기
-            post = self.db.child("post").child(name).child(key).get()
-            return post.val() if post.val() else None
+            post_ref = self.db.child("post").child(user_id).child(post_id)
+            post = post_ref.get()
+            if post.val():
+                post_data = post.val()
+                post_data["key"] = post_id  # 게시글 키 추가
+                return post_data
+            return None
         except Exception as e:
             print(f"Error fetching post by key: {e}")
             return None
-        
+
     # 모든 게시글 목록 가져오기
     def get_all_posts(self):
         try:
@@ -249,26 +256,39 @@ class DBhandler:
             result = []
             if posts.each():
                 for user_posts in posts.each():  # 각 사용자의 게시글
-                    for key, post in user_posts.val().items():
-                        post["key"] = key  # 게시글 고유 키 추가
-                        post["name"] = user_posts.key()  # 작성자 추가
+                    user_id = user_posts.key()  # user_id
+                    for post_id, post in user_posts.val().items():
+                        post["key"] = post_id
+                        post["user_id"] = user_id
                         result.append(post)
-            print(f"Fetched posts: {result}")  # 디버깅 메시지
+            print(f"Fetched posts: {result}")
             return result
         except Exception as e:
             print(f"Error fetching posts: {e}")
             return []
 
-
     # 특정 게시글 조회수 증가
-    def increment_views(self, name, key):
+    def increment_views(self, user_id, post_id):
         try:
-            post = self.db.child("post").child(name).child(key).get()
+            post_ref = self.db.child("post").child(user_id).child(post_id)  # 올바른 경로
+            post = post_ref.get()
             if post.val():
                 current_views = post.val().get("views", 0)
-                self.db.child("post").child(name).child(key).update({"views": current_views + 1})
+                updated_views = current_views + 1
+                post_ref.update({"views": updated_views})  # 조회수 업데이트
+                print(f"Views updated to: {updated_views} for post/{post_id}")
+                return updated_views
+            else:
+                print(f"Post not found at post/{user_id}/{post_id}.")
+                return 0
         except Exception as e:
             print(f"Error updating views: {e}")
+            return 0
+
+
+
+
+
         
 
 
