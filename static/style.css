@@ -111,16 +111,20 @@
     font-weight: 600;
     font-size: 1.2rem;
 }
+ 
 
+/*important 달고 별짓을 다해도... 검색바가 가로로 안길어집니다...*/
 .search-bar {
-    position: relative;
-    display: flex;
+    position: relative !important;
+    display: flex !important;
     justify-content: center;
     align-items: center;
-    flex: 0 1 1000px;
-    margin: 0 auto;
-    height: 36px;
+    max-width: 1000px !important; 
+    width: 100% !important; 
+    margin: 0 auto; 
+    height: 36px; 
 }
+
 
 .search-button {
     background: none;
@@ -141,13 +145,14 @@
 }
 
 .search-bar input {
-    width: 100%;
+    width: 100% !important;
     height: 36px;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 2.5rem;
     border: none;
     border-radius: 20px;
     background: #f5f5f5;
     font-size: 0.9rem;
+    box-sizing: border-box !important;
 }
 
 .search-bar input:focus {
@@ -404,6 +409,7 @@ hr {
 /* 입력 필드 */
 .data_input.login {
     width: 100%;
+    max-width: 550px;
     height: 48px;
     padding: 0 16px;
     border: 1px solid #E6E6E6;
@@ -452,16 +458,25 @@ hr {
 }
 
 /*회원가입 테이블*/
-#signup_table{
+#signup_table {
     width: 100%;
-    margin:0;
+    max-width: 1000px; 
+    margin: 0 auto;
+    border-spacing: 0; 
 }
 
-#signup_table th{
-    text-align: left;
-    padding-right: 20px;
-    width: 100px;
+#signup_table th {
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+    padding: 5px 10px; /* 셀 내부 여백 추가 */
+    vertical-align: middle; /* 수직 중앙 정렬 */
+    width: 150px; /* 고정된 레이블 너비 */
 }
+
+#signup_table td {
+    padding: 5px 10px; /* 내부 여백 */
+    vertical-align: middle; /* 수직 중앙 정렬 */
+}
+
 
 .row.signup {
     display: flex;
@@ -474,9 +489,14 @@ hr {
 }
 
 .column.middle.signup {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
+    flex: 0 1 600px;
+    /* 최대 너비 설정 */
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin: 0 20px;
+    /* 좌우 여백 추가 */
 }
 
 
@@ -489,15 +509,22 @@ hr {
 
 /* 입력 필드 */
 .data_input.signup {
+    
+    box-sizing: border-box;
+    margin: 5px auto; /* 간격 추가 및 중앙 정렬 */
+    display: block;
+    
     width: 100%;
-    height: 40px;
-    padding: 0 12px;
-    border: 1px solid #ddd;
+    max-width: 550px;
+    height: 48px;
+    padding: 0 16px;
+    border: 1px solid #E6E6E6;
     border-radius: 8px;
     font-size: 16px;
-    background-color: #f8f8f8;
+    background-color: #E6E6E6;
     transition: border-color 0.3s, background-color 0.3s;
 }
+
 
 .data_input.signup:focus {
     border-color: #006633;
@@ -512,7 +539,7 @@ hr {
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 16px;
-    background-color: #f8f8f8;
+    background-color: #E6E6E6;
     transition: border-color 0.3s, background-color 0.3s;
 }
 
@@ -529,7 +556,7 @@ hr {
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 16px;
-    background-color: #f8f8f8;
+    background-color: #E6E6E6;
     transition: border-color 0.3s, background-color 0.3s;
 }
 
@@ -539,16 +566,12 @@ hr {
     outline: none;
 }
 
-#signup_table tr {
-    margin: 0; /* 행 간 간격 제거 */
-    padding: 0; /* 행 내부 간격 제거 */
-}
 
 /* 회원가입 버튼 */
 #signup_btn.submit_btn {
-    width: 450px;  /* 241108v1. 버튼 크기 조정 */
+    width: 450px;
     height: 48px;
-    background-color: #006633;
+    background-color: #00462A;
     color: white;
     border: none;
     border-radius: 8px;
@@ -557,7 +580,7 @@ hr {
     cursor: pointer;
     transition: background-color 0.3s;
     margin: 20px auto;
-    display: block;     /* block 요소로 설정 */
+    display: block;
 }
 
 #signup_btn.submit_btn:hover {
@@ -675,7 +698,8 @@ hr {
 .row {
     display: flex;
     justify-content: center;
-    max-width: 1200px;
+    width: auto; 
+    max-width: 100%;
     margin: 40px auto;
 }
 
@@ -685,7 +709,7 @@ hr {
 }
 
 .column.middle {
-    flex: 0 1 600px;
+    flex: 0 1 800px;
     /* 최대 너비 설정 */
     background: white;
     padding: 40px;
@@ -699,6 +723,7 @@ hr {
 #find {
     padding: 0;
     width: 100%;
+    max-width: 750px;
 }
 
 /* 제목 스타일 */
@@ -737,8 +762,10 @@ hr {
 #findId th {
     width: 100px;
     text-align: left;
-    padding: 12px 0;
+    padding: 10px 15px;
+    width: auto; 
     vertical-align: middle;
+    
 }
 
 #findId th .data_name {
@@ -748,7 +775,9 @@ hr {
 
 /* 입력 필드 그룹 정렬 */
 #findId td {
-    padding: 5px 0;
+    padding: 10px 15px; 
+    width: auto; 
+    flex: 2;
 }
 
 #findId .data_input.findId {
@@ -766,12 +795,14 @@ hr {
 
 /* 입력 필드 스타일 */
 #findId .data_input {
-    height: 45px;
-    padding: 0 15px;
+    width: 100%; 
+    max-width: 300px; 
+    height: 45px; 
+    padding: 0 15px; 
     border: 1px solid #D9D9D9;
     border-radius: 8px;
-    font-size: 15px;
-    background-color: #E6E6E6;
+    background-color: #E6E6E6; 
+    box-sizing: border-box; 
 }
 
 #findId input[type="text"],
@@ -783,9 +814,6 @@ hr {
 #findId input[type="text"].findId {
     width: 180px;
 }
-
-
-
 
 #findId .data_input:focus {
     border-color: #00462A;
@@ -1210,7 +1238,7 @@ footer {
 }
 
 #aboutus_r {
-    background-color: #E6E6E6;
+    background-color: #f5f5f5;
 }
 
 #aboutus_r.container {
@@ -2083,4 +2111,48 @@ footer {
 }
 .delete-btn:hover {
     background-color: #00462A;
+}
+
+
+.page-title {
+    text-align: center; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 20px 0; 
+    position: relative;
+}
+
+.page-title img {
+    max-width: 80%; 
+    height: auto; 
+    border-radius: 10px; 
+}
+
+.auth-buttons {
+    position: absolute; 
+    bottom: 25%; /* "소소한 이화" 텍스트 바로 아래로 위치 조정 */
+    left: 50%; 
+    transform: translateX(-50%); 
+    display: flex;
+    gap: 20px; /* 버튼 간 간격 */
+}
+
+.auth-buttons .login-btn,
+.auth-buttons .signup-btn {
+    padding: 10px 20px;
+    background-color: #00462A; 
+    color: white; 
+    border: none; 
+    border-radius: 18px; 
+    cursor: pointer;
+    font-size: 1rem; 
+    transition: background-color 0.3s ease, transform 0.2s ease; 
+}
+
+.auth-buttons .login-btn:hover,
+.auth-buttons .signup-btn:hover {
+    background-color: #A4C1AE; 
+    transform: translateY(-2px); 
 }
