@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    {% block header %} <!--header가 필요 없는 파일은 없앨 수 있게-->
+    {% block header %}
     <header class="header">
         <div class="logo-section">
             <div class="logo">
@@ -42,25 +42,32 @@
             </form>
         </div>
 
-
-
-        <!-- 241107v1. 여기 다시 설정 필요합니다!!!!-->
         <div class="header-icons">
-            <a href="상품등록하기.html" class="register-btn">제품 등록하기</a>
-            <a href="main.html" class="icon-btn"><img src="/static/images/home.svg" alt="Home"></a>
+            <a class="register-btn" onclick="location.href='/상품등록하기.html'">제품 등록하기</a>
+            <!--링크 연결 문제 그냥 href앞에 / 붙여줘서 해결하면 됨-->
+            <a class="icon-btn" onclick="location.href='/main.html'">
+                <img src="/static/images/home.svg" alt="Home">
+            </a>
             {% if session['id'] %}
-            <a href="profile.html"><img src="/static/images/profile.svg" alt="Profile"></a><b>{{session['id']}}님</b><a
-                href="/logout">logout</a>
+            <a onclick="location.href='/profile.html'">
+                <img src="/static/images/profile.svg" alt="Profile">
+            </a>
+            <b>{{session['id']}}님</b>
+            <a onclick="location.href='/logout'">logout</a>
             {% else %}
-            <a href="login.html" class="icon-btn"><img src="/static/images/profile.svg" alt="Profile"></a>
+            <a class="icon-btn" onclick="location.href='/login.html'">
+                <img src="{{ url_for('static', filename='images/profile.svg') }}" alt="Profile">
+            </a>
             {% endif %}
-            <a href="cart.html" class="icon-btn"><img src="/static/images/cart.svg" alt="Cart"></a>
+            <a class="icon-btn" onclick="location.href='/cart.html'">
+                <img src="/static/images/cart.svg" alt="Cart">
+            </a>
         </div>
     </header>
     {% endblock header %}
     {% block section %}
     {% endblock section %}
-    {% block footer %} <!--footer 필요 없는 파일은 지울 수 있게-->
+    {% block footer %}
     <footer>
         <div class="footer-content">
             <div class="footer-logo">
@@ -69,23 +76,17 @@
             <div class="footer-name">
                 <h3>소소한 이화</h3>
             </div>
-            <!--http full name으로 추가하기 !!!!!!!-->
             <div class="footer-links">
-                <a href="aboutus.html">About Us</a>
-                <!--여기 교체 필요
-                <a href="http://127.0.0.1:5000">제품</a>
-                <a href="main_service.html">서비스</a>-->
-
+                <a onclick="location.href='aboutus.html'">About Us</a>
             </div>
         </div>
         <div class="footer-bottom">
             <div class="footer-info">
                 <span>©copyright 2024</span>
             </div>
-
         </div>
     </footer>
     {% endblock footer %}
 </body>
-<script src="path/to/main.js"></script>
+
 </html>

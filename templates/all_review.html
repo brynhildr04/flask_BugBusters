@@ -17,7 +17,7 @@
         <!--첫 번째 열-->
         {% for key, value in row1 %}
         <button onclick="location.href='/review_detail/{{key}}';" class="product-card" style="cursor:pointer">
-            <div class="product-image"><img src="static/images/{{value.img_path}}"></div>
+            <div class="product-image"><img src="../static/images/{{value.img_path}}"></div>
             <div class="product-info">
                 <h3># {{value.title}}</h3>
                 <p class="product-name">{{key}}</p>
@@ -28,7 +28,7 @@
         <!--두 번쨰 열-->
         {% for key, value in row2 %}
         <button onclick="location.href='/review_detail/{{key}}';" class="product-card">
-            <div class="product-image"><img src="static/images/{{value.img_path}}"></div>
+            <div class="product-image"><img src="../static/images/{{value.img_path}}"></div>
             <div class="product-info">
                 <h3># {{value.title}}</h3>
                 <p class="product-name">{{key}}</p>
@@ -44,7 +44,7 @@
             <ul>
                 <li>
                     {% for i in range(page_count)%}
-                    <a href="{{url_for('view_list', page=i)}}" color="black">{{i}}</a>
+                    <a href="{{url_for('view_review', page=i)}}" color="black">{{i}}</a>
                     {% endfor %}
                 </li>
             </ul>

@@ -1,7 +1,8 @@
 {% extends "header.html" %}
 {% block section %}
-<!--좋아요를 위한 javascript-->
+
 <script>
+    /*좋아요를 위한 javascript*/
     function showHeart() {
         $.ajax({
             type: 'GET',
@@ -17,7 +18,6 @@
                     $("#heart").css("color", "grey");
                     $("#heart").attr("onclick", "like()");
                 }
-                //alert("showheart!")
             }
         });
     }
@@ -47,9 +47,24 @@
             }
         });
     }
+    /*총 가격 변경을 위한 javajscript*/
+    function changeTotal() {
+        var quantity = $("#quantity").val();
+        var price = "{{data.price}}";
+        price = parseInt(price, 10);
+        var total = quantity * price;
+        total=total.toLocaleString('ko-KR')+"원";
+        $("#total-amount").html(total);
+    }
+
     $(document).ready(function () {
         showHeart();
+        $("#quantity").change(function () {
+            changeTotal();
+        });
     });
+
+
 </script>
 
 {% if session['status']=="product" %}
@@ -96,36 +111,34 @@
         <div class="product-price">
             <span class="price">{{data.price}}</span> <!--상품 등록 화면에서 가격 입력받아야 함...-->
         </div>
+        <form action="/add_to_cart/{{name}}" method="POST" enctype="multipart/form-data">
+            <div class="quantity-selector">
+                <label for="quantity">수량:</label>
+                <input type="number" id="quantity" name="quantity" min="1" max="9" value="1">
+            </div>
 
-        <div class="quantity-selector">
-            <label for="quantity">수량:</label>
-            <input type="number" id="quantity" name="quantity" min="1" max="9" value="1">
-        </div>
+            <div class="total-price">
+                <span>Total</span>
+                <span class="total-amount" id="total-amount">{{ "{:,}".format(data.price | int) }}원</span> <!--여기는 jquery 사용하면 된다고 함-->
+            </div>
+            <!--좋아요 버튼-->
+            <i class="fa fa-heart" id="heart"></i>
 
-        <div class="total-price">
-            <span>Total</span>
-            <span class="total-amount">{{data.price}}원 (2개)</span> <!--여기는 jquery 사용하면 된다고 함-->
-        </div>
-        <!--좋아요 버튼-->
-        <i class="fa fa-heart" id="heart"></i>
-
-        <div class="product-buttons">
-            <button class="button cart-button" onclick="addToCart1(); location.href='cart_product.html';">
-                Add To Cart
-            </button>
-            <button class="button buy-button" onclick="buy(); location.href='purchase_product.html';">
-                Buy
-            </button>
-        </div>
+            <div class="product-buttons">
+                <input class="button cart-button" type="submit" value="Add To Cart" onclick="{{url_for('view_cart')}}">
+                <button class="button buy-button" onclick="buy(); location.href='purchase.html';">
+                    Buy
+                </button>
+            </div>
+        </form>
     </div>
 </div>
-
 <!-- 상품 탭 섹션 -->
 <div class="product-tabs">
     <div class="tab-buttons">
         <button class="tab active" id="detailsTab" onclick="showDetails()">상세 설명</button>
         <button class="tab" id="reviewsTab" onclick="showReviews()">리뷰({{data.rateNum}})</button>
-        <button class="tab" id="sellerTab" onclick="location.href='chat_product.html'">판매자 문의</button>
+        <button class="tab" id="sellerTab" onclick="location.href='/board_list/{{ name }}/'">판매자 문의</button>
     </div>
 
     <div id="detailsContent" class="tab-content active-content">
@@ -149,7 +162,7 @@
 
 
             <!-- 리뷰 요약 정보 -->
-            <div class="review-summary"> 
+            <div class="review-summary">
                 <div class="average-rating">
                     <div class="rating-number">{{data.rate}}</div>
                     <div class="stars-container">
@@ -181,5 +194,5 @@
         </div>
     </div>
 </div>
-<script src="path/to/main.js"></script>
+
 {% endblock section %}
