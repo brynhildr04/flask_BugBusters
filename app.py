@@ -98,25 +98,32 @@ def post_write():
 @application.route("/board_list/<name>/")
 def view_board_list(name):
     posts = DB.get_post_by_name(name)
+    updated_posts = []
+    
     if not posts:
         posts = {}
         print(f"No posts for {name}, showing empty board.")  # 디버깅 메시지
     return render_template("board_list.html", posts=posts, name=name)
 
 # 제품 상세 페이지 보기
-@application.route("/post_detail/<item_name>/<key>")
-def view_post_detail(item_name, key):
-    updated_views = DB.increment_views(item_name, key)
-    post = DB.get_post_by_key(item_name, key)
+@application.route("/post_detail/<item_name>/<post_key>")
+def view_post_detail(item_name, post_key):
+    updated_views = DB.increment_views(item_name, post_key)
+    post = DB.get_post_by_key(item_name, post_key)
+
+    comments = DB.get_comments_by_post(item_name, post_key)
+
     if post:
-        return render_template("board_view.html", post=post, item_name=item_name, key=key)
+        return render_template("board_view.html", post=post, item_name=item_name, post_key=post_key, comments=comments)
     else:
         return "Post not found", 404
 
+#제품별 게시판 보기
 @application.route('/board_view.html')
 def view_board_view():
     return render_template('board_view.html')
 
+#게시글 지우기
 @application.route("/delete_post/<item_name>/<post_key>", methods=["DELETE"])
 def delete_post(item_name, post_key):
     password = request.args.get('password')
@@ -127,6 +134,7 @@ def delete_post(item_name, post_key):
     else:
         return '', 401
 
+#게시글 수정하기
 @application.route("/board_modify/<item_name>/<post_key>", methods=["GET", "POST"])
 def modify_post(item_name, post_key):
     if request.method == "POST":
@@ -146,6 +154,100 @@ def modify_post(item_name, post_key):
     
     post = DB.get_post_by_key(item_name, post_key)
     return render_template("board_modify.html", post=post, item_name=item_name, post_key=post_key)
+
+@application.route('/comment_write/<item_name>/<post_key>/', methods=["POST"])
+def write_comment(item_name, post_key):
+    user_id = session.get('id', 'unknown_user')  # 세션에서 사용자 ID 가져오기
+    content = request.form.get("commentContent", "")
+    comment_password = request.form.get("commentPassword", "")  # 댓글 비밀번호 받기
+
+    # 댓글 비밀번호가 제대로 입력되었는지 확인
+    if not comment_password:
+        return "댓글 비밀번호를 입력해야 댓글을 작성할 수 있습니다.", 400
+
+    # 댓글 내용이 없으면 오류 반환
+    if not content:
+        return "댓글 내용을 입력하세요.", 400
+
+    # 댓글을 DB에 저장
+    comment_key = DB.save_comment(item_name, post_key, user_id, content, comment_password)
+    if not comment_key:
+        return "댓글 저장에 실패했습니다.", 500
+
+    # 댓글 작성 후 해당 게시글의 댓글 목록을 반환
+    comments = DB.get_comments_by_post(item_name, post_key)
+    return jsonify(comments)
+
+# 댓글 수정
+@application.route("/comment_modify/<item_name>/<post_key>/<comment_key>", methods=["GET", "POST"])
+def modify_comment(item_name, post_key, comment_key):
+    # 비밀번호 확인
+    if request.method == "GET":
+        password = request.args.get("password")
+        comment = DB.get_comment_by_key(item_name, post_key, comment_key)
+        if not comment or comment["password"] != password:
+            return "비밀번호가 일치하지 않습니다.", 401
+
+        # 비밀번호가 맞으면 수정 페이지 렌더링
+        return render_template("comment_modify.html", comment=comment, item_name=item_name, post_key=post_key, comment_key=comment_key)
+
+    # POST 요청: 댓글 수정
+    new_content = request.form.get("newContent")
+    if DB.update_comment(item_name, post_key, comment_key, new_content):
+        return '', 200
+    return "댓글 수정에 실패했습니다.", 500
+
+# 댓글 삭제
+@application.route("/comment_delete/<item_name>/<post_key>/<comment_key>", methods=["DELETE"])
+def delete_comment(item_name, post_key, comment_key):
+    comment = DB.get_comment_by_key(item_name, post_key, comment_key)
+    comment_password = request.args.get("password")
+
+    if comment and comment["password"] == comment_password:  # 비밀번호 확인
+        if DB.delete_comment(item_name, post_key, comment_key):
+            return '', 200
+        return '', 500
+    return '', 401
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @application.route('/purchase.html')
 def view_purchase_product():

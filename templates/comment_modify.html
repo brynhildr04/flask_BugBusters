@@ -1,0 +1,19 @@
+{% extends "header.html" %}
+{% block check %}
+<input type="checkbox" id="switch" class="switch-input" onclick="location.href='main_service.html'">
+{% endblock check %}
+{% block section %}
+{% if session['status']=="product" %}
+{% include 'nav_product.html' %}
+{% else %}
+{% include 'nav_service.html' %}
+{% endif %}
+
+<h2>댓글 수정</h2>
+<form method="POST" action="{{ url_for('modify_comment', item_name=item_name, post_key=post_key, comment_key=comment_key) }}">
+    <label for="newContent">수정할 내용:</label>
+    <textarea id="newContent" name="newContent" rows="5" cols="40">{{ comment['content'] }}</textarea>
+    <button type="submit">수정 완료</button>
+</form>
+<button onclick="window.location.href='/post_detail/{{ item_name }}/{{ post_key }}';">취소</button>
+{% endblock section %}
