@@ -445,3 +445,5 @@ function initializeSlider(trackId, prevBtnId, nextBtnId) {
         nextBtn.style.opacity = currentPosition >= maxPosition ? '0.5' : '1';
     }
 }
+
+//댓글 등록 js
