@@ -10,8 +10,8 @@
 <div class="row signup">
     <div class="column side"></div>
     <div class="column middle signup">
-        <h2 id="login" style="text-align: center;">회원가입</h2>
-        <hr width=100%>
+        <h2 id="login">회원가입</h2>
+        <hr>
         <form method="post" action="/signup_post">
             <table id="signup_table">
                 <tr>
@@ -19,7 +19,7 @@
                         <label class="data_name" for="id">아이디</label>
                     </th>
                     <td>
-                        <input class="data_input signup" type="text" name="id" id="id" required>
+                        <input class="data_input signup" type="text" name="id" id="id" placeholder="아이디를 입력하세요" required>
                     </td>
                 </tr>
                 <tr>
@@ -27,7 +27,7 @@
                         <label class="data_name" for="name">이름</label>
                     </th>
                     <td>
-                        <input class="data_input signup" type="text" name="name" id="name" required>
+                        <input class="data_input signup" type="text" name="name" id="name" placeholder="이름을 입력하세요" required>
                     </td>
                 </tr>
                 <tr>
@@ -35,15 +35,16 @@
                         <label class="data_name" for="stdNum">학번</label>
                     </th>
                     <td>
-                        <input class="data_input signup" type="number" name="stdNum" id="stdNum" required>
+                        <input class="data_input signup" type="number" name="stdNum" id="stdNum" placeholder="학번을 입력하세요" required>
                     </td>
                 </tr>
                 <tr>
                     <th>
                         <label class="data_name" for="email_id">학교 이메일</label>
                     </th>
-                    <td>
-                        <input class="data_input email" type="text" name="email_id" id="email_id" required>&nbsp;@
+                    <td class="email-input-group">
+                        <input class="data_input email" type="text" name="email_id" id="email_id" placeholder="이메일" required>
+                        <span>@</span>
                         <select class="data_input email" name="email_domain" id="email_domain">
                             <option value="ewhain.net">ewhain.net</option>
                             <option value="ewha.ac.kr">ewha.ac.kr</option>
@@ -54,12 +55,10 @@
                     <th>
                         <label class="data_name" for="birth">생년월일</label>
                     </th>
-                    <td>
-
-                        <input class="data_input date" type="number" name="byear" id="byear" required>년
-                        <input class="data_input date" type="number" min="1" max="12" name="bmonth" id="bmonth" required>월
-                        <input class="data_input date" type="number" min="1" max="31" name="bday" id="bday" required>일
-
+                    <td class="birth-input-group">
+                        <input class="data_input date" type="number" name="byear" id="byear" placeholder="년" required>
+                        <input class="data_input date" type="number" min="1" max="12" name="bmonth" id="bmonth" placeholder="월" required>
+                        <input class="data_input date" type="number" min="1" max="31" name="bday" id="bday" placeholder="일" required>
                     </td>
                 </tr>
                 <tr>
@@ -67,64 +66,96 @@
                         <label class="data_name" for="pw">비밀번호</label>
                     </th>
                     <td>
-                        <input class="data_input signup" type="password" name="pw" id="pw" required>
+                        <input class="data_input signup" type="password" name="pw" id="pw" placeholder="비밀번호를 입력하세요" required>
                     </td>
                 </tr>
-                <!--
-                    <tr>
-                        <th>
-                            <label class="data_name" id="pw_check">비밀번호 확인</label>
-                        </th>
-                        <td>
-                            <input class="data_input" type="password" name="pw_check" id="pw_check" required>
-                        </td>
-                    </tr>
-                -->
                 <tr>
                     <th>
                         <label class="data_name" for="phoneNum">전화번호</label>
                     </th>
                     <td>
-                        <input class="data_input signup" type="number" name="phoneNum" id="phoneNum" required>
+                        <input class="data_input signup" type="number" name="phoneNum" id="phoneNum" placeholder="-없이 숫자만 입력하세요" required>
                     </td>
                 </tr>
                 <tr>
                     <th>
-                        <laebl class="data_name" id="address">주소</label>
+                        <label class="data_name" for="address">주소</label>
                     </th>
                     <td>
-                        <input class="data_input signup" type="text" name="address" id="address" required>
+                        <input class="data_input signup" type="text" name="address" id="address" placeholder="주소를 입력하세요" required>
                     </td>
                 </tr>
-                <!--<tr>
-                    <th colspan="2">
-                        <p class="data_name">이용악관</p>
-                    </th>
-                </tr>-->
                 <tr>
-                    <th colspan="2" class="fakeimg" style="width: auto; height: 200px">
-                        <strong>이용약관 전문</strong><br>
-                        <span style="display: block; margin-top: 10px; font-weight: normal;">
-                            '소소한 이화'는 서비스 사용자의 개인정보(아이디, 이름, 학번, 학교 이메일, 생년월일, 비밀번호, 전화번호, 주소)를 수집합니다. 사용자는 '소소한 이화'에 개인정보를 제공하는 것에 동의하지 않을 수 있으나, 개인정보 제공 동의를 하지 않을 시 소소한 마켓 서비스 사용이 불가능합니다.
-                        </span>
+                    <th>
+                        <label class="data_name">이용약관</label>
                     </th>
+                    <td>
+                        <div class="terms-container">
+                            <textarea class="terms-content" readonly>[소소한 이화] 이용약관
+
+제1조 (목적)
+이 약관은 이화여자대학교 학생들을 위한 중고거래 플랫폼 '소소한 이화'(이하 "플랫폼")의 이용 조건 및 절차, 이용자와 플랫폼 운영자의 권리, 의무, 책임사항을 규정함을 목적으로 합니다.
+
+제2조 (회원 자격)
+1. 본 플랫폼의 회원은 이화여자대학교 재학생 및 휴학생으로 제한됩니다.
+2. 회원가입 시 이화여자대학교 이메일(@ewhain.net 또는 @ewha.ac.kr)을 통한 인증이 필요합니다.
+
+제3조 (거래 규칙)
+1. 모든 거래는 실제 상품/서비스의 가치에 준하는 적절한 가격으로 이루어져야 합니다.
+2. 다음과 같은 물품은 거래가 금지됩니다:
+   - 위조품 및 불법복제품
+   - 주류 및 담배
+   - 의약품 및 건강기능식품
+   - 화장품 샘플
+   - 위험물 및 불법물품
+   - 기타 법령에서 판매를 금지하는 품목
+
+제4조 (이용자의 의무)
+1. 회원은 다음 행위를 해서는 안 됩니다:
+   - 타인의 정보 도용
+   - 플랫폼 내 허위정보 기재
+   - 다른 회원에 대한 희롱 또는 위협
+   - 시스템에 악영향을 주는 행위
+   - 영리목적의 광고성 정보 게시
+2. 회원은 안전하고 신뢰할 수 있는 거래를 위해 노력해야 합니다.
+
+제5조 (개인정보보호)
+1. 플랫폼은 회원의 개인정보를 보호하기 위해 최선을 다합니다.
+2. 회원의 개인정보는 본인의 동의 없이 제3자에게 제공되지 않습니다.
+3. 거래 목적으로 상호 공개된 개인정보는 거래 외 다른 목적으로 사용할 수 없습니다.
+
+제6조 (거래 안전)
+1. 모든 거래는 교내에서 진행하는 것을 원칙으로 합니다.
+2. 송금 시 피해를 방지하기 위해 직거래를 권장합니다.
+3. 거래 시 발생하는 분쟁에 대해 플랫폼은 중재자 역할을 할 수 있으나, 책임을 지지 않습니다.
+
+제7조 (서비스 제한)
+다음과 같은 경우 서비스 이용이 제한될 수 있습니다:
+1. 본 약관을 위반하는 행위
+2. 타인에게 피해를 주는 행위
+3. 플랫폼의 정상적인 운영을 방해하는 행위
+4. 기타 관련 법령을 위반하는 행위
+
+제8조 (약관 변경)
+1. 본 약관은 서비스 운영상 필요한 경우 변경될 수 있습니다.
+2. 약관이 변경될 경우, 플랫폼은 변경된 약관을 공지사항을 통해 공지합니다.
+
+제9조 (분쟁해결)
+1. 본 서비스 이용과 관련하여 발생한 분쟁은 당사자 간의 원만한 합의를 우선으로 합니다.
+2. 분쟁이 해결되지 않을 경우, 관련 법령에 따라 처리됩니다.
+
+[시행일] 이 약관은 2024년 1월 1일부터 시행됩니다.</textarea>
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="agreed" name="agreed" required>
+                                <label for="agreed">이용약관에 동의합니다</label>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
-                
                 <tr>
-                    <th colspan="2" style="text-align: right;">
-                        <label for="agreed">동의합니다</label>
-                        <input type="checkbox" id="agreed" name="agreed"
-                            required><!--js 연결 필요함. 체크되었는지 안되었는지 확인해서 안내 문구 innerHTML 하는 거-->
-                    </th>
-                </tr>
-                <tr>
-                    <th colspan="2">
-                        <p style="width: auto; text-align: right;"><br><br>
-                            <!--table의 cell 안에서는 아무리 <br>을 써도 적용되지 않음. <p> 태그 안에서 사용할 것-->
-                            <input class="submit_btn" type="submit" value="회원가입"
-                                id="signup_btn"><br><br><!--나중에 a빼고 백엔드 연결 필요. type도 submit으로 바꿔야 함.-->
-                        </p>
-                    </th>
+                    <td colspan="2">
+                        <button type="submit" id="signup_btn" class="submit_btn">회원가입</button>
+                    </td>
                 </tr>
             </table>
         </form>

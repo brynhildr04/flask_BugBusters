@@ -17,10 +17,6 @@ def hello():
     session['status']="product"
     return render_template("aboutus.html")
 
-#메인 홈화면
-@application.route("/main.html")
-def view_main():
-    return render_template("main.html")
 
 #마이페이지
 @application.route("/profile.html")
@@ -474,3 +470,35 @@ def update_cart_quantity(item_name):
 def clear_cart():
     DB.clear_cart(session['id'])
     return jsonify({"message": "장바구니가 비워졌습니다."})
+
+
+# main.html 과 DB연결해보기
+
+@application.route("/main.html")
+def view_main():
+    db = DBhandler()
+    product_type = session.get('status', 'product')
+    
+    # 상품 데이터 가져오기
+    all_items = db.get_items_byproductType(product_type)
+    
+    # 상품이 있는 경우와 없는 경우를 모두 처리
+    if all_items:
+        sorted_items = dict(sorted(all_items.items()))
+        items_list = list(sorted_items.items())
+        halfway = len(items_list) // 2
+        
+        return render_template(
+            "main.html",
+            items=sorted_items,
+            items_list=items_list,  # 전체 정렬된 리스트
+            total=len(all_items)    # 전체 개수
+        )
+    
+    # 상품이 없는 경우 기본값 전달
+    return render_template(
+        "main.html",
+        items={},
+        items_list=[],
+        total=0
+    )

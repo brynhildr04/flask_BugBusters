@@ -1,5 +1,6 @@
 import pyrebase
 import json
+from datetime import datetime
 class DBhandler:
     def __init__(self ):
         with open('./authentication/firebase_auth.json') as f:
@@ -306,8 +307,57 @@ class DBhandler:
         except Exception as e:
             print(f"Error deleting post: {e}")
             return False
+            
+    # 댓글 저장
+    def save_comment(self, item_name, post_key, user_id, content, comment_password):
+        comment_info = {
+            "id": user_id,                  # 댓글 작성자 ID
+            "content": content,             # 댓글 내용
+            "date": f"{datetime.today().year}.{datetime.today().month}.{datetime.today().day}.",  # 작성 날짜
+            "password": comment_password   # 댓글 비밀번호 저장
+        }
+        try:
+            # Firebase에 댓글 저장
+            comment_key = self.db.child("comments").child(item_name).child(post_key).push(comment_info)["name"]
+            return comment_key
+        except Exception as e:
+            print(f"Error saving comment: {e}")
+            return None
+    
+    # 댓글 가져오기 (방금 작성된 댓글)
+    def get_comment_by_key(self, item_name, post_key, comment_key):
+        comment = self.db.child("comments").child(item_name).child(post_key).child(comment_key).get().val()
+        if not comment:
+            print(f"No comment found for item: {item_name}, post_key: {post_key}, comment_key: {comment_key}")
+            return None
+        return comment
+    
+    #게시물에 대한 댓글 목록 가져오기
+    def get_comments_by_post(self, item_name, post_key):
+        comments = self.db.child("comments").child(item_name).child(post_key).get().val()
+        if not comments:
+            return []
+        return [{"comment_key": key, **value} for key, value in comments.items()]
 
+    # 댓글 수정
+    def update_comment(self, item_name, post_key, comment_key, new_content):
+        try:
+            self.db.child("comments").child(item_name).child(post_key).child(comment_key).update({"content": new_content})
+            return True
+        except Exception as e:
+            print(f"Error updating comment: {e}")
+            return False
 
+    # 댓글 삭제
+    def delete_comment(self, item_name, post_key, comment_key):
+        try:
+            self.db.child("comments").child(item_name).child(post_key).child(comment_key).remove()
+            print(f"Comment {comment_key} under post {post_key} deleted successfully.")
+            return True
+        except Exception as e:
+            print(f"Error deleting comment: {e}")
+            return False
+    
 
 
 
