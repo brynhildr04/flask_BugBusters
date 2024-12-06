@@ -46,7 +46,7 @@
     display: flex;
     width: 120px;
     height: 36px;
-    background: #e0e0e0;
+    background: #E6E6E6;
     border-radius: 18px;
     position: relative;
     cursor: pointer;
@@ -59,7 +59,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: #666;
+    color: #6c6c6c;
     font-size: 14px;
     font-weight: 500;
     z-index: 1;
@@ -75,7 +75,7 @@
     position: absolute;
     width: 54px;
     height: 30px;
-    background: #006633;
+    background: #00462A;
     border-radius: 15px;
     top: 3px;
     left: 3px;
@@ -88,7 +88,7 @@
 }
 
 .switch-input:checked+.switch-label .switch-option.left {
-    color: #666;
+    color: #6c6c6c;
 }
 
 .switch-input:checked+.switch-label .switch-option.right {
@@ -100,7 +100,7 @@
 }
 
 .switch-input:not(:checked)+.switch-label .switch-option.right {
-    color: #666;
+    color: #6c6c6c;
 }
 
 .logo img {
@@ -266,7 +266,7 @@
 
 .register-btn:hover {
     color: white;
-    background-color: #006633;
+    background-color: #00462A;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -302,7 +302,7 @@
     gap: 2rem;
     padding: 1rem 0;
     background: white;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid white;
 }
 
 .nav-categories a {
@@ -313,11 +313,11 @@
 }
 
 .nav-categories a:hover {
-    color: #006633;
+    color: #00462A;
 }
 
 .nav-categories a.active {
-    color: #006633;
+    color: #00462A;
     font-weight: bold;
 }
 
@@ -368,7 +368,7 @@
 .product-image {
     width: 100%;
     height: 200px;
-    background: #f5f5f5;
+    background: #E6E6E6;
 }
 
 .product-info {
@@ -388,7 +388,7 @@
     transform: translateY(-50%);
     width: 40px;
     height: 40px;
-    background: #006633;
+    background: #00462A;
     color: white;
     border: none;
     border-radius: 50%;
@@ -406,7 +406,7 @@
 }
 
 .slider-button:hover {
-    background: #004d26;
+    background: #00462A;
 }
 
 .product-card:hover {
@@ -502,7 +502,7 @@ hr {
 }
 
 .data_input.login:focus {
-    border-color: #006633;
+    border-color: #00462A;
     background-color: white;
     outline: none;
 }
@@ -512,7 +512,7 @@ hr {
     width: 450px;
     /* 241108v1. 버튼 크기 조정 */
     height: 48px;
-    background-color: #006633;
+    background-color: #00462A;
     color: white;
     border: none;
     border-radius: 8px;
@@ -526,7 +526,7 @@ hr {
 }
 
 #login_btn.submit_btn:hover {
-    background-color: #004d26;
+    background-color: #00462A;
 }
 
 /*회원가입*/
@@ -672,7 +672,7 @@ input[type="checkbox"] {
 #signup_btn.submit_btn {
     width: 100%;
     height: 48px;
-    background-color: #006633;
+    background-color: #00462A;
     color: white;
     border: none;
     border-radius: 8px;
@@ -750,7 +750,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .linkto {
     margin-top: 20px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #E6E6E6;
     padding-top: 20px;
 }
 
@@ -768,7 +768,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .linkto a:hover {
-    color: #006633;
+    color: #00462A;
 }
 
 /* All Product 영역 */
@@ -834,7 +834,7 @@ input[type="number"]::-webkit-outer-spin-button {
 .product-price {
     font-size: 1.1rem;
     font-weight: bold;
-    color: #006633;
+    color: #00462A;
 }
 
 
@@ -998,7 +998,7 @@ input[type="number"]::-webkit-outer-spin-button {
 /* 구분선 */
 hr {
     border: none;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #E6E6E6;
     margin: 30px 0;
 }
 
@@ -1058,7 +1058,7 @@ hr {
 }
 
 .pagination a.disabled {
-    color: #ccc;
+    color: #D9D9D9;
     pointer-events: none;
 }
 
@@ -1074,7 +1074,7 @@ hr {
 
 /* Footer */
 footer {
-    background: #f8f8f8;
+    background: #E6E6E6;
     padding: 3rem 2rem;
     margin-top: 4rem;
 }
@@ -1116,7 +1116,7 @@ footer {
 }
 
 .footer-bottom {
-    border-top: 1px solid #eee;
+    border-top: 1px solid #E6E6E6;
     padding-top: 2rem;
     display: flex;
     justify-content: space-between;
@@ -1873,7 +1873,7 @@ footer {
     width: 60px;
     height: 60px;
     border-radius: 30px;
-    background-color: #006633;
+    background-color: #00462A;
     color: white;
     border: none;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -1885,7 +1885,7 @@ footer {
 }
 
 .write-review-btn:hover {
-    background-color: #004d26;
+    background-color: #00462A;
     transform: translateY(-2px);
 }
 
@@ -1919,7 +1919,7 @@ footer {
     height: 500px;
     overflow: hidden;
     border-radius: 12px;
-    background: #f8f8f8;
+    background: #E6E6E6;
 }
 
 .slider-content {
@@ -1993,8 +1993,8 @@ footer {
     font-weight: bold;
     margin: 20px 0;
     padding: 20px 0;
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #D9D9D9;
+    border-bottom: 1px solid #D9D9D9;
 }
 
 /* 수량 선택 */
@@ -2010,7 +2010,7 @@ footer {
     height: 40px;
     padding: 0 10px;
     font-size: 18px;
-    border: 1px solid #ddd;
+    border: 1px solid #D9D9D9;
     border-radius: 8px;
 }
 
@@ -2022,7 +2022,7 @@ footer {
     font-size: 20px;
     margin: 20px 0;
     padding: 20px 0;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #D9D9D9;
 }
 
 /* 버튼 */
@@ -2050,7 +2050,7 @@ footer {
 }
 
 .buy-button {
-    background-color: #006633;
+    background-color: #00462A;
     color: white;
 }
 
@@ -2069,7 +2069,7 @@ footer {
     display: flex;
     justify-content: center;
     gap: 40px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #D9D9D9;
     margin-bottom: 40px;
 }
 
@@ -2084,9 +2084,9 @@ footer {
 }
 
 .tab.active {
-    color: #006633;
+    color: #00462A;
     font-weight: bold;
-    border-bottom: 2px solid #006633;
+    border-bottom: 2px solid #00462A;
 }
 
 .tab-content {
