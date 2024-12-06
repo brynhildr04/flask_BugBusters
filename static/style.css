@@ -476,12 +476,19 @@ hr {
 #login_table {
     width: 100%;
     margin: 20px 0;
+    border-collapse: separate;
+    border-spacing: 0 15px;  /* 행간 간격 조정 */
 }
 
 #login_table th {
     text-align: left;
     padding-right: 20px;
-    width: 100px;
+    width: 120px;  /* 레이블 영역 너비 증가 */
+    vertical-align: top;  /* 상단 정렬 */
+}
+
+#login_table td {
+    width: calc(100% - 120px);  /* th 너비를 제외한 나머지 */
 }
 
 /* 입력 필드 라벨 (중복된 게 있어서 주석처리(우민하)
@@ -489,8 +496,35 @@ hr {
     font-size: 16px;
     font-weight: 500;
     color: #333;
+    display: block;  /* 블록 레벨로 변경 */
+    margin-top: 5px;  /* 상단 여백 추가 */
 }
-*/
+
+/* 데이터 출력 스타일 */
+.data_print {
+    font-size: 16px;
+    color: #333;
+    padding: 12px 16px;  /* 패딩 조정 */
+    margin: 0;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    min-height: 45px;  /* 높이 조정 */
+    display: flex;
+    align-items: center;
+}
+
+/* br 태그 대신 마진으로 간격 조정 */
+#login_table tr {
+    margin-bottom: 20px;  /* 행간 간격 */
+}
+
+/* 반응형 대응 */
+@media (max-width: 768px) {
+    .data_print {
+        font-size: 15px;
+        padding: 6px 10px;
+    }
+}
 
 
 /* 입력 필드 */
@@ -2541,4 +2575,178 @@ swiper-container::part(pagination-bullet-active) {
     background: #f5f5f5;
     border-radius: 8px;
     margin: 20px 0;
+}
+
+
+
+
+/* QnA 게시판 공통 스타일 */
+.qna-container {
+    max-width: 1158px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.qna-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* 게시판 목록 테이블 */
+.qna-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.qna-table th {
+    background-color: #f8f8f8;
+    color: #333;
+    font-weight: 600;
+    padding: 16px;
+    text-align: left;
+    border-bottom: 2px solid #eee;
+}
+
+.qna-table td {
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+    color: #666;
+}
+
+.qna-table .number { width: 8%; }
+.qna-table .postTitle { width: 50%; }
+.qna-table .postId { width: 15%; }
+.qna-table .created-at { width: 15%; }
+.qna-table .views { width: 12%; }
+
+/* 게시판 링크 스타일 */
+.qna-link {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.qna-link:hover {
+    color: #006633;
+}
+
+/* 게시판 버튼 스타일 */
+.qna-btn {
+    background-color: #006633;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 10px 0;
+}
+
+.qna-btn:hover {
+    background-color: #004d26;
+}
+
+.qna-btn-full {
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* 게시물 작성/수정 폼 스타일 */
+.qna-form-container {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.qna-form-label {
+    display: block;
+    margin: 16px 0 8px;
+    color: #333;
+    font-weight: 500;
+}
+
+.qna-form-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 16px;
+    transition: border-color 0.3s;
+}
+
+.qna-form-input:focus {
+    outline: none;
+    border-color: #006633;
+}
+
+.qna-form-textarea {
+    min-height: 200px;
+    resize: vertical;
+}
+
+/* 게시물 상세보기 스타일 */
+.qna-detail-container {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.qna-detail-header {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.qna-detail-content {
+    min-height: 200px;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* 댓글 섹션 스타일 */
+.qna-comments {
+    margin-top: 40px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.qna-comment-form {
+    margin: 20px 0;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .qna-table th, 
+    .qna-table td {
+        padding: 12px;
+    }
+
+    .qna-form-container {
+        padding: 20px;
+    }
+
+    .qna-btn {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .qna-table .created-at, 
+    .qna-table .views {
+        display: none;
+    }
 }
