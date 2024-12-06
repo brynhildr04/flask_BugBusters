@@ -98,32 +98,25 @@ def post_write():
 @application.route("/board_list/<name>/")
 def view_board_list(name):
     posts = DB.get_post_by_name(name)
-    updated_posts = []
-    
     if not posts:
         posts = {}
         print(f"No posts for {name}, showing empty board.")  # 디버깅 메시지
     return render_template("board_list.html", posts=posts, name=name)
 
 # 제품 상세 페이지 보기
-@application.route("/post_detail/<item_name>/<post_key>")
-def view_post_detail(item_name, post_key):
-    updated_views = DB.increment_views(item_name, post_key)
-    post = DB.get_post_by_key(item_name, post_key)
-
-    comments = DB.get_comments_by_post(item_name, post_key)
-
+@application.route("/post_detail/<item_name>/<key>")
+def view_post_detail(item_name, key):
+    updated_views = DB.increment_views(item_name, key)
+    post = DB.get_post_by_key(item_name, key)
     if post:
-        return render_template("board_view.html", post=post, item_name=item_name, post_key=post_key, comments=comments)
+        return render_template("board_view.html", post=post, item_name=item_name, key=key)
     else:
         return "Post not found", 404
 
-#제품별 게시판 보기
 @application.route('/board_view.html')
 def view_board_view():
     return render_template('board_view.html')
 
-#게시글 지우기
 @application.route("/delete_post/<item_name>/<post_key>", methods=["DELETE"])
 def delete_post(item_name, post_key):
     password = request.args.get('password')
@@ -134,7 +127,6 @@ def delete_post(item_name, post_key):
     else:
         return '', 401
 
-#게시글 수정하기
 @application.route("/board_modify/<item_name>/<post_key>", methods=["GET", "POST"])
 def modify_post(item_name, post_key):
     if request.method == "POST":
@@ -154,100 +146,6 @@ def modify_post(item_name, post_key):
     
     post = DB.get_post_by_key(item_name, post_key)
     return render_template("board_modify.html", post=post, item_name=item_name, post_key=post_key)
-
-@application.route('/comment_write/<item_name>/<post_key>/', methods=["POST"])
-def write_comment(item_name, post_key):
-    user_id = session.get('id', 'unknown_user')  # 세션에서 사용자 ID 가져오기
-    content = request.form.get("commentContent", "")
-    comment_password = request.form.get("commentPassword", "")  # 댓글 비밀번호 받기
-
-    # 댓글 비밀번호가 제대로 입력되었는지 확인
-    if not comment_password:
-        return "댓글 비밀번호를 입력해야 댓글을 작성할 수 있습니다.", 400
-
-    # 댓글 내용이 없으면 오류 반환
-    if not content:
-        return "댓글 내용을 입력하세요.", 400
-
-    # 댓글을 DB에 저장
-    comment_key = DB.save_comment(item_name, post_key, user_id, content, comment_password)
-    if not comment_key:
-        return "댓글 저장에 실패했습니다.", 500
-
-    # 댓글 작성 후 해당 게시글의 댓글 목록을 반환
-    comments = DB.get_comments_by_post(item_name, post_key)
-    return jsonify(comments)
-
-# 댓글 수정
-@application.route("/comment_modify/<item_name>/<post_key>/<comment_key>", methods=["GET", "POST"])
-def modify_comment(item_name, post_key, comment_key):
-    # 비밀번호 확인
-    if request.method == "GET":
-        password = request.args.get("password")
-        comment = DB.get_comment_by_key(item_name, post_key, comment_key)
-        if not comment or comment["password"] != password:
-            return "비밀번호가 일치하지 않습니다.", 401
-
-        # 비밀번호가 맞으면 수정 페이지 렌더링
-        return render_template("comment_modify.html", comment=comment, item_name=item_name, post_key=post_key, comment_key=comment_key)
-
-    # POST 요청: 댓글 수정
-    new_content = request.form.get("newContent")
-    if DB.update_comment(item_name, post_key, comment_key, new_content):
-        return '', 200
-    return "댓글 수정에 실패했습니다.", 500
-
-# 댓글 삭제
-@application.route("/comment_delete/<item_name>/<post_key>/<comment_key>", methods=["DELETE"])
-def delete_comment(item_name, post_key, comment_key):
-    comment = DB.get_comment_by_key(item_name, post_key, comment_key)
-    comment_password = request.args.get("password")
-
-    if comment and comment["password"] == comment_password:  # 비밀번호 확인
-        if DB.delete_comment(item_name, post_key, comment_key):
-            return '', 200
-        return '', 500
-    return '', 401
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @application.route('/purchase.html')
 def view_purchase_product():
@@ -583,36 +481,28 @@ def clear_cart():
 @application.route("/main.html")
 def view_main():
     db = DBhandler()
-    product_type = session.get('status', 'product')  # 기본값 'product'로 설정
+    product_type = session.get('status', 'product')
     
-    # 모든 아이템 가져오기
-    items = db.get_items_byproductType(product_type)
+    # 상품 데이터 가져오기
+    all_items = db.get_items_byproductType(product_type)
     
-    if items:
-        # 총 아이템 수 계산
-        total = len(items)
-        
-        # 아이템 정렬 (이름 기준)
-        items_list = sorted(items.items(), key=lambda x: x[0])
-        
-        # 두 행으로 나누기
-        mid_point = len(items_list) // 2
-        row1 = dict(items_list[:mid_point])
-        row2 = dict(items_list[mid_point:])
+    # 상품이 있는 경우와 없는 경우를 모두 처리
+    if all_items:
+        sorted_items = dict(sorted(all_items.items()))
+        items_list = list(sorted_items.items())
+        halfway = len(items_list) // 2
         
         return render_template(
             "main.html",
-            row1=row1.items(),
-            row2=row2.items(),
-            total=total,
-            items=items  # swiper에서도 사용할 수 있도록 전체 아이템도 전달
+            items=sorted_items,
+            items_list=items_list,  # 전체 정렬된 리스트
+            total=len(all_items)    # 전체 개수
         )
-    else:
-        # 아이템이 없는 경우
-        return render_template(
-            "main.html",
-            row1=[],
-            row2=[],
-            total=0,
-            items={}
-        )
+    
+    # 상품이 없는 경우 기본값 전달
+    return render_template(
+        "main.html",
+        items={},
+        items_list=[],
+        total=0
+    )

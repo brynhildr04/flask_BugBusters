@@ -111,10 +111,9 @@
     font-weight: 600;
     font-size: 1.2rem;
 }
-/* Header 기본 스타일 수정 */
+/* Header 기본 스타일 */
 .header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
     background: white;
@@ -122,20 +121,22 @@
     top: 0;
     z-index: 1000;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    gap: 2rem; /* 요소들 사이의 간격 */
 }
 
 /* 로고 섹션 */
 .logo-section {
-    flex: 0 0 auto;
     display: flex;
     align-items: center;
     gap: 1rem;
+    min-width: 250px; /* 로고 섹션의 최소 너비 설정 */
 }
 
-/* 검색바 컨테이너 수정 */
+/* 검색바 컨테이너 */
 .search-bar {
-    flex: 0 1 600px; /* 최대 너비 600px로 제한하고 flex-grow: 0으로 설정 */
-    margin: 0 20px;
+    flex: 1;
+    max-width: 600px; /* 검색바 최대 너비 */
+    margin: 0 auto; /* 중앙 정렬을 위한 마진 */
     position: relative;
 }
 
@@ -148,7 +149,7 @@
 .search-bar input {
     width: 100%;
     height: 40px;
-    padding: 0.5rem 40px 0.5rem 1rem; /* 오른쪽 패딩 증가로 버튼과 겹치지 않게 */
+    padding: 0.5rem 40px 0.5rem 1rem;
     border: 1px solid #e1e1e1;
     border-radius: 20px;
     background: #f8f8f8;
@@ -163,51 +164,23 @@
     box-shadow: 0 0 0 3px rgba(0, 102, 51, 0.1);
 }
 
-/* 검색 버튼 */
-.search-button {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    height: 24px;
-    width: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.search-button img {
-    width: 18px;
-    height: 18px;
-    opacity: 0.6;
-    transition: opacity 0.2s ease;
-}
-
-.search-button:hover img {
-    opacity: 1;
-}
-
 /* 헤더 아이콘 */
 .header-icons {
-    flex: 0 0 auto;
     display: flex;
-    gap: 1.5rem;
     align-items: center;
+    gap: 1.5rem;
+    min-width: 250px; /* 로고 섹션과 동일한 최소 너비로 설정 */
+    justify-content: flex-end;
 }
 
-/* 반응형 디자인 추가 */
+/* 반응형 디자인 */
 @media (max-width: 1024px) {
     .search-bar {
-        flex: 0 1 400px;
-        margin: 0 15px;
+        max-width: 400px;
     }
-
+    
     .register-btn {
-        display: none; /* 화면이 작아지면 등록하기 버튼 숨김 */
+        display: none;
     }
 }
 
@@ -215,27 +188,43 @@
     .header {
         padding: 1rem;
         flex-wrap: wrap;
+        gap: 1rem;
     }
 
     .logo-section {
-        flex: 1 1 100%;
-        justify-content: space-between;
-        margin-bottom: 1rem;
+        min-width: auto;
+        flex: 1;
     }
 
     .search-bar {
-        flex: 1 1 100%;
         order: 3;
-        margin: 1rem 0 0 0;
+        flex: 0 0 100%;
+        max-width: none;
+        margin: 0.5rem 0;
     }
 
     .header-icons {
-        flex: 0 0 auto;
+        min-width: auto;
         gap: 1rem;
     }
 
     .toggle-switch {
-        display: none; /* 모바일에서 토글 스위치 숨김 */
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-text {
+        display: none;
+    }
+
+    .header-icons {
+        gap: 0.8rem;
+    }
+
+    .header-icons img {
+        width: 20px;
+        height: 20px;
     }
 }
 
