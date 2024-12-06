@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="search-bar">
-            <form action="{{ url_for('search') }}" method="GET">
+            <form action="{{ url_for('search') }}" method="GET" style="width: 100%; max-width: 800px; margin: 0 auto; padding: 16px; box-sizing: border-box;">
                 <input type="text" name="query" placeholder="검색" required>
                 <button class="search-button" type="submit">
                     <img src="/static/images/search.svg" alt="search icon">
@@ -52,7 +52,7 @@
             <a onclick="location.href='/profile.html'">
                 <img src="/static/images/profile.svg" alt="Profile">
             </a>
-            <b>{{session['id']}}님</b>
+            <b style="white-space: nowrap;">{{session['id']}}님</b>
             <a onclick="location.href='/logout'">logout</a>
             {% else %}
             <a class="icon-btn" onclick="location.href='/login.html'">
