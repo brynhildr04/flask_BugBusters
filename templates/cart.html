@@ -111,10 +111,13 @@
                     <button class="delete-btn" id="delete-btn" onclick="removeFromCart('{{ key }}')">X</button>
                 </div>
             </div>
-            {% endfor %}
-
-            <div class="grand-total">
-                장바구니 총 금액: <span id="grandTotal">{{ "{:,}".format(total_price) }}</span>원
+        </div>
+        
+        <div class="cart-item">
+            <img src="product2.png" alt="상품2">
+            <div class="cart-details">
+                <p><strong>상품명 2</strong></p>
+                <p>개당 가격: <span class="unit-price">10,000</span>원</p>
             </div>
 
             <div class="cart-buttons">

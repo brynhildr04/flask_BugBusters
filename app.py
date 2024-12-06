@@ -17,10 +17,6 @@ def hello():
     session['status']="product"
     return render_template("aboutus.html")
 
-#메인 홈화면
-@application.route("/main.html")
-def view_main():
-    return render_template("main.html")
 
 #마이페이지
 @application.route("/profile.html")
@@ -71,48 +67,81 @@ def view_aboutus():
     return render_template('aboutus.html')
 
 
-#게시판 작성 페이지
+# 게시판 작성 페이지
 @application.route('/board_write/<name>/')
 def view_board_write(name):
-    writer=session['name']
+    writer = session.get('id', 'unknown_user')  # 세션에서 안전하게 ID 가져오기
+    print(f"Accessing board_write for product: {name}, writer: {writer}")  # 디버깅 메시지
     return render_template('board_write.html', name=name, writer=writer)
 
-#작성된 게시판 게시글 백엔드로 넘겨주기
+# 작성된 게시판 게시글 백엔드로 넘겨주기
 @application.route("/post_write", methods=["POST"])
 def post_write():
     data = request.form
-    user_id = session['id']
+    user_id = session.get('id', 'unknown_user')  # 세션에서 사용자 ID 가져오기
+    print(f"User ID for post_write: {user_id}")  # 디버깅 메시지
+
     date = f"{datetime.today().year}.{datetime.today().month}.{datetime.today().day}."
-    key = DB.save_post(data, user_id, date)
-    return redirect(url_for("view_board_list", item_name=key))  # 리디렉션으로 이동
+    item_name = data.get("name", "unknown_item")  # 상품 이름 가져오기
+    item_name, post_key = DB.save_post(data, user_id, date)
 
-#제품에 대한 게시글 리스트 보여주기
-@application.route("/board_list/<item_name>/")
-def view_board_list(item_name):
-    posts = DB.get_post_by_name(item_name) 
-    posts = dict(list(posts.items())[:])
-    print(posts)  # 디버깅 메시지
-    return render_template("board_list.html", posts=posts)
+    if not post_key:
+        return "Failed to save post", 500
 
-#제품 상세 페이지 보기
+    return redirect(url_for("view_board_list", name=item_name))
+
+# 제품에 대한 게시글 리스트 보여주기
+@application.route("/board_list/<name>/")
+def view_board_list(name):
+    posts = DB.get_post_by_name(name)
+    if not posts:
+        posts = {}
+        print(f"No posts for {name}, showing empty board.")  # 디버깅 메시지
+    return render_template("board_list.html", posts=posts, name=name)
+
+# 제품 상세 페이지 보기
 @application.route("/post_detail/<item_name>/<key>")
 def view_post_detail(item_name, key):
-    # 조회수 증가
     updated_views = DB.increment_views(item_name, key)
-        
-     # 게시글 데이터 가져오기
     post = DB.get_post_by_key(item_name, key)
     if post:
-        return render_template("board_view.html", post=post)
+        return render_template("board_view.html", post=post, item_name=item_name, key=key)
+    else:
+        return "Post not found", 404
 
-    
 @application.route('/board_view.html')
 def view_board_view():
     return render_template('board_view.html')
 
-@application.route('/board_modify.html')
-def view_board_modify():
-    return render_template('board_modify.html')
+@application.route("/delete_post/<item_name>/<post_key>", methods=["DELETE"])
+def delete_post(item_name, post_key):
+    password = request.args.get('password')
+    post = DB.get_post_by_key(item_name, post_key)
+    if post and str(post["psw"]) == str(password):
+        DB.delete_post(item_name, post_key)
+        return '', 200
+    else:
+        return '', 401
+
+@application.route("/board_modify/<item_name>/<post_key>", methods=["GET", "POST"])
+def modify_post(item_name, post_key):
+    if request.method == "POST":
+        password = request.form.get("psw")
+        post = DB.get_post_by_key(item_name, post_key)
+        if post and str(post["psw"]) == str(password):
+            new_data = {
+                "title": request.form.get("postTitle"),
+                "content": request.form.get("postContent"),
+            }
+
+            if DB.update_post(item_name, post_key, new_data):
+                return redirect(url_for("view_board_list", name=item_name))  # 리스트 페이지로 리디렉션
+            return "게시글 업데이트에 실패했습니다.", 500
+    
+        return "비밀번호가 일치하지 않습니다.", 401
+    
+    post = DB.get_post_by_key(item_name, post_key)
+    return render_template("board_modify.html", post=post, item_name=item_name, post_key=post_key)
 
 @application.route('/purchase.html')
 def view_purchase_product():
@@ -442,3 +471,35 @@ def update_cart_quantity(item_name):
 def clear_cart():
     DB.clear_cart(session['id'])
     return jsonify({"message": "장바구니가 비워졌습니다."})
+
+
+# main.html 과 DB연결해보기
+
+@application.route("/main.html")
+def view_main():
+    db = DBhandler()
+    product_type = session.get('status', 'product')
+    
+    # 상품 데이터 가져오기
+    all_items = db.get_items_byproductType(product_type)
+    
+    # 상품이 있는 경우와 없는 경우를 모두 처리
+    if all_items:
+        sorted_items = dict(sorted(all_items.items()))
+        items_list = list(sorted_items.items())
+        halfway = len(items_list) // 2
+        
+        return render_template(
+            "main.html",
+            items=sorted_items,
+            items_list=items_list,  # 전체 정렬된 리스트
+            total=len(all_items)    # 전체 개수
+        )
+    
+    # 상품이 없는 경우 기본값 전달
+    return render_template(
+        "main.html",
+        items={},
+        items_list=[],
+        total=0
+    )
