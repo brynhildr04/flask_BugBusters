@@ -1,10 +1,10 @@
 <nav class="nav-categories">
-    <a href="/list" class="active">ALL</a>
-    <a href="/list/어학">어학</a>
-    <a href="/list/IT">IT</a>
-    <a href="/list/취미">취미</a>
-    <a href="/list/디자인">디자인</a>
-    <a href="/list/첨식">첨삭</a>
-    <a href="/list/생활">생활</a>
-    <a href="/list/기타">기타</a>
+    <a href="/list" class="{{ 'active' if request.path == '/list' else '' }}">ALL</a>
+    <a href="/list/어학" class="{{ 'active' if request.path == '/list/어학' else '' }}">어학</a>
+    <a href="/list/IT" class="{{ 'active' if request.path == '/list/IT' else '' }}">IT</a>
+    <a href="/list/취미" class="{{ 'active' if request.path == '/list/취미' else '' }}">취미</a>
+    <a href="/list/디자인" class="{{ 'active' if request.path == '/list/디자인' else '' }}">디자인</a>
+    <a href="/list/첨삭" class="{{ 'active' if request.path == '/list/첨삭' else '' }}">첨삭</a>
+    <a href="/list/생활" class="{{ 'active' if request.path == '/list/생활' else '' }}">생활</a>
+    <a href="/list/기타" class="{{ 'active' if request.path == '/list/기타' else '' }}">기타</a>
 </nav>

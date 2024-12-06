@@ -110,6 +110,7 @@
 .logo-text {
     font-weight: 600;
     font-size: 1.2rem;
+    white-space: nowrap;
 }
 /* Header 기본 스타일 */
 .header {
@@ -262,6 +263,7 @@
     text-decoration: none;
     border-radius: 20px;
     font-size: 0.9rem;
+    white-space: nowrap;
 }
 
 .register-btn:hover {
@@ -455,6 +457,21 @@
     /* 좌우 여백 추가 */
 }
 
+/* 로그인 타이틀 */
+#login {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 0px 0;
+}
+
 /* 로그인 테이블 */
 #login_table {
     width: 100%;
@@ -474,14 +491,18 @@
     width: calc(100% - 120px);  /* th 너비를 제외한 나머지 */
 }
 
-/* 데이터 이름 라벨 */
+/*
+입력 필드 라벨 (중복된 게 있어서 주석처리(우민하)
 .data_name {
     font-size: 16px;
     font-weight: 500;
     color: #333;
-    display: block;  /* 블록 레벨로 변경 */
-    margin-top: 5px;  /* 상단 여백 추가 */
+    display: block;
+    margin-top: 5px;
 }
+*/
+
+
 
 /* 데이터 출력 스타일 */
 .data_print {
@@ -513,13 +534,15 @@
 /* 입력 필드 */
 .data_input.login {
     width: 100%;
-    height: 48px;
+    height: 40px;
     padding: 0 16px;
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 16px;
     background-color: #f8f8f8;
     transition: border-color 0.3s, background-color 0.3s;
+    margin-bottom: 16px;
+    justify-content: center;
 }
 
 .data_input.login:focus {
@@ -587,12 +610,37 @@
 
 #signup_table th {
     text-align: left;
+    padding-right: 20px;
+    width: 120px;
+}
+
+.row.signup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0 auto;
+    padding-top: 20px;
     padding-right: 24px;
     width: 120px;
     vertical-align: top;
     padding-top: 14px;
 }
 
+/* 라벨 스타일 */
+.data_name {
+    font-size: 16px;
+    font-weight: 700;
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    
+    font-weight: 500;
+}
 
 /* 입력 필드 공통 스타일 */
 .data_input {
@@ -601,6 +649,10 @@
     padding: 0 16px;
     border: 1px solid #e1e1e1;
     border-radius: 8px;
+    font-size: 16px;
+    background-color: #f8f8f8;
+    transition: border-color 0.3s, background-color 0.3s;
+    margin-bottom: 16px;
     font-size: 15px;
     color: #333;
     background-color: #fff;
@@ -630,6 +682,21 @@
 }
 
 .data_input.email {
+    width: 40%;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #f8f8f8;
+    transition: border-color 0.3s, background-color 0.3s;
+    margin-bottom: 16px;
+}
+
+.data_input.email:focus {
+    border-color: #006633;
+    background-color: white;
+    outline: none;
     width: 160px;
 }
 
@@ -652,6 +719,7 @@
     padding: 16px;
     background-color: #f8f8f8;
     margin-bottom: 24px;
+    margin-bottom: 16px;
 }
 
 .terms-content {
@@ -2057,6 +2125,33 @@ footer {
     font-weight: 500;
     cursor: pointer;
     transition: background-color 0.3s;
+}
+
+
+/*about us용 버튼*/
+.aboutus-button {
+    background-color: #A4C1AE;
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;    
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 40px;
+    text-align: center;
+    line-height: 1;
+    width: 120px;
+    height: 40px;
+    white-space: nowrap;
+}
+
+
+.aboutus-button:hover {
+    opacity: 0.9;
 }
 
 .cart-button {
