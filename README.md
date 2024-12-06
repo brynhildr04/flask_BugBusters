@@ -1,2 +1,1 @@
-# flask_BugBusters
-This is BugBusters flask team project repository
+제꺼 이거 안 보셔도 되고 241129 보시면 됩니다.
