@@ -43,13 +43,6 @@
         </div>
 
         <div class="header-icons">
-<<<<<<< HEAD
-            <button onclick="location.href='상품등록하기.html'">상품 등록하기</button>
-            <a href="main.html" class="icon-btn"><img src="/static/images/home.svg" alt="Home"></a>
-            {% if session['id'] %}
-            <a href="profile.html"><img src="/static/images/profile.svg" alt="Profile"></a><b>{{session['id']}}님</b><a
-                href="/logout" class="logout-link">logout</a>
-=======
             <a class="register-btn" onclick="location.href='/상품등록하기.html'">제품 등록하기</a>
             <!--링크 연결 문제 그냥 href앞에 / 붙여줘서 해결하면 됨-->
             <a class="icon-btn" onclick="location.href='/main.html'">
@@ -61,7 +54,6 @@
             </a>
             <b>{{session['id']}}님</b>
             <a onclick="location.href='/logout'">logout</a>
->>>>>>> dce5f0c025368fdb8758598c7cfa602d68075de1
             {% else %}
             <a class="icon-btn" onclick="location.href='/login.html'">
                 <img src="{{ url_for('static', filename='images/profile.svg') }}" alt="Profile">
