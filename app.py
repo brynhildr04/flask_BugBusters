@@ -17,10 +17,6 @@ def hello():
     session['status']="product"
     return render_template("aboutus.html")
 
-#메인 홈화면
-@application.route("/main.html")
-def view_main():
-    return render_template("main.html")
 
 #마이페이지
 @application.route("/profile.html")

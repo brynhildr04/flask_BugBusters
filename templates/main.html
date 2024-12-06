@@ -25,7 +25,7 @@
                 style="--swiper-navigation-color: #2AA27C; --swiper-pagination-color: #2AA27C;">
                 {% for key, value in items_list %}
                     <swiper-slide>
-                        <a href="{{ url_for('view_detail', name=key) }}" class="product-card">
+                        <a href="{{ url_for('view_product_detail', name=key) }}" class="product-card">
                             <div class="product-image">
                                 <img src="{{ url_for('static', filename='images/' + value.img_path) }}" alt="{{ key }}">
                             </div>
@@ -63,7 +63,7 @@
                 style="--swiper-navigation-color: #2AA27C; --swiper-pagination-color: #2AA27C;">
                 {% for key, value in items_list %}
                     <swiper-slide>
-                        <a href="{{ url_for('view_detail', name=key) }}" class="product-card">
+                        <a href="{{ url_for('view_product_detail', name=key) }}" class="product-card">
                             <div class="product-image">
                                 <img src="{{ url_for('static', filename='images/' + value.img_path) }}" alt="{{ key }}">
                             </div>
