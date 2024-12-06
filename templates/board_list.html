@@ -34,7 +34,7 @@
             </thead>
             <tbody>
                 {% if posts %}
-                    {% for key, value in posts.items() %}
+                    {% for key, value in posts.items() %} <!--딕셔너리 반복문 돌릴 때는 .items() 사용하기...-->
                         <tr>
                             <td>{{ loop.index }}</td>
                             <td class="title">

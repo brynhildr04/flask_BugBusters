@@ -12,24 +12,27 @@
 {% block section %}
 <!--카트를 위한 javascript-->
 <script>
-    function updateQuantity(op, itemName) {
-        var quantity=document.getElementById("quantity").firstChild.nodeValue
-        if(op=='-') quantity--;
-        else quantity++;
+    function updateQuantity(op, itemName, quantity) {
+        var changed=parseInt(quantity);
+        if(op=='-') changed--;
+        else changed++;
         $.ajax({
             type: 'POST',
             url: `/update_cart_quantity/${itemName}`,
             data: {
-                quantity: quantity
+                quantity: changed
             },
             success: function (response) {
+                /*
                 var quantity=parseInt(response['data']['quantity']);
                 var item_total=parseInt(response['data']['total']);
                 var total=parseInt(response['total'])
                 $("#quantity").html( quantity.toLocaleString('ko-KR'));
                 $("#item-total").html(item_total.toLocaleString('ko-KR'));
                 $("#grandTotal").html(total.toLocaleString('ko-KR'));
+                $("#quantity").val(changed)*/
                 alert(response['message']);//이거 나중에 삭제해도 되는 코드
+                window.location.reload();
             },
             error: function (error) {
                 alert('수량 업데이트에 실패했습니다.');
@@ -96,9 +99,12 @@
                     <p>개당 가격: <span class="unit-price">{{ "{:,}".format(value['price']) }}</span>원</p>
                 </div>
                 <div class="quantity-control">
-                    <span class="quantity-btn" id="decrease-btn" onclick="updateQuantity('-', '{{ key }}')">-</span>
-                    <span class="quantity" id="quantity">{{ value['quantity'] }}</span>
-                    <span class="quantity-btn" id="increase-btn" onclick="updateQuantity('+', '{{ key }}')">+</span>
+                    {% set quantity=value['quantity'] %}
+                    <span class="quantity-btn" id="decrease-btn" onclick="updateQuantity('-', '{{ key }}', '{{ quantity }}')">-</span>
+                    <form>
+                        <input type="text" class="quantity" id="quantity" value="{{ quantity }}">
+                    </form>
+                    <span class="quantity-btn" id="increase-btn" onclick="updateQuantity('+', '{{ key }}', '{{ quantity }}')">+</span>
                 </div>
                 <div class="total-price">
                     총 금액: <span class="item-total" id="item-total">{{ "{:,}".format(value['total']) }}</span>원

@@ -432,7 +432,8 @@ def remove_from_cart(item_name):
 #장바구니에서 수량 변화
 @application.route("/update_cart_quantity/<item_name>", methods=['POST'])
 def update_cart_quantity(item_name):
-    quantity = request.form.get('quantity', type=int)    
+    quantity=request.form.get('quantity')    
+    print(quantity, type(quantity))
     data=DB.update_quantity(session['id'], item_name, quantity)
     total=DB.calc_total(session['id'])
     return jsonify({"message": "수량이 업데이트되었습니다.", "data": data, "total": total})
