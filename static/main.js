@@ -296,7 +296,7 @@ function updateCategoryOptions(obj) {
     const productType = $(obj).val(); // 제품 유형 선택
     const categorySelect = document.getElementById("category"); // 카테고리 드롭다운
 
-    // 기존 옵션 제거
+    // 기존 옵션 제거                                                                                                                   
     categorySelect.innerHTML = "";
 
     // 선택된 유형에 따른 카테고리 옵션 추가
@@ -311,6 +311,101 @@ function updateCategoryOptions(obj) {
 document.addEventListener("DOMContentLoaded", function () {
     updateCategoryOptions(); // 기본적으로 '제품' 카테고리를 설정
 });
+
+document.getElementById('images').addEventListener('change', function (event) {
+    const previewContainer = document.getElementById('imagePreviewContainer');
+    previewContainer.innerHTML = ''; // 이전 미리보기 초기화
+
+    const files = event.target.files;
+    Array.from(files).forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.style.width = '100px'; // 미리보기 이미지 크기
+            img.style.margin = '5px';
+            previewContainer.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+    });
+});
+
+//1204 추가
+/*const imageInput = document.getElementById("image-input");
+const cameraBox = document.getElementById("camera-box");
+const previewContainer = document.getElementById("image-preview-container");
+
+// 업로드된 이미지를 추적하기 위한 배열
+let uploadedImages = [];
+
+// 카메라 박스를 클릭하면 파일 입력 창 열기
+cameraBox.addEventListener("click", () => {
+    imageInput.click();
+});
+
+// 파일 선택 시 처리
+imageInput.addEventListener("change", (event) => {
+    const files = Array.from(event.target.files);
+
+    // 이미 5장 이상의 이미지가 업로드된 경우 추가 불가
+    if (uploadedImages.length + files.length > 5) {
+        alert("최대 5장의 이미지만 업로드할 수 있습니다.");
+        return;
+    }
+
+    // 파일 읽기 및 미리보기 생성
+    files.forEach((file) => {
+        if (file.type.startsWith("image/")) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = document.createElement("img");
+                img.src = e.target.result;
+                previewContainer.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+            uploadedImages.push(file);
+        }
+    });
+
+    // 파일 입력 초기화 (같은 파일을 다시 선택할 수 있도록)
+    event.target.value = "";
+});*/
+
+/*//1206 추가
+// 파일 등록 버튼 클릭 시 파일 선택 창 열기
+document.getElementById("file-upload-button").addEventListener("click", function () {
+    document.getElementById("image-input").click();
+});
+
+// 파일 선택 후 미리보기 추가
+// 파일 등록 버튼 클릭 시 파일 선택 창 열기
+document.getElementById("file-upload-button").addEventListener("click", function (event) {
+    event.preventDefault(); // 기본 동작(폼 제출) 방지
+    document.getElementById("image-input").click();
+});
+
+// 파일 선택 후 미리보기 추가
+document.getElementById("image-input").addEventListener("change", function (event) {
+    const files = event.target.files; // 선택된 파일들
+    const previewContainer = document.getElementById("image-preview-container");
+
+    // 파일 각각에 대해 미리보기 생성
+    Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const img = document.createElement("img");
+            img.src = e.target.result; // 이미지 소스 설정
+            img.className = "image-preview-item"; // 클래스 추가
+            previewContainer.appendChild(img); // 컨테이너에 이미지 추가
+        };
+        reader.readAsDataURL(file); // 파일 읽기
+    });
+
+    // 파일 입력 필드 초기화 (같은 파일 선택 가능하도록)
+    event.target.value = "";
+});*/
+
+
 
 //은영님 js
 function setRating(stars) {

@@ -1,8 +1,16 @@
 {% extends "header.html" %}
 {% block section %}
 <section id="upload_result">
+    <div class="container">
     <h1>상품 등록 완료</h1>
     <div class="product-info-container">
+        <div class="image-container">
+        {% if img_path %}
+        <!--<p><strong>첨부된 이미지:</strong></p>-->
+        <img src="{{ img_path }}" alt="상품 이미지">
+    {% endif %}
+</div>
+<div class="info-container">
     <div class="product-info">
         <p><strong>판매자 아이디:</strong> {{ data.seller }}</p>
         <p><strong>제목:</strong> {{ data.title }}</p>
@@ -10,14 +18,11 @@
         <p><strong>제품 유형:</strong> {{ data.product_type }}</p>
         <p><strong>카테고리:</strong> {{ data.category }}</p>
         <p><strong>내용:</strong> {{ data.description }}</p>
-        <p><strong>평점:</strong> {{ data.rate }}</p>
-
-        {% if img_path %}
-        <p><strong>첨부된 이미지:</strong></p>
-        <img src="{{ img_path }}" alt="상품 이미지">
-    {% endif %}
+        <!--<p><strong>평점:</strong> {{ data.rate }}</p>-->
     </div>
 </div>
+</div>
+
     <script src="path/to/main.js"></script>
 </section>
 {% endblock section %}

@@ -161,19 +161,40 @@
     align-items: center;
 }
 
-.register-btn {
+.header-icons button{
+    margin: 10px 0;
+         text-align: center;
     padding: 0.5rem 1rem;
-    background: #A4C1AE;
-    color: black;
-    text-decoration: none;
-    border-radius: 20px;
-    font-size: 0.9rem;
+        background: #A4C1AE;
+        color: black;
+        text-decoration: none;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        width: 110px;
+ }
+ 
+ .header-icons button:hover{
+    color: white;
+        background-color: #006633;
+        transition: background-color 0.3s ease, color 0.3s ease;
+ }
+
+ .logout-link {
+    margin: 10px 0;
+         text-align: center;
+    padding: 0.5rem 1rem;
+        background: #A4C1AE;
+        color: black;
+        text-decoration: none;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        border: 2px solid black;
 }
 
-.register-btn:hover {
+.logout-link:hover {
     color: white;
-    background-color: #006633;
-    transition: background-color 0.3s ease, color 0.3s ease;
+        background-color: #006633;
+        transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .icon-btn img {
@@ -257,8 +278,14 @@
 
 .product-image {
     width: 100%;
-    height: 200px;
+    height: 100px;
     background: #f5f5f5;
+}
+
+.product-image img {
+    width: 100%; /* 이미지 가로를 부모 컨테이너에 맞추기 */
+    height: 100%; /* 이미지 세로를 부모 컨테이너에 맞추기 */
+    object-fit: cover; /* 비율 유지하면서 컨테이너를 꽉 채우기 */
 }
 
 .product-info {
@@ -993,6 +1020,7 @@ footer {
 
 /* Input Fields */
 #ps_upload input[type="text"],
+#ps_upload input[type="number"],
 #ps_upload select,
 #ps_upload textarea {
     width: 100%;
@@ -1030,52 +1058,75 @@ footer {
 }
 
 #ps_upload #category {
-    width: 523px;
+    width: 480px;
     height: 80px;
     padding: 10px;
 }
 
 #ps_upload .image-upload {
+    float:left;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
 }
 
-#ps_upload .image-preview {
-    width: 180px;
-    height: 180px;
-    background-color: #E6E6E6;
+/*1204 추가*/
+/* 업로드 컨테이너 */
+.image-upload-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: 10px;
+    gap: 10px; /* 아이콘과 버튼 사이 간격 */
 }
 
-#ps_upload .image-preview img {
-    max-width: 100%;
-    max-height: 100%;
-    display: block;
-}
-
-#ps_upload .image-upload label.upload-label {
-    font-size: 24px;
-    font-weight: bold;
-    width: 119px;
-    height: 40px;
-    display: inline-flex;
+/* 카메라 박스 */
+.camera-box {
+    width: 80px;
+    height: 80px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    color: black;
-    background-color: #CDECDB;
+    border: 2px dashed #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+.camera-icon {
+    width: 50px;
+    height: 50px;
+    opacity: 0.5;
+}
+
+/* 파일 등록 버튼 */
+#file-upload-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
+#file-upload-button:hover {
+    background-color: #0056b3;
+}
+
+/* 미리보기 */
+.image-preview {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.image-preview-item {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
 
 #ps_upload .button-container {
     text-align: right;
@@ -1113,7 +1164,13 @@ footer {
     gap: 20px; /* h1과 content 간격 */
 }
 
-#upload_result h1 {
+.container {
+    max-width: 821px; /* h1과 동일한 최대 너비 */
+    width: 100%; /* 반응형 적용 */
+    text-align: center; /* 기본 텍스트 정렬 */
+}
+
+.container h1 {
     text-align: center;
     font-size: 32px;
     font-weight: bold;
@@ -1125,8 +1182,15 @@ footer {
     line-height: 80px;
     background-color: #ffffff;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
     margin-top: 50px;
+}
+
+.info-container {
+    display: flex; /* 가로 정렬 */
+    justify-content: space-between; /* 양쪽 간격 */
+    gap: 20px; /* 정보와 설명 사이 간격 */
+    margin-top: 20px;
 }
 
 #upload_result .product-info-container {
@@ -1143,11 +1207,26 @@ footer {
     margin: 0;
 }
 
+/*1206 추가*/
+#upload_result .image-container {
+    flex: 1;
+    max-width: 821px;
+    background-color: #ffffff;
+}
+
+#upload_result .image-container img {
+    width: 100%; /* 이미지가 컨테이너를 넘지 않도록 */
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
+}
+
 #upload_result .product-info {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
     max-width: 821px;
     /* 고정 너비 대신 최대 너비 사용 */
     width: 100%;
@@ -1159,15 +1238,19 @@ footer {
     margin: 10px 0;
 }
 
-#upload_result .product-info img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
-    margin-top: 10px;
-}
-
 #upload_result .product-info strong {
     font-weight: bold;
+}
+
+.description {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    color: #333;
+    max-width: fit-content;
 }
 
 /********aboutus css*******/

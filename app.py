@@ -176,11 +176,12 @@ def reg_item_submit_post():
     
     if 'image' in request.files:
         image = request.files['image']
+
         if image.filename != '':
             image.save(os.path.join(application.config['UPLOAD_FOLDER'], image.filename))
             img_path = url_for('static', filename='images/' + image.filename)
             
-            DB.insert_item(data['title'], data, image.filename)
+            DB.insert_item(data['title'], data, img_path)
             return render_template("상품등록결과.html", data=data, img_path=img_path)
     
     return render_template("상품등록결과.html", data=data, img_path=None)
