@@ -491,14 +491,18 @@ hr {
     width: calc(100% - 120px);  /* th 너비를 제외한 나머지 */
 }
 
-/* 입력 필드 라벨 (중복된 게 있어서 주석처리(우민하)
+/*
+입력 필드 라벨 (중복된 게 있어서 주석처리(우민하)
 .data_name {
     font-size: 16px;
     font-weight: 500;
     color: #333;
-    display: block;  /* 블록 레벨로 변경 */
-    margin-top: 5px;  /* 상단 여백 추가 */
+    display: block;
+    margin-top: 5px;
 }
+*/
+
+
 
 /* 데이터 출력 스타일 */
 .data_print {
