@@ -15,7 +15,7 @@
         <h2 id="review_detail_h2">상품 리뷰 상세</h2>
 
         <!-- 이미지 자리 표시: 이미지가 크면 css가 다 깨지는거 수정해야함!!!!-->
-        <div id="review_detail_image"><img src="../../static/images/{{data.img_path}}"></div>
+        <div id="review_detail_image"><img src="../../../static/images/{{data.img_path}}"></div>
 
         <!-- 별점 및 사용자 정보 -->
         <div id="review_user_info">
@@ -29,7 +29,7 @@
                 {% endfor %}
             </span>
             <span id="user_score">({{data.rate}})</span>
-            <span id="user_id">{{data.user_id}} | {{data.date}}</span><!--여기는 사용자ID 만으로... 근데 로그인 안해도 리뷰쓸 수 있는데 이게 의미가 있나?-->
+            <span id="user_id">{{data.user_id}} | {{data.date}}</span>
         </div>
 
         <!-- 리뷰 텍스트 -->

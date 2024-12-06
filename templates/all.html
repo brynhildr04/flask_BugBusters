@@ -17,7 +17,7 @@
         <!--첫 번째 열-->
         {% for key, value in row1 %}
         <button onclick="location.href='/view_detail/{{key}}';" class="product-card" style="cursor:pointer">
-            <div class="product-image"><img src="static/images/{{value.img_path}}"></div>
+            <div class="product-image"><img src="../static/images/{{value.img_path}}"></div>
             <div class="product-info">
                 <h3># {{value.category}}</h3>
                 <p class="product-name">{{key}}</p>
@@ -28,7 +28,7 @@
         <!--두 번쨰 열-->
         {% for key, value in row2 %}
         <button onclick="location.href='/view_detail/{{key}}';" class="product-card">
-            <div class="product-image"><img src="static/images/{{value.img_path}}"></div>
+            <div class="product-image"><img src="../static/images/{{value.img_path}}"></div>
             <div class="product-info">
                 <h3># {{value.category}}</h3>
                 <p class="product-name">{{key}}</p>
@@ -54,4 +54,5 @@
     {% else %}
     <p>등록된 상품이 없습니다</p>
     {% endif %}
-    {% endblock section %}
+</div>
+{% endblock section %}

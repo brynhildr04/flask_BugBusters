@@ -1,5 +1,6 @@
 import pyrebase
 import json
+from datetime import datetime
 class DBhandler:
     def __init__(self ):
         with open('./authentication/firebase_auth.json') as f:
@@ -35,7 +36,6 @@ class DBhandler:
             "bmonth": data['bmonth'],
             "bday": data['bday'],
             "pw": pw,
-            #"pw_check":  pw,
             "phoneNum": data['phoneNum'],
             "address": data['address'],
             "agreed": data['agreed']
@@ -68,30 +68,29 @@ class DBhandler:
             if value['id']==id_ and value['pw']==pw_:
                 return True
         return False
+    def get_user(self, id_):
+        users=self.db.child("user").get()
+        for res in users.each():
+            value=res.val()
+            if(value['id']==id_):
+                return res.val()
+        return None
     
     def get_items(self):
         items=self.db.child("item").get().val()
         return items 
     
     #제품/서비스 각각 전체 체품 가져오기
-    def get_items_byproductType(self, category):
+    def get_items_byproductType(self, product_type):
         items=self.db.child("item").get()
         target_value=[]
         target_key=[]
-        if(category=="product" or category=="service"):
-            for res in items.each():
-                value=res.val()
-                key_value=res.key()
-                if(value['product_type']==category):
-                    target_value.append(value)
-                    target_key.append(key_value)
-        else:
-            for res in items.each():
-                value=res.val()
-                key_value=res.key()
-                if(value['category']==category):
-                    target_value.append(value)
-                    target_key.append(key_value)
+        for res in items.each():
+            value=res.val()
+            key_value=res.key()
+            if(value['product_type']==product_type):
+                target_value.append(value)
+                target_key.append(key_value)
 
         print("######target_value", target_value)
         new_dict={}
@@ -100,7 +99,8 @@ class DBhandler:
         return new_dict
     
     #카테고리별 제품 가져오기
-    def get_items_byCategory(self, data, cate):
+    def get_items_byCategory(self, cate):
+        data=self.db.child("item").get()
         target_value=[]
         target_key=[]
         for res in data.each():
@@ -182,7 +182,6 @@ class DBhandler:
             if key_value == name:
                 target_value=res.val()
         return target_value
-        
     def update_heart(self, user_id, isHeart, item):
         heart_info ={
             "interested": isHeart
@@ -190,16 +189,10 @@ class DBhandler:
         self.db.child("heart").child(user_id).child(item).set(heart_info)
         return True
     
-    #제품/서비스 상태 알아오기   
-    def get_status(self, uid):
-        status=self.db.child("status").child(uid).get().val()
-        return status
-    def update_status(self, user_id, changed):
-        status_info={
-            "status": changed
-        }
-        self.db.child("status").child(user_id).set(status_info)
-        return changed
+    #좋아요 목록 가져오기
+    def get_heart_byId(self, uid):
+        hearts=self.db.child("heart").child(uid).get().val()
+        return hearts
     
     #제품 평점 업데이트 #이제 리뷰가 등록되면 평점 가져오는 코드 추가해야 함
     def update_rate(self, name):
@@ -215,3 +208,168 @@ class DBhandler:
         self.db.child("item").child(name).child("rate").set(rate)
         self.db.child("item").child(name).child("rateNum").set(total)
         return total
+    
+    #카트
+    def get_cart(self, uid):
+        items=self.db.child("cart").child(uid).get().val()
+        return items
+    def add_to_cart(self, uid, data):
+        quantity=int(data['quantity'])
+        price=int(self.db.child("item").child(data['name']).child("price").get().val())
+        total=quantity*price
+        cart_info={
+            "quantity": quantity,
+            "price": price,
+            "total": total,
+            "img_path": self.db.child("item").child(data['name']).child("img_path").get().val()
+        }
+        self.db.child("cart").child(uid).child(data['name']).set(cart_info)
+        return 1
+    def calc_total(self, uid):
+        items=self.db.child("cart").child(uid).get()
+        total=0
+        if(items.val()==None): return total
+        for res in items.each():
+            total+=res.val()['total']
+        return total
+    def remove_item(self, uid, name):
+        self.db.child("cart").child(uid).child(name).remove()
+        return 1
+    def update_quantity(self, uid, name, changed):
+        price=int(self.db.child("item").child(name).child("price").get().val())
+        total=price*int(changed)
+        self.db.child("cart").child(uid).child(name).update({"quantity": changed})
+        self.db.child("cart").child(uid).child(name).update({"total": total})
+        return self.db.child("cart").child(uid).child(name).get().val()
+    def clear_cart(self, uid):
+        self.db.child("cart").child(uid).remove()
+        return 0
+    
+    
+    # 게시글 저장
+    def save_post(self, data, user_id, date):
+        post_info = {
+            "id": user_id,
+            "name": data.get("writer", "unknown_writer"),  # 안전한 접근
+            "psw":data.get("psw", "No Psw"),
+            "title": data.get("postTitle", "No Title"),   # 게시물 제목 기본값
+            "content": data.get("postContent", ""),       # 게시물 내용 기본값
+            "date": date,                                 # 작성 날짜
+            "views": 0                                    # 초기 조회수
+        }
+        item_name = data.get("name", "unknown_item")  # 상품 이름 기본값
+        try:
+            post_key = self.db.child("post").child(item_name).push(post_info)["name"]
+            return item_name, post_key
+        except Exception as e:
+            print(f"Error saving post: {e}")
+            return None, None
+
+    # 특정 제품 하위의 게시글 가져오기
+    def get_post_by_name(self, item_name):
+        post_ref = self.db.child("post").child(item_name).get().val()
+        if post_ref is None:  # Firebase에서 데이터가 없으면
+            print(f"No posts found for item: {item_name}")  # 디버깅 메시지
+            return {}  # 빈 딕셔너리 반환
+        return post_ref
+
+    # 특정 게시글 가져오기
+    def get_post_by_key(self, item_name, key):
+        post = self.db.child("post").child(item_name).child(key).get().val()
+        if not post:
+            print(f"No post found for item: {item_name}, key: {key}")
+            return None
+        return post
+
+    # 특정 게시글 조회수 증가
+    def increment_views(self, item_name, key):
+        post = self.db.child("post").child(item_name).child(key).get().val()
+        if not post:
+            print(f"No post found for item: {item_name}, key: {key}")
+            return 0  # 기본 조회수 반환
+        updated_views = int(post.get('views', 0)) + 1
+        self.db.child("post").child(item_name).child(key).update({"views": updated_views})
+        return updated_views
+
+    def update_post(self, item_name, key, new_data): 
+        try: 
+            self.db.child("post").child(item_name).child(key).update(new_data) 
+            return True 
+        except Exception as e: 
+            print(f"Error updating post: {e}") 
+            return False
+        
+    def delete_post(self, item_name, key):
+        try:
+            self.db.child("post").child(item_name).child(key).remove()
+            print(f"Post {key} under {item_name} deleted successfully.")
+            return True
+        except Exception as e:
+            print(f"Error deleting post: {e}")
+            return False
+            
+    # 댓글 저장
+    def save_comment(self, item_name, post_key, user_id, content, comment_password):
+        comment_info = {
+            "id": user_id,                  # 댓글 작성자 ID
+            "content": content,             # 댓글 내용
+            "date": f"{datetime.today().year}.{datetime.today().month}.{datetime.today().day}.",  # 작성 날짜
+            "password": comment_password   # 댓글 비밀번호 저장
+        }
+        try:
+            # Firebase에 댓글 저장
+            comment_key = self.db.child("comments").child(item_name).child(post_key).push(comment_info)["name"]
+            return comment_key
+        except Exception as e:
+            print(f"Error saving comment: {e}")
+            return None
+    
+    # 댓글 가져오기 (방금 작성된 댓글)
+    def get_comment_by_key(self, item_name, post_key, comment_key):
+        comment = self.db.child("comments").child(item_name).child(post_key).child(comment_key).get().val()
+        if not comment:
+            print(f"No comment found for item: {item_name}, post_key: {post_key}, comment_key: {comment_key}")
+            return None
+        return comment
+    
+    #게시물에 대한 댓글 목록 가져오기
+    def get_comments_by_post(self, item_name, post_key):
+        comments = self.db.child("comments").child(item_name).child(post_key).get().val()
+        if not comments:
+            return []
+        return [{"comment_key": key, **value} for key, value in comments.items()]
+
+    # 댓글 수정
+    def update_comment(self, item_name, post_key, comment_key, new_content):
+        try:
+            self.db.child("comments").child(item_name).child(post_key).child(comment_key).update({"content": new_content})
+            return True
+        except Exception as e:
+            print(f"Error updating comment: {e}")
+            return False
+
+    # 댓글 삭제
+    def delete_comment(self, item_name, post_key, comment_key):
+        try:
+            self.db.child("comments").child(item_name).child(post_key).child(comment_key).remove()
+            print(f"Comment {comment_key} under post {post_key} deleted successfully.")
+            return True
+        except Exception as e:
+            print(f"Error deleting comment: {e}")
+            return False
+    
+
+
+
+
+        
+
+
+
+
+    
+    
+
+
+
+

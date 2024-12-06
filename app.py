@@ -14,6 +14,7 @@ DB=DBhandler()
 #첫화면
 @application.route("/")
 def hello():
+    session['status']="product"
     return render_template("aboutus.html")
 
 #메인 홈화면
@@ -21,17 +22,14 @@ def hello():
 def view_main():
     return render_template("main.html")
 
-#장바구니
-@application.route("/cart.html")
-def view_cart():
-    return render_template("cart.html")
-
-
 #마이페이지
 @application.route("/profile.html")
 def view_profile():
-    data=DB.find_user
-    return render_template("profile.html")
+    data=DB.get_user(session['id'])
+    if(data==None):
+        return render_template("login.html")
+    heart=DB.get_heart_byId(session['id'])
+    return render_template("profile.html", data=data, heart=heart)
 
 #로그인
 @application.route("/login.html")
@@ -62,6 +60,7 @@ def view_product_detail(name):
 def view_register():
     return render_template("상품등록하기.html")
 
+
 # kimjiyoon의 추가 페이지 라우트들
 @application.route('/payment.html')
 def view_payment():
@@ -71,22 +70,190 @@ def view_payment():
 def view_aboutus():
     return render_template('aboutus.html')
 
-@application.route('/chat_product.html')
-def view_chat_product():
-    return render_template('chat_product.html')
 
-@application.route('/chat_service.html')
-def view_chat_service():
-    return render_template('chat_service.html')
+# 게시판 작성 페이지
+@application.route('/board_write/<name>/')
+def view_board_write(name):
+    writer = session.get('id', 'unknown_user')  # 세션에서 안전하게 ID 가져오기
+    print(f"Accessing board_write for product: {name}, writer: {writer}")  # 디버깅 메시지
+    return render_template('board_write.html', name=name, writer=writer)
+
+# 작성된 게시판 게시글 백엔드로 넘겨주기
+@application.route("/post_write", methods=["POST"])
+def post_write():
+    data = request.form
+    user_id = session.get('id', 'unknown_user')  # 세션에서 사용자 ID 가져오기
+    print(f"User ID for post_write: {user_id}")  # 디버깅 메시지
+
+    date = f"{datetime.today().year}.{datetime.today().month}.{datetime.today().day}."
+    item_name = data.get("name", "unknown_item")  # 상품 이름 가져오기
+    item_name, post_key = DB.save_post(data, user_id, date)
+
+    if not post_key:
+        return "Failed to save post", 500
+
+    return redirect(url_for("view_board_list", name=item_name))
+
+# 제품에 대한 게시글 리스트 보여주기
+@application.route("/board_list/<name>/")
+def view_board_list(name):
+    posts = DB.get_post_by_name(name)
+    updated_posts = []
+    
+    if not posts:
+        posts = {}
+        print(f"No posts for {name}, showing empty board.")  # 디버깅 메시지
+    return render_template("board_list.html", posts=posts, name=name)
+
+# 제품 상세 페이지 보기
+@application.route("/post_detail/<item_name>/<post_key>")
+def view_post_detail(item_name, post_key):
+    updated_views = DB.increment_views(item_name, post_key)
+    post = DB.get_post_by_key(item_name, post_key)
+
+    comments = DB.get_comments_by_post(item_name, post_key)
+
+    if post:
+        return render_template("board_view.html", post=post, item_name=item_name, post_key=post_key, comments=comments)
+    else:
+        return "Post not found", 404
+
+#제품별 게시판 보기
+@application.route('/board_view.html')
+def view_board_view():
+    return render_template('board_view.html')
+
+#게시글 지우기
+@application.route("/delete_post/<item_name>/<post_key>", methods=["DELETE"])
+def delete_post(item_name, post_key):
+    password = request.args.get('password')
+    post = DB.get_post_by_key(item_name, post_key)
+    if post and str(post["psw"]) == str(password):
+        DB.delete_post(item_name, post_key)
+        return '', 200
+    else:
+        return '', 401
+
+#게시글 수정하기
+@application.route("/board_modify/<item_name>/<post_key>", methods=["GET", "POST"])
+def modify_post(item_name, post_key):
+    if request.method == "POST":
+        password = request.form.get("psw")
+        post = DB.get_post_by_key(item_name, post_key)
+        if post and str(post["psw"]) == str(password):
+            new_data = {
+                "title": request.form.get("postTitle"),
+                "content": request.form.get("postContent"),
+            }
+
+            if DB.update_post(item_name, post_key, new_data):
+                return redirect(url_for("view_board_list", name=item_name))  # 리스트 페이지로 리디렉션
+            return "게시글 업데이트에 실패했습니다.", 500
+    
+        return "비밀번호가 일치하지 않습니다.", 401
+    
+    post = DB.get_post_by_key(item_name, post_key)
+    return render_template("board_modify.html", post=post, item_name=item_name, post_key=post_key)
+
+@application.route('/comment_write/<item_name>/<post_key>/', methods=["POST"])
+def write_comment(item_name, post_key):
+    user_id = session.get('id', 'unknown_user')  # 세션에서 사용자 ID 가져오기
+    content = request.form.get("commentContent", "")
+    comment_password = request.form.get("commentPassword", "")  # 댓글 비밀번호 받기
+
+    # 댓글 비밀번호가 제대로 입력되었는지 확인
+    if not comment_password:
+        return "댓글 비밀번호를 입력해야 댓글을 작성할 수 있습니다.", 400
+
+    # 댓글 내용이 없으면 오류 반환
+    if not content:
+        return "댓글 내용을 입력하세요.", 400
+
+    # 댓글을 DB에 저장
+    comment_key = DB.save_comment(item_name, post_key, user_id, content, comment_password)
+    if not comment_key:
+        return "댓글 저장에 실패했습니다.", 500
+
+    # 댓글 작성 후 해당 게시글의 댓글 목록을 반환
+    comments = DB.get_comments_by_post(item_name, post_key)
+    return jsonify(comments)
+
+# 댓글 수정
+@application.route("/comment_modify/<item_name>/<post_key>/<comment_key>", methods=["GET", "POST"])
+def modify_comment(item_name, post_key, comment_key):
+    # 비밀번호 확인
+    if request.method == "GET":
+        password = request.args.get("password")
+        comment = DB.get_comment_by_key(item_name, post_key, comment_key)
+        if not comment or comment["password"] != password:
+            return "비밀번호가 일치하지 않습니다.", 401
+
+        # 비밀번호가 맞으면 수정 페이지 렌더링
+        return render_template("comment_modify.html", comment=comment, item_name=item_name, post_key=post_key, comment_key=comment_key)
+
+    # POST 요청: 댓글 수정
+    new_content = request.form.get("newContent")
+    if DB.update_comment(item_name, post_key, comment_key, new_content):
+        return '', 200
+    return "댓글 수정에 실패했습니다.", 500
+
+# 댓글 삭제
+@application.route("/comment_delete/<item_name>/<post_key>/<comment_key>", methods=["DELETE"])
+def delete_comment(item_name, post_key, comment_key):
+    comment = DB.get_comment_by_key(item_name, post_key, comment_key)
+    comment_password = request.args.get("password")
+
+    if comment and comment["password"] == comment_password:  # 비밀번호 확인
+        if DB.delete_comment(item_name, post_key, comment_key):
+            return '', 200
+        return '', 500
+    return '', 401
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @application.route('/purchase.html')
 def view_purchase_product():
     return render_template('purchase.html')
 
 #지금 상황이 좀 꼬였는데, view_detail에서 바로 review.html로 넘어가버려서 404가 뜨는 중 
-@application.route('/question_submit.html')
-def view_question_submit():
-    return render_template('question_submit.html')
 
 #리뷰 작성 페이지
 @application.route("/reg_review_init/<name>/")
@@ -122,12 +289,6 @@ def view_itemReview_detail(name, key):
     data=DB.get_review_bykey(str(name), str(key))
     return render_template("review_detail.html", name=key, data=data)
 
-
-#전체 상품 조회 페이지
-@application.route("/all.html")
-def view_all_products():
-    return render_template("all.html")
-
 #회원가입 백엔드 연결
 @application.route("/signup_post", methods=['POST'])
 def register_user():
@@ -149,7 +310,9 @@ def login_user():
     if DB.find_user(id_, pw_hash):
         session['id']=id_
         session['status']="product" #처음 로그인하면 product를 기본으로 설정
-        return redirect(url_for('view_list')) #교수님 수업 파일은 상품 리스트가 home 인데 우리는 홈화면이 따로 있으니까... hello()로 고쳐야 할 수도
+        data=DB.get_user(session['id'])
+        session['name']=data['name']
+        return redirect(url_for('view_main')) #교수님 수업 파일은 상품 리스트가 home 인데 우리는 홈화면이 따로 있으니까... hello()로 고쳐야 할 수도
     else:
         flash("아이디/패스워드가 일치하지 않습니다!")
         return render_template("login.html")
@@ -158,6 +321,7 @@ def login_user():
 @application.route("/logout")
 def logout_user():
     session.clear()
+    session['status']="product"
     return redirect("aboutus.html") #교수님 수업 파일은 상품 리스트가 home 인데 우리는 홈화면이 따로 있으니까... hello()로 고쳐야 할 수도
 
 #제품등록 백엔드 연결 #지금 누가 등록했는지에 대한 게 없는데, 만약 추가해야 한다면 로그인이 반드시 필요하다는 것
@@ -166,7 +330,7 @@ def reg_item_submit_post():
     data = {
         "seller": session['id'],
         "title": request.form.get("title", ""),
-        "price": request.form.get("price", ""),
+        "price": request.form.get("price", type=int),
         "product_type": request.form.get("product_type", ""),
         "category": request.form.get("category", ""),
         "description": request.form.get("description", ""),
@@ -219,7 +383,7 @@ def view_list():
         row2=locals()['data_1'].items(),
         limit=per_page,
         page=page, #현재 페이지 인덱스
-        page_count=int(math.ceil((item_counts/per_page)+1)), #페이지 개수
+        page_count=int(math.ceil((item_counts/per_page))), #페이지 개수
         total=item_counts
         )
 #카테고리별 제품 가져오기
@@ -232,7 +396,7 @@ def view_list_category(category):
     start_idx=per_page*page #page 인덱스로 start_idx, end_idx 생성
     end_idx=per_page*(page+1)
 
-    data=DB.get_items_byproductType(category)
+    data=DB.get_items_byCategory(category)
 
     item_counts = len(data) #한 페이지에 start_idx, end_idx 만큼 읽어오기
     data = dict(sorted(data.items(), key=lambda x: x[0], reverse=False))
@@ -254,12 +418,12 @@ def view_list_category(category):
         row2=locals()['data_1'].items(),
         limit=per_page,
         page=page, #현재 페이지 인덱스
-        page_count=int(math.ceil((item_counts/per_page)+1)), #페이지 개수
+        page_count=int(math.ceil((item_counts/per_page))), #페이지 개수
         total=item_counts,
         category=category
         )
 
-#데이터베이스에서 리뷰 가져오기 (전체) 이건 제출용
+#데이터베이스에서 리뷰 가져오기 (전체) 이건 제출용 #이거 조만간 삭제해야 할 거 같은데 금요일에 보여드리고 삭제하든 말든 해야지
 @application.route("/all_review")
 def view_review():
     page = request.args.get("page", 0, type=int)
@@ -284,7 +448,7 @@ def view_review():
         row2=locals()['data_1'].items(),
         limit=per_page,
         page=page,
-        page_count=int((item_counts/per_page)+1),
+        page_count=int(math.ceil((item_counts/per_page))),
         total=item_counts)
 
 #데이터베이스에서 리뷰 가져오기 (상품별)
@@ -312,13 +476,14 @@ def view_product_review(name):
             locals()['data_{}'.format(i)] = dict(list(data.items())[i*per_row:(i+1)*per_row])
     return render_template(
         "/all_item_review.html",
+        name=name,
         datas=data.items(),
         row1=locals()['data_0'].items(),
         row2=locals()['data_1'].items(),
         row3=locals()['data_2'].items(),
         limit=per_page,
         page=page,
-        page_count=int((item_counts/per_page)+1),
+        page_count=int(math.ceil((item_counts/per_page))),
         total=item_counts)
 
 #좋아요 기능 백엔드 연결
@@ -337,20 +502,20 @@ def unlike(name):
     return jsonify({'msg': '안좋아요 완료!'})
 
 #스위치
-@application.route('/switch/<id>/', methods=['GET'])
-def show_switch(id):
-    status =DB.get_status(session['id'])
+@application.route('/switch', methods=['GET'])
+def show_switch():
+    status=session['status']
     print("showSwtich: ", session['status'])
     return jsonify({'status':status})
-@application.route('/toService/<id>/', methods=['POST'])
-def toService(id):
-    status=DB.update_status(session['id'], "service")
+@application.route('/toService', methods=['POST'])
+def toService():
+    status="service"
     session['status']=status
     print("toService: "+session['status'])
     return jsonify({'msg':'서비스로'})
-@application.route('/toProduct/<id>/', methods=['POST'])
-def toProduct(id):
-    status=DB.update_status(session['id'], "product")
+@application.route('/toProduct', methods=['POST'])
+def toProduct():
+    status="product"
     session['status']=status
     print("toProduct: "+session['status'])
     return jsonify({'msg': '제품으로'})
@@ -375,3 +540,40 @@ def DynamicUrl(varible_name):
 
 if __name__ == "__main__":
     application.run(host='0.0.0.0', debug=True)
+
+
+#장바구니 보기
+@application.route("/cart.html")
+def view_cart():
+    cart = DB.get_cart(session['id'])
+    if (cart!=None): cart = dict(list(cart.items())[:])
+    total=DB.calc_total(session['id'])
+    return render_template("cart.html", cart=cart, total_price=total)
+
+# 장바구니에 제품 추가
+@application.route("/add_to_cart/<item_name>", methods=['POST'])
+def add_to_cart(item_name):
+    data={
+        "name": item_name,
+        "quantity": request.form.get('quantity', "")
+    }
+    print(data)
+    success = DB.add_to_cart(session['id'], data)
+    return redirect(url_for('view_cart'))
+#장바구니에서 제품 제거
+@application.route("/remove_from_cart/<item_name>", methods=['POST'])
+def remove_from_cart(item_name):
+    DB.remove_item(session['id'], item_name)
+    return jsonify({"message": "상품이 장바구니에서 제거되었습니다."})
+#장바구니에서 수량 변화
+@application.route("/update_cart_quantity/<item_name>", methods=['POST'])
+def update_cart_quantity(item_name):
+    quantity = request.form.get('quantity', type=int)    
+    data=DB.update_quantity(session['id'], item_name, quantity)
+    total=DB.calc_total(session['id'])
+    return jsonify({"message": "수량이 업데이트되었습니다.", "data": data, "total": total})
+#장바구니 비우기
+@application.route("/clear_cart", methods=['GET'])
+def clear_cart():
+    DB.clear_cart(session['id'])
+    return jsonify({"message": "장바구니가 비워졌습니다."})
