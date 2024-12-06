@@ -474,3 +474,43 @@ def update_cart_quantity(item_name):
 def clear_cart():
     DB.clear_cart(session['id'])
     return jsonify({"message": "장바구니가 비워졌습니다."})
+
+
+# main.html 과 DB연결해보기
+
+@application.route("/main.html")
+def view_main():
+    db = DBhandler()
+    product_type = session.get('status', 'product')  # 기본값 'product'로 설정
+    
+    # 모든 아이템 가져오기
+    items = db.get_items_byproductType(product_type)
+    
+    if items:
+        # 총 아이템 수 계산
+        total = len(items)
+        
+        # 아이템 정렬 (이름 기준)
+        items_list = sorted(items.items(), key=lambda x: x[0])
+        
+        # 두 행으로 나누기
+        mid_point = len(items_list) // 2
+        row1 = dict(items_list[:mid_point])
+        row2 = dict(items_list[mid_point:])
+        
+        return render_template(
+            "main.html",
+            row1=row1.items(),
+            row2=row2.items(),
+            total=total,
+            items=items  # swiper에서도 사용할 수 있도록 전체 아이템도 전달
+        )
+    else:
+        # 아이템이 없는 경우
+        return render_template(
+            "main.html",
+            row1=[],
+            row2=[],
+            total=0,
+            items={}
+        )
