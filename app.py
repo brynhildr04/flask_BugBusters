@@ -113,10 +113,12 @@ def view_post_detail(item_name, key):
     else:
         return "Post not found", 404
 
+#제품별 게시판 보기
 @application.route('/board_view.html')
 def view_board_view():
     return render_template('board_view.html')
 
+#게시글 지우기
 @application.route("/delete_post/<item_name>/<post_key>", methods=["DELETE"])
 def delete_post(item_name, post_key):
     password = request.args.get('password')
@@ -127,6 +129,7 @@ def delete_post(item_name, post_key):
     else:
         return '', 401
 
+#게시글 수정하기
 @application.route("/board_modify/<item_name>/<post_key>", methods=["GET", "POST"])
 def modify_post(item_name, post_key):
     if request.method == "POST":
@@ -146,6 +149,89 @@ def modify_post(item_name, post_key):
     
     post = DB.get_post_by_key(item_name, post_key)
     return render_template("board_modify.html", post=post, item_name=item_name, post_key=post_key)
+
+# 댓글 작성 페이지
+@application.route('/comment_write/<item_name>/<post_key>/', methods=["POST"])
+def write_comment(item_name, post_key):
+    user_id = session.get('id', 'unknown_user')  # 세션에서 사용자 ID 가져오기
+    content = request.form.get("commentContent", "")
+    comment_password = request.args.get("comment_password", "")  # 비밀번호 받기
+    
+    # 비밀번호가 제대로 입력되었는지 확인 (간단히 체크 예시)
+    if not comment_password:
+        return "비밀번호를 입력해야 댓글을 작성할 수 있습니다.", 400
+
+    # 댓글 내용이 없으면 오류 반환
+    if not content:
+        return "댓글 내용을 입력하세요.", 400
+
+    # 댓글을 DB에 저장
+    comment_key = DB.save_comment(item_name, post_key, user_id, content)
+    if not comment_key:
+        return "댓글 저장에 실패했습니다.", 500
+
+    # 댓글 작성 후, 해당 게시글의 상세보기 페이지로 리디렉션
+    return redirect(url_for("view_post_detail", item_name=item_name, key=post_key))
+
+# 게시글에 대한 댓글 보기
+@application.route("/comments/<item_name>/<post_key>/")
+def view_comments(item_name, post_key):
+    comments = DB.get_comments_by_post(item_name, post_key)
+    return render_template("comments_section.html", comments=comments, item_name=item_name, post_key=post_key)
+
+# 댓글 수정
+@application.route("/comment_modify/<item_name>/<post_key>/<comment_key>", methods=["POST"])
+def modify_comment(item_name, post_key, comment_key):
+    password = request.form.get("psw")
+    comment = DB.get_comment_by_key(item_name, post_key, comment_key)
+    
+    if comment and str(comment["id"]) == str(session.get("id")):  # 로그인한 사용자 ID와 댓글 작성자 ID 비교
+        new_content = request.form.get("newContent")
+        if DB.update_comment(item_name, post_key, comment_key, new_content):
+            return redirect(url_for("view_post_detail", item_name=item_name, key=post_key))
+        return "댓글 수정에 실패했습니다.", 500
+
+    return "댓글 수정 권한이 없습니다.", 401
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @application.route('/purchase.html')
 def view_purchase_product():

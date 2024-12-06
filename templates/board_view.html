@@ -33,7 +33,37 @@
     <script src="path/to/main.js"></script>
 </section>
 
-<script> 
+<section id="board_view_comment">
+    <div class="container mt-3 mb-2">
+        <textarea id="newComment" class="form-control flex-grow-1" rows="2" placeholder="댓글을 입력하세요.." style="max-width: 80%; margin-right: 20px;"></textarea>
+        <button id="submitComment" class="btn btn-primary btn-sm mt-2 mb-5">댓글쓰기</button>
+    </div>
+
+    <div class="container mt-5 mb-2" style="font-size: 0.9em;">
+        <table id="comments">
+            <tr>
+                <th style="font-weight: normal; width: 100px">작성자</th>
+                <th style="font-weight: normal; width: 100px">내용</th>
+                <th style="font-weight: normal; width: 100px">작성일</th>
+                <th style="font-weight: normal; width: 100px">수정/삭제</th>
+            </tr>
+            {% for comment in comments %}
+                <tr>
+                    <td>{{ comment['id'] }}</td>
+                    <td>{{ comment['content'] }}</td>
+                    <td>{{ comment['date'] }}</td>
+                    <td>
+                        <button class="editCommentBtn" data-comment-id="{{ comment['comment_key'] }}">수정</button>
+                        <button class="deleteCommentBtn" data-comment-id="{{ comment['comment_key'] }}">삭제</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</section>
+   
+<script>
+//게시물 파트 
 const modifyBtn = document.querySelector("#modify"); 
 modifyBtn.addEventListener("click", () => { 
     const password = prompt("비밀번호를 입력하세요:"); 
@@ -61,5 +91,64 @@ deleteBtn.addEventListener("click", async () => {
             } 
     } 
 });
+
+//댓글 파트
+    // 댓글 작성
+    document.getElementById("submitComment").addEventListener("click", async function() {
+        const commentContent = document.getElementById("newComment").value;
+        const item_name = "{{ item_name }}";
+        const post_key = "{{ key }}";
+
+        // 댓글 내용이 비어있는지 확인
+        if (!commentContent) {
+            alert("댓글 내용을 입력하세요.");
+            return;
+        }
+
+        // 댓글 비밀번호 입력을 받기 위한 프롬프트
+        const comment_password = prompt("댓글 비밀번호를 입력하세요:");
+
+        if (comment_password) {
+            // 서버로 댓글 내용과 댓글 비밀번호를 함께 전송
+            const response = await fetch(`/comment_write/${item_name}/${post_key}/?comment_password=${comment_password}`, {
+                method: 'POST',
+                body: new URLSearchParams({
+                    "commentContent": commentContent
+                })
+            });
+
+            // 서버 응답 확인
+            if (response.ok) {
+                alert("댓글이 작성되었습니다.");
+                location.reload(); // 댓글 작성 후 페이지 새로고침
+            } else {
+                alert("댓글 작성에 실패했습니다.");
+            }
+        } else {
+            alert("비밀번호를 입력해야 댓글을 작성할 수 있습니다.");
+        }
+    });
+
+    // 댓글 삭제
+    document.querySelectorAll(".deleteCommentBtn").forEach(button => {
+        button.addEventListener("click", async (e) => {
+            const commentKey = e.target.getAttribute("data-comment-id");
+            const password = prompt("비밀번호를 입력하세요:");
+
+            const response = await fetch(`/comment_delete/{{ item_name }}/{{ key }}/${commentKey}?password=${password}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                alert("댓글이 삭제되었습니다.");
+                location.reload();
+            } else {
+                alert("비밀번호가 일치하지 않거나 삭제할 권한이 없습니다.");
+            }
+        });
+    });
+
+    // 댓글 수정
+    document.querySelectorAll(".editCommentBtn").for
 </script>
 {% endblock section %}
