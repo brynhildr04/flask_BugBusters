@@ -337,6 +337,7 @@
 /* 241108v1. 신우림이 주석달고 추가하였음. (제거, 너비설정, 좌우여백추가) */
 .row {
     display: flex;
+    justify-content: center;
     align-items: center; /* 세로 가운데 정렬 */
     flex-direction: column; /* 자식 요소를 세로 정렬 */
     max-width: 1200px;
@@ -529,16 +530,6 @@ hr {
     text-align: left;
     padding-right: 20px;
     width: 120px;
-}
-
-.row.signup {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0 auto;
-    padding-top: 20px;
 }
 
 /* 라벨 스타일 */
