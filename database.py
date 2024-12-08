@@ -291,6 +291,7 @@ class DBhandler:
         self.db.child("post").child(item_name).child(key).update({"views": updated_views})
         return updated_views
 
+    #게시글 수정    
     def update_post(self, item_name, key, new_data): 
         try: 
             self.db.child("post").child(item_name).child(key).update(new_data) 
@@ -299,8 +300,10 @@ class DBhandler:
             print(f"Error updating post: {e}") 
             return False
         
+    #게시글 삭제
     def delete_post(self, item_name, key):
         try:
+            self.db.child("comments").child(item_name).child(key).remove()
             self.db.child("post").child(item_name).child(key).remove()
             print(f"Post {key} under {item_name} deleted successfully.")
             return True
@@ -357,6 +360,52 @@ class DBhandler:
         except Exception as e:
             print(f"Error deleting comment: {e}")
             return False
+    
+    
+    def get_posts_by_user(self, user_id):
+        user_all_posts = self.db.child("post").get()  # 모든 게시물 데이터 가져오기
+        user_posts = []
+
+        if not user_all_posts.val():
+            return user_posts
+
+        for item_name, posts in user_all_posts.val().items():
+            for post_key, post_data in posts.items():
+                if post_data.get("id") == user_id:  # 작성자 ID 확인
+                    user_posts.append({
+                        "item_name": item_name,
+                        "post_key": post_key,
+                        **post_data
+                    })
+
+        return user_posts
+    
+    def get_comments_by_user(self, user_id):
+        user_all_comments = self.db.child("comments").get()  # 모든 댓글 데이터 가져오기
+        user_comments = []
+
+        # 데이터가 없을 경우 빈 리스트 반환
+        if not user_all_comments.val():
+            return user_comments
+
+        # 데이터 순회
+        for item_name, posts in user_all_comments.val().items():
+            if not posts:  # posts가 None일 경우 무시
+                continue
+            for post_key, comments in posts.items():
+                if not comments:  # comments가 None일 경우 무시
+                    continue
+                for comment_key, comment_data in comments.items():
+                    if comment_data.get("id") == user_id:  # 작성자 ID 확인
+                        user_comments.append({
+                            "item_name": item_name,
+                            "post_key": post_key,
+                            "comment_key": comment_key,
+                            **comment_data
+                        })
+
+        return user_comments
+
     
 
 

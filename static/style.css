@@ -18,6 +18,7 @@
     top: 0;
     z-index: 1000;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    gap: 2rem; /* 요소들 사이의 간격 */
 }
 
 .logo {
@@ -111,18 +112,6 @@
     font-weight: 600;
     font-size: 1.2rem;
     white-space: nowrap;
-}
-/* Header 기본 스타일 */
-.header {
-    display: flex;
-    align-items: center;
-    padding: 1rem 2rem;
-    background: white;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    gap: 2rem; /* 요소들 사이의 간격 */
 }
 
 /* 로고 섹션 */
@@ -325,101 +314,12 @@
 
 /* 상품 카드 영역 */
 
-.products-section {
-    max-width: 1158px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.section-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 32px;
-    color: #333;
-    text-align: left;
-}
-
-
-/* 슬라이더 컨테이너 */
-.slider-container {
-    position: relative;
-    padding: 20px 40px;
-}
-
-/* 슬라이더 */
-.product-slider {
-    overflow: hidden;
-    margin: 0 auto;
-}
-
-.slide-track {
-    display: flex;
-    gap: 32px;
-    transition: transform 0.5s ease-in-out;
-}
-
-.product-card {
-    flex: 0 0 calc((100% - 64px) / 3);
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease;
-}
-
-.product-image {
-    width: 100%;
-    height: 200px;
-    background: #E6E6E6;
-}
-
-.product-info {
-    padding: 1rem;
-}
-
-.product-info h3 {
-    margin: 0;
-    font-size: 1rem;
-    color: #666;
-}
-
-/* 슬라이더 버튼 */
-.slider-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-    background: #00462A;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 20px;
-    z-index: 10;
-}
-
-.slider-button.prev {
-    left: 0;
-}
-
-.slider-button.next {
-    right: 0;
-}
-
-.slider-button:hover {
-    background: #00462A;
-}
-
-.product-card:hover {
-    transform: translateY(-5px);
-}
-
-.product-image {
-    width: 100%;
-    height: 200px;
+.product-detailimage {
+    width: 40%;
+    height: auto;
     background: #f5f5f5;
 }
+
 
 
 .product-info {
@@ -438,8 +338,15 @@
 .row {
     display: flex;
     justify-content: center;
+    align-items: center; /* 세로 가운데 정렬 */
+    flex-direction: column; /* 자식 요소를 세로 정렬 */
     max-width: 1200px;
-    margin: 40px auto;
+    margin: 40px auto; /* 페이지 가운데 정렬 */
+}
+
+.column {
+    flex: 1; /* 자식 요소가 동일한 비율로 배치 */
+    padding: 20px;
 }
 
 .column.side {
@@ -574,18 +481,29 @@ hr {
 }
 
 /*회원가입*/
+
+#signup {
+    margin-bottom: 10px; /* 제목과 테이블 사이 간격 */
+}
+
+hr {
+    margin: 10px 0; /* 수평선 위아래 간격 줄이기 */
+}
+
 /* 회원가입 페이지 컨테이너 */
 .row.signup {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     min-height: 100vh;
-    background-color: #f9f9f9;
-    padding: 60px 20px;
+    margin: 0 auto;
+    padding-top: 20px;
 }
-
 .column.middle.signup {
     width: 100%;
-    max-width: 560px;
+    max-width: 600px;
+    margin: 0 auto;
     background: white;
     padding: 48px;
     border-radius: 16px;
@@ -612,20 +530,6 @@ hr {
     text-align: left;
     padding-right: 20px;
     width: 120px;
-}
-
-.row.signup {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0 auto;
-    padding-top: 20px;
-    padding-right: 24px;
-    width: 120px;
-    vertical-align: top;
-    padding-top: 14px;
 }
 
 /* 라벨 스타일 */
@@ -924,28 +828,18 @@ input[type="number"]::-webkit-outer-spin-button {
 
 
 /* 아이디/비밀번호 찾기 페이지 스타일 */
-.row {
-    display: flex;
-    justify-content: center;
-    max-width: 1200px;
-    margin: 40px auto;
-}
 
-.column.side {
-    display: none;
-    /* side column 제거 */
-}
-
+/*중복이라 주석처리(우민하)*/
+/*
 .column.middle {
     flex: 0 1 600px;
-    /* 최대 너비 설정 */
     background: white;
     padding: 40px;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     margin: 0 20px;
-    /* 좌우 여백 추가 */
 }
+*/
 
 /* 아이디/비밀번호 찾기 영역 */
 #find {
@@ -1991,37 +1885,6 @@ footer {
     overflow: hidden;
 }
 
-/* 이미지 슬라이더 */
-.product-images {
-    flex: 1;
-}
-
-.slider-container {
-    position: relative;
-    width: 100%;
-    height: 500px;
-    overflow: hidden;
-    border-radius: 12px;
-    background: #E6E6E6;
-}
-
-.slider-content {
-    width: 100%;
-    height: 100%;
-}
-
-.slide {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    object-fit: cover;
-}
-
-.slide.active {
-    opacity: 1;
-}
 
 /* 상품 정보 섹션 */
 .product-info-section {
@@ -2316,10 +2179,6 @@ footer {
 }
 
 @media (max-width: 768px) {
-    .slider-container {
-        height: 400px;
-    }
-
     .product-title {
         font-size: 28px;
     }
@@ -2753,4 +2612,37 @@ swiper-container::part(pagination-bullet-active) {
     .qna-table .views {
         display: none;
     }
+}
+
+/*페이지 첫화면 로그인과 회원가입 버튼 css 인데 밑에 흰선 없애는 중입니다... */
+
+.auth-buttons {
+    position: absolute; 
+    bottom: 25%; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    display: flex;
+    gap: 20px; 
+    margin: 0; 
+    padding: 0; 
+    border: none; 
+}
+
+.auth-buttons .login-btn,
+.auth-buttons .signup-btn {
+    padding: 10px 20px;
+    background-color: #00462A; 
+    color: white; 
+    border: none; 
+    border-radius: 18px; 
+    cursor: pointer;
+    font-size: 1rem; 
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 0; 
+}
+
+.auth-buttons .login-btn:hover,
+.auth-buttons .signup-btn:hover {
+    background-color: #A4C1AE; 
+    transform: translateY(-2px); 
 }

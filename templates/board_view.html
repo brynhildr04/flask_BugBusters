@@ -1,6 +1,12 @@
 {% extends "header.html" %}
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/qna.css') }}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Review Detail Page</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='eunyoung_style.css') }}">
+<script src="{{ url_for('static', filename='main.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='qna.css') }}">
 {% endblock %}
 
 {% block section %}
@@ -39,7 +45,7 @@
                 <button type="submit" class="qna-btn">댓글 작성</button>
             </form>
 
-            <table class="qna-table">
+            <table class="qna-table" id="comments">
                 <tr>
                     <th>작성자</th>
                     <th>내용</th>
@@ -63,6 +69,132 @@
 </section>
 
 <script>
-// 기존 JavaScript 코드는 그대로 유지
+//게시물 파트 
+const modifyBtn = document.querySelector("#modify"); 
+modifyBtn.addEventListener("click", () => { 
+    const postpassword = prompt("비밀번호를 입력하세요:"); 
+    if (postpassword) { 
+        const item_name = "{{ item_name }}"; 
+        const post_key = "{{ post_key }}"; // 게시글의 고유 ID 
+        location.href = `/board_modify/${item_name}/${post_key}?password=${postpassword}`; } 
+    }
+);
+
+const deleteBtn = document.querySelector("#delete"); 
+deleteBtn.addEventListener("click", async () => { 
+    const postpassword = prompt("비밀번호를 입력하세요:"); 
+    if (postpassword) { 
+        const item_name = "{{ item_name }}"; 
+        const post_key = "{{ post_key }}"; // 게시글의 고유 ID 
+        const response = await fetch(`/delete_post/${item_name}/${post_key}?password=${postpassword}`, { 
+            method: 'DELETE' 
+        }); 
+        if (response.ok) { 
+            alert("게시물이 삭제되었습니다."); 
+            location.href = `/board_list/${item_name}`; 
+            } else { 
+                alert("비밀번호가 일치하지 않습니다."); 
+            } 
+    } 
+});
+
+const post_key = "{{ post_key }}";
+console.log(`Post Key: ${post_key}`);
+
+//댓글 파트
+    // 댓글 작성
+    document.getElementById("commentForm").addEventListener("submit", async function(event) {
+        event.preventDefault(); // 폼 제출 기본 동작 방지
+
+        const commentContent = document.querySelector("textarea[name='commentContent']").value;
+        const item_name = "{{ item_name }}";
+        const post_key = "{{ post_key }}";
+        const commentPassword = document.querySelector("input[name='commentPassword']").value;
+
+        // 댓글 내용이 비어있는지 확인
+        if (!commentContent) {
+            alert("댓글 내용을 입력하세요.");
+            return;
+        }
+
+        // 서버로 댓글 내용과 댓글 비밀번호를 함께 전송
+        const response = await fetch(`/comment_write/${item_name}/${post_key}/`, {
+            method: 'POST',
+            body: new URLSearchParams({
+                "commentContent": commentContent, // 댓글 내용
+                "commentPassword": commentPassword // 댓글 비밀번호
+            })
+        });
+
+        // 서버 응답 확인
+        if (response.ok) {
+            const comments = await response.json(); // 서버에서 반환된 새 댓글 정보
+
+            // 댓글 목록 동적으로 갱신
+            const table = document.querySelector("#comments tbody");
+            table.innerHTML = "";  // 기존 댓글을 초기화
+            comments.forEach(comment => {
+                const row = document.createElement("tr");
+                row.innerHTML = `<td>${comment.id}</td><td>${comment.content}</td><td>${comment.date}</td><td><button class="editCommentBtn" data-comment-id="${comment.comment_key}">수정</button><button class="deleteCommentBtn" data-comment-id="${comment.comment_key}">삭제</button></td>`;
+                table.appendChild(row);
+            });
+
+            // 댓글 작성 폼 초기화
+            document.querySelector("textarea[name='commentContent']").value = '';
+            document.querySelector("input[name='commentPassword']").value = '';
+        } else {
+            alert("댓글 작성에 실패했습니다.");
+        }
+    });
+
+    
+
+    // 댓글 삭제 버튼
+    document.getElementById("comments").addEventListener("click", async (e) => {
+        if (e.target.classList.contains("deleteCommentBtn")) {
+            const commentKey = e.target.getAttribute("data-comment-id");
+            const password = prompt("댓글 삭제 비밀번호를 입력하세요:");
+            if (password) {
+                const response = await fetch(`/comment_delete/{{ item_name }}/{{ post_key }}/${commentKey}?password=${password}`, {
+                    method: 'DELETE'
+                });
+                if (response.ok) {
+                    alert("댓글이 삭제되었습니다.");
+                    location.reload();
+                } else {
+                    alert("비밀번호가 일치하지 않거나 삭제 권한이 없습니다.");
+                }
+            }
+        }
+    });
+
+    // 댓글 수정 버튼
+    document.getElementById("comments").addEventListener("click", async (e) => {
+        if (e.target.classList.contains("editCommentBtn")) {
+            const commentKey = e.target.getAttribute("data-comment-id");
+            const password = prompt("댓글 수정 비밀번호를 입력하세요:");
+            if (password) {
+                const newContent = prompt("수정할 댓글 내용을 입력하세요:");
+                if (newContent) {
+                    const response = await fetch(`/comment_modify/{{ item_name }}/{{ post_key }}/${commentKey}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: new URLSearchParams({
+                            "commentPassword": password,
+                            "newContent": newContent
+                        })
+                    });
+                    if (response.ok) {
+                        alert("댓글이 수정되었습니다.");
+                        location.reload();
+                    } else {
+                        alert("비밀번호가 일치하지 않거나 수정에 실패했습니다.");
+                    }
+                }
+            }
+        }
+    });
 </script>
 {% endblock section %}
