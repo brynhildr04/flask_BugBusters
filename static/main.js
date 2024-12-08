@@ -24,7 +24,7 @@ function toService() {
         },
         success: function (response) {
             alert(response['msg'])
-            window.location.href="/list";
+            window.location.href="/main.html";
         }
     });
 }
@@ -37,7 +37,7 @@ function toProduct() {
         },
         success: function (response) {
             alert(response['msg'])
-            window.location.href="/list";
+            window.location.href="/main.html";
         }
     });
 }
@@ -377,18 +377,6 @@ function updateGrandTotal() {
 
     // 총 금액 업데이트
     document.getElementById('grandTotal').textContent = grandTotal.toLocaleString() + '원';
-}
-
-//박수민 js
-function pwSending() {
-    var msg = document.getElementById("findPW_msg");
-    msg.innerHTML = "*임시 비밀번호가 이메일이 전송되었습니다.";
-    msg.style.visibility = "visible";
-}
-function idSending() {
-    var msg = document.getElementById("findId_msg");
-    msg.innerHTML = "*아이디가 이메일이 전송되었습니다.";
-    msg.style.visibility = "visible";
 }
 
 // 슬라이더 기능 (신우림 js)

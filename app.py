@@ -5,11 +5,23 @@ import os
 import sys
 import math
 from datetime import datetime
+import smtplib
+from email.mime.text import MIMEText
+import random
+
 
 application = Flask(__name__)
 application.config["SECRET_KEY"]="sosohanewhamarket"
 application.config['UPLOAD_FOLDER'] = 'static/images'
 DB=DBhandler()
+
+#파이썬으로 이메일을 보내기 위한 코드
+    #587포트 및 465포트 존재
+smtp = smtplib.SMTP('smtp.gmail.com', 587)
+smtp.ehlo()
+smtp.starttls()
+    #로그인을 통해 지메일 접속
+smtp.login('park.sumin2004@gmail.com', 'kdew xhur tlrn hhlg')
 
 #첫화면
 @application.route("/")
@@ -42,13 +54,65 @@ def signup():
 def view_find_id():
     return render_template("find_id.html")
 
+#이메일 보내기
+@application.route("/sendingId", methods=['POST'])
+def sendId():        
+    email=request.form['email_id']+"@"+request.form['email_domain']
+    print(email)
+    user=DB.get_user(email)
+    if (user==None):
+        flash("가입한 적 없는 이메일 입니다.")
+        return redirect(url_for('view_find_id'))
+    uid=user['id']
+    print(uid)
+    try: 
+        #내용을 입력하는 MIMEText => 다른 라이브러리 사용 가능
+        msg = MIMEText(('가입하신 아이디는 %s 입니다.'%uid), "plain")
+        msg['Subject'] = '소소한 이화: 아이디 전송 메일입니다'
+
+        #이메일을 보내기 위한 설정(Cc도 가능)
+        smtp.sendmail('park.sumin2004@gmail.com', email, msg.as_string())
+        #객체 닫기
+        smtp.quit()
+    except:
+        flash("이메일 전송에 실패했습니다. 존재하지 않는 이메일일 수 있습니다.")
+        return render_template("/find_id.html")
+    flash("가입하신 이메일로 아이디가 전송되었습니다.")
+    return render_template("/login.html")
+
+@application.route("/sendingPW", methods=['POST'])
+def sendingPW():
+    uid=request.form["id"]
+    stdNum=request.form['stdNum']
+    email=request.form['email_id2']+"@"+request.form['email_domain2']
+    user_key=DB.find_user_forPW(uid, stdNum, email)
+    if(user_key==None):
+        flash("가입한 적 없는 회원정보 입니다.")
+        return render_template("/find_id.html")
+    temp_pw=str(int(random.random()*1000000))
+    pw_hash = hashlib.sha256(temp_pw.encode('utf-8')).hexdigest()
+    DB.change_pw(user_key, pw_hash)
+    try:  
+        #내용을 입력하는 MIMEText
+        msg = MIMEText(('새 비밀번호는 %s 입니다.'%temp_pw), "plain")
+        msg['Subject'] = '소소한 이화: 임시 비밀번호 전송 메일입니다'
+        #이메일을 보내기 위한 설정
+        smtp.sendmail('park.sumin2004@gmail.com', email, msg.as_string())
+        #객체 닫기
+        smtp.quit()
+    except:
+        flash("이메일 전송에 실패했습니다. 존재하지 않는 이메일일 수 있습니다.")
+        return render_template("/find_id.html")
+    
+    flash("새 비밀번호가 가입하신 이메일로 전송되었습니다.")
+    return render_template("/login.html")
+
 #제품 상세 페이지 백엔드 연결
 @application.route("/view_detail/<name>/")
 def view_product_detail(name):
-    print("###name: ", name)
     data=DB.get_item_byname(str(name))
     DB.update_rate(name)
-    print("###data: ", data)
+    DB.update_popularity(name, 1)
     return render_template("detail.html", name=name, data=data)
 
 #상품 등록하기
@@ -99,7 +163,7 @@ def view_board_list(name):
         print(f"No posts for {name}, showing empty board.")  # 디버깅 메시지
     return render_template("board_list.html", posts=posts, name=name)
 
-# 제품 상세 페이지 보기
+# 각 게시글 상세 페이지 보기
 @application.route("/post_detail/<item_name>/<key>")
 def view_post_detail(item_name, key):
     updated_views = DB.increment_views(item_name, key)
@@ -257,7 +321,6 @@ def view_list():
     data=DB.get_items_byproductType(product_type)
 
     item_counts = len(data) #한 페이지에 start_idx, end_idx 만큼 읽어오기
-    data = dict(sorted(data.items(), key=lambda x: x[0], reverse=False))
     item_counts=len(data)
     if item_counts<=per_page:
         data=dict(list(data.items())[:item_counts])
@@ -292,7 +355,6 @@ def view_list_category(category):
     data=DB.get_items_byCategory(category)
 
     item_counts = len(data) #한 페이지에 start_idx, end_idx 만큼 읽어오기
-    data = dict(sorted(data.items(), key=lambda x: x[0], reverse=False))
     item_counts=len(data)
     if item_counts<=per_page:
         data=dict(list(data.items())[:item_counts])
@@ -388,29 +450,28 @@ def show_heart(name):
 @application.route('/like/<name>/', methods=['POST'])
 def like(name):
     my_heart = DB.update_heart(session['id'],'Y',name)
+    DB.update_popularity(name, 5)
     return jsonify({'msg': '좋아요 완료!'})
 @application.route('/unlike/<name>/', methods=['POST'])
 def unlike(name):
     my_heart = DB.update_heart(session['id'],'N',name)
+    DB.update_popularity(name, -5)
     return jsonify({'msg': '안좋아요 완료!'})
 
 #스위치
 @application.route('/switch', methods=['GET'])
 def show_switch():
     status=session['status']
-    print("showSwtich: ", session['status'])
     return jsonify({'status':status})
 @application.route('/toService', methods=['POST'])
 def toService():
     status="service"
     session['status']=status
-    print("toService: "+session['status'])
     return jsonify({'msg':'서비스로'})
 @application.route('/toProduct', methods=['POST'])
 def toProduct():
     status="product"
     session['status']=status
-    print("toProduct: "+session['status'])
     return jsonify({'msg': '제품으로'})
 
 
@@ -418,13 +479,14 @@ def toProduct():
 @application.route('/search', methods=['GET'])
 def search():
     query = request.args.get('query', '')  # 검색어 가져오기
-    results = [{'name': query, 'img_path': 'default.jpg'}] if query else []  # 임시 검색 결과
-    total = len(results)  # 검색 결과 개수
+    data=DB.get_items_byKeyWord(query)
+    data = dict(list(data.items())[:])
+    total = len(data)  # 검색 결과 개수
 
     items_per_page = 10  # 한 페이지에 표시할 항목 수
     page_count = (total // items_per_page) + (1 if total % items_per_page > 0 else 0)  # 페이지 수 계산
 
-    return render_template('search.html', query=query, total=total, products=results, page_count=page_count)
+    return render_template('search.html', query=query, total=total, products=data.items(), page_count=page_count)
 
 #동적 라우팅
 @application.route('/dynamicurl/<varible_name>/')
@@ -450,7 +512,6 @@ def add_to_cart(item_name):
         "name": item_name,
         "quantity": request.form.get('quantity', "")
     }
-    print(data)
     success = DB.add_to_cart(session['id'], data)
     return redirect(url_for('view_cart'))
 #장바구니에서 제품 제거
@@ -462,7 +523,6 @@ def remove_from_cart(item_name):
 @application.route("/update_cart_quantity/<item_name>", methods=['POST'])
 def update_cart_quantity(item_name):
     quantity=request.form.get('quantity')    
-    print(quantity, type(quantity))
     data=DB.update_quantity(session['id'], item_name, quantity)
     total=DB.calc_total(session['id'])
     return jsonify({"message": "수량이 업데이트되었습니다.", "data": data, "total": total})
@@ -474,26 +534,20 @@ def clear_cart():
 
 
 # main.html 과 DB연결해보기
-
 @application.route("/main.html")
 def view_main():
-    db = DBhandler()
     product_type = session.get('status', 'product')
     
     # 상품 데이터 가져오기
-    all_items = db.get_items_byproductType(product_type)
-    
+    data = DB.get_items_byproductType(product_type)
     # 상품이 있는 경우와 없는 경우를 모두 처리
-    if all_items:
-        sorted_items = dict(sorted(all_items.items()))
-        items_list = list(sorted_items.items())
-        halfway = len(items_list) // 2
-        
+    if data:
+        data = dict(list(data.items())[:4])
+        print(data)
         return render_template(
             "main.html",
-            items=sorted_items,
-            items_list=items_list,  # 전체 정렬된 리스트
-            total=len(all_items)    # 전체 개수
+            items_list=data,  # 전체 정렬된 리스트
+            total=len(data)    # 전체 개수
         )
     
     # 상품이 없는 경우 기본값 전달

@@ -19,10 +19,10 @@ class DBhandler:
             "rate": data['rate'],
             "rateNum": data['rateNum'],
             "price": data['price'],
-            "img_path": img_path
+            "img_path": img_path,
+            "popularity": 0
         }
         self.db.child("item").child(name).set(item_info) #db에 등록하는 과정
-        print(data,img_path)
         return True
     
     def insert_user(self, data, pw):
@@ -30,8 +30,7 @@ class DBhandler:
             "id": data['id'],
             "name": data['name'],
             "stdNum": data['stdNum'],
-            "email_id": data['email_id'],
-            "email_domain": data['email_domain'],
+            "email": data['email_id']+"@"+data['email_domain'],
             "byear": data['byear'],
             "bmonth": data['bmonth'],
             "bday": data['bday'],
@@ -42,14 +41,12 @@ class DBhandler:
         }
         if self.user_duplicate_check(str(data['id'])): #아이디 중복 체크
             self.db.child("user").push(user_info)
-            print(data)
             return True
         else:
             return False
         
     def user_duplicate_check(self, id_string):
         users = self.db.child("user").get() #user 노드에 사용자 정보 등록
-        print("users###",users.val())
         if str(users.val()) == "None": # first registration 이때는 중복 체크로직 타지 않음
             return True
         else:
@@ -59,20 +56,46 @@ class DBhandler:
             if value['id'] == id_string:
                 return False
             return True
-    
+    #로그인을 위한 사용자 찾기
     def find_user(self, id_, pw_):
         users=self.db.child("user").get()
         target_value=[]
         for res in users.each():
             value=res.val()
             if value['id']==id_ and value['pw']==pw_:
+                if('email_domain' in value): 
+                    email=value['email_id']+"@"+value['email_domain']
+                    self.db.child("user").child(res.key()).child("email").set(email)
+                    self.db.child("user").child(res.key()).child("email_id").remove()
+                    self.db.child("user").child(res.key()).child("email_domain").remove()
+                    continue
                 return True
         return False
+        
+    #비번 찾기를 위한 사용자 찾기
+    def find_user_forPW(self, id_, stdNum, email):
+        users=self.db.child("user").get()
+        for res in users.each():
+            value=res.val()
+            if(value['id']==id_) and (value['stdNum']==stdNum) and (value['email']==email):
+                return res.key()
+        return None
+    #비번 변경하기
+    def change_pw(self, user_key, changed):
+        self.db.child("user").child(user_key).child("pw").set(changed)
+        return
+
     def get_user(self, id_):
         users=self.db.child("user").get()
         for res in users.each():
             value=res.val()
-            if(value['id']==id_):
+            if('email_domain' in value): 
+                    email=value['email_id']+"@"+value['email_domain']
+                    self.db.child("user").child(res.key()).child("email").set(email)
+                    self.db.child("user").child(res.key()).child("email_id").remove()
+                    self.db.child("user").child(res.key()).child("email_domain").remove()
+                    continue
+            if(value['id']==id_) or (value['email']==id_):
                 return res.val()
         return None
     
@@ -82,7 +105,7 @@ class DBhandler:
     
     #제품/서비스 각각 전체 체품 가져오기
     def get_items_byproductType(self, product_type):
-        items=self.db.child("item").get()
+        items=self.db.child("item").order_by_child("popularity").get() #정렬
         target_value=[]
         target_key=[]
         for res in items.each():
@@ -91,12 +114,11 @@ class DBhandler:
             if(value['product_type']==product_type):
                 target_value.append(value)
                 target_key.append(key_value)
-
-        print("######target_value", target_value)
         new_dict={}
         for k, v in zip(target_key, target_value):
             new_dict[k]=v
-        return new_dict
+        sorted_dict=dict(sorted(new_dict.items(), key=lambda x: x[1]["popularity"], reverse=True)) #정렬
+        return sorted_dict
     
     #카테고리별 제품 가져오기
     def get_items_byCategory(self, cate):
@@ -118,12 +140,27 @@ class DBhandler:
     def get_item_byname(self, name):
         items = self.db.child("item").get()
         target_value=""
-        print("###########",name)
         for res in items.each():
             key_value = res.key()
             if key_value == name:
                 target_value=res.val()
         return target_value
+    
+    #키워드로 item에서 정보 가져오기
+    def get_items_byKeyWord(self, keyword):
+        items=self.db.child("item").get()
+        target_key=[]
+        target_value=[]
+        for res in items.each():
+            value=res.val()
+            key_value=res.key()
+            if (keyword in key_value) or (keyword in value['description']):
+                target_value.append(value)
+                target_key.append(key_value)
+        new_dict={}
+        for k, v in zip(target_key, target_value):
+            new_dict[k]=v
+        return new_dict
     
     #리뷰작성 화면
     def reg_review(self, data, img_path, user_id, date):
@@ -148,7 +185,6 @@ class DBhandler:
     def get_review_byname(self, name):
         reviews = self.db.child("review").get()
         target_value=""
-        print("###########",name)
         for res in reviews.each():
             key_value = res.key()
             if key_value == name:
@@ -202,12 +238,19 @@ class DBhandler:
         if(item.val()==None): return 0
         for res in item.each():
             total+=1
-            print(res, res.key(), res.val())
             sum+=int(res.val()['rate'])
         rate=round(sum/total,1)
         self.db.child("item").child(name).child("rate").set(rate)
         self.db.child("item").child(name).child("rateNum").set(total)
         return total
+    
+    #인기도 업데이트
+    def update_popularity(self, name, weight):
+        item=self.db.child("item").child(name).child("popularity").get().val()
+        changed=int(item)+weight
+        if(changed<0):
+            changed=0
+        self.db.child("item").child(name).child("popularity").set(changed)
     
     #카트
     def get_cart(self, uid):
@@ -357,7 +400,6 @@ class DBhandler:
         except Exception as e:
             print(f"Error deleting comment: {e}")
             return False
-    
 
 
 

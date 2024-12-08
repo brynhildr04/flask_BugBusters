@@ -1,93 +1,40 @@
 {% extends 'header.html' %}
 {% block section %}
-<head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/swiper-styles.css') }}">
-</head>
-
 <section class="page-title">
-    <img src="/static/images/mainimage.jpg" alt="Ewha Market Project">   
+    <img src="/static/images/mainimage.jpg" alt="Ewha Market Project">
 </section>
 
-
-
-
 {% if session['status']=="product" %}
-    {% include 'nav_product.html' %}
-    <section class="products-section">
-        <h2 class="section-title">오늘의 인기 상품</h2>
-        
-        {% if items_list %}
-            <p>상품 리스트 -- 현재까지 {{ total }}개 등록됨</p>
-            
-            <swiper-container 
-                pagination="true" 
-                navigation="true" 
-                slides-per-view="auto"
-                space-between="24"
-                style="--swiper-navigation-color: #2AA27C; --swiper-pagination-color: #2AA27C;">
-                {% for key, value in items_list %}
-                    <swiper-slide>
-                        <a href="{{ url_for('view_product_detail', name=key) }}" class="product-card">
-                            <div class="product-image">
-                                <img src="{{ url_for('static', filename='images/' + value.img_path) }}" alt="{{ key }}">
-                            </div>
-                            <div class="product-info">
-                                <h3>#{{ value.category }}</h3>
-                                <p class="product-name">{{ key }}</p>
-                                <p class="product-price">{{ value.price }}원</p>
-                                <div class="rating">
-                                    <span class="stars">★ {{ "%.1f"|format(value.rate|float) }}</span>
-                                    <span class="review-count">({{ value.rateNum }})</span>
-                                </div>
-                            </div>
-                        </a>
-                    </swiper-slide>
-                {% endfor %}
-            </swiper-container>
-        {% else %}
-            <p class="no-items">등록된 상품이 없습니다.</p>
-        {% endif %}
-    </section>
-
+{% set info="상품" %}
+{% include 'nav_product.html' %}
 {% else %}
-    {% include 'nav_service.html' %}
-    <section class="products-section">
-        <h2 class="section-title">오늘의 인기 서비스</h2>
-        
-        {% if items_list %}
-            <p>서비스 리스트 -- 현재까지 {{ total }}개 등록됨</p>
-            
-            <swiper-container 
-                pagination="true" 
-                navigation="true" 
-                slides-per-view="auto"
-                space-between="24"
-                style="--swiper-navigation-color: #2AA27C; --swiper-pagination-color: #2AA27C;">
-                {% for key, value in items_list %}
-                    <swiper-slide>
-                        <a href="{{ url_for('view_product_detail', name=key) }}" class="product-card">
-                            <div class="product-image">
-                                <img src="{{ url_for('static', filename='images/' + value.img_path) }}" alt="{{ key }}">
-                            </div>
-                            <div class="product-info">
-                                <h3>#{{ value.category }}</h3>
-                                <p class="product-name">{{ key }}</p>
-                                <p class="product-price">{{ value.price }}원</p>
-                                <div class="rating">
-                                    <span class="stars">★ {{ "%.1f"|format(value.rate|float) }}</span>
-                                    <span class="review-count">({{ value.rateNum }})</span>
-                                </div>
-                            </div>
-                        </a>
-                    </swiper-slide>
-                {% endfor %}
-            </swiper-container>
-        {% else %}
-            <p class="no-items">등록된 서비스가 없습니다.</p>
-        {% endif %}
-    </section>
+{% set info="서비스" %}
+{% include 'nav_service.html' %}
 {% endif %}
+<section class="products-section">
+    <h2 class="section-title">오늘의 인기 {{ info }}</h2>
+
+    {% if total > 0 %}
+    <div class="products-grid">
+        {% for key, value in items_list.items() %}
+        <button onclick="location.href='/view_detail/{{key}}';" class="product-card" style="cursor:pointer">
+            <div class="product-image"><img src="../static/images/{{value.img_path}}"></div>
+            <div class="product-info">
+                <h3># {{value.category}}</h3>
+                <p class="product-name">{{key}}</p>
+                <p class="product-price">{{value.price}}원</p>
+                <div class="rating">
+                    <span class="stars">★ {{ "%.1f"|format(value.rate|float) }}</span>
+                    <span class="review-count">({{ value.rateNum }})</span>
+                </div>
+            </div>
+        </button>
+    {% endfor %}
+    </div>
+    {% else %}
+    <p class="no-items">등록된 {{ info }}이/가 없습니다.</p>
+    {% endif %}
+</section>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
 {% endblock section %}
