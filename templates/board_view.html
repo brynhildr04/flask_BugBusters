@@ -19,7 +19,7 @@
 <section class="qna-container">
     <div class="qna-detail-container">
         <div class="qna-detail-header">
-            <h2 class="qna-title">{{ post['item_name'] }}에 대한 게시글</h2>
+            <h2 class="qna-title">{{ item_name }}에 대한 게시글</h2>
             {% if post %}
                 <h3>{{ post['title'] }}</h3>
                 <p>작성자: {{ post['name'] }}</p>
@@ -72,7 +72,7 @@
 //게시물 파트 
 const modifyBtn = document.querySelector("#modify"); 
 modifyBtn.addEventListener("click", () => { 
-    const postpassword = prompt("비밀번호를 입력하세요:"); 
+    const postpassword = prompt("비밀번호를 입력하세요:");  //https://wikidocs.net/137925 이걸로 좀 수정할 수 있을 것 같은데
     if (postpassword) { 
         const item_name = "{{ item_name }}"; 
         const post_key = "{{ post_key }}"; // 게시글의 고유 ID 

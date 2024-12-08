@@ -1,17 +1,33 @@
 {% extends "header.html" %}
 {% block header %}
 {% endblock header %}
+
+{% block head %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ewha Market Project</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='minha_style.css') }}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ url_for('static', filename='main.js') }}" defer></script>
+{% endblock head %}
+
 {% block section %}
-<br><br><br><br><br>
+{% with mesg = get_flashed_messages() %}
+{% if mesg !=[] %}
+<script>alert("{{ mesg[0] }}")</script>
+{% endif %}
+{% endwith %}
+<br>
 <div class="row">
     <div class="column side"></div>
     <div class="column middle">
         <h2 id="login">아이디/비밀번호 찾기</h2>
         <hr width=100%><br>
-        
+
         <!-- 아이디 찾기 섹션 -->
         <div id="find">
-            <form>
+            <form action="/sendingId" method="post">
                 <h3 class="data_name" style="font-size: 18px;">아이디 찾기</h3>
                 <p class="data_name" style="font-size: 14px; color: #666; margin: 8px 0 20px 0;">
                     가입 시 작성한 이메일로 아이디가 전송됩니다.
@@ -22,23 +38,20 @@
                             <label class="data_name" for="email_id">이메일</label>
                         </th>
                         <td class="email-input-group">
-                            <input class="data_input email" type="text" name="email_id" id="email_id" required>
+                            <input class="data_input email" type="text" name="email_id" id="email_id" required value="">
                             <span>@</span>
                             <select class="data_input email" name="email_domain" id="email_domain">
-                                <option value="ewhain.net">ewhain.net</option>
+                                <option value="ewhain.net" selected>ewhain.net</option>
                                 <option value="ewha.ac.kr">ewha.ac.kr</option>
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2" style="text-align: right;">
-                            <button type="button" id="findId_btn" class="submit_btn" onclick="idSending()">이메일 전송</button>
+                            <input type="submit" id="findId_btn" class="submit_btn" value="이메일 전송">
                         </td>
                     </tr>
                 </table>
-                <p id="findId_msg" style="color: #dc3545; font-size: 13px; text-align: right; visibility: hidden;">
-                    여기보세요
-                </p>
             </form>
         </div>
 
@@ -46,7 +59,7 @@
 
         <!-- 비밀번호 찾기 섹션 -->
         <div id="find">
-            <form>
+            <form action="/sendingPW" method="post">
                 <h3 class="data_name" style="font-size: 18px;">비밀번호 찾기</h3>
                 <p class="data_name" style="font-size: 14px; color: #666; margin: 8px 0 20px 0;">
                     가입 시 작성한 이메일로 임시 비밀번호가 전송됩니다.
@@ -73,29 +86,28 @@
                             <label class="data_name" for="email_id2">이메일</label>
                         </th>
                         <td class="email-input-group">
-                            <input class="data_input email" type="text" name="email_id" id="email_id2" required>
+                            <input class="data_input email" type="text" name="email_id2" id="email_id2" required>
                             <span>@</span>
-                            <select class="data_input email" name="email_domain" id="email_domain2">
-                                <option value="ewhain.net">ewhain.net</option>
+                            <select class="data_input email" name="email_domain2" id="email_domain2">
+                                <option value="ewhain.net" selected>ewhain.net</option>
                                 <option value="ewha.ac.kr">ewha.ac.kr</option>
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2" style="text-align: right;">
-                            <button type="button" id="findPW_btn" class="submit_btn" onclick="pwSending()">이메일 전송</button>
+                            <input type="submit" id="findPW_btn" class="submit_btn" value="이메일 전송">
                         </td>
                     </tr>
                 </table>
-                <p id="findPW_msg" style="color: #dc3545; font-size: 13px; text-align: right; visibility: hidden;">
-                    여기보세요
-                </p>
             </form>
+        </div>
+        <div style="text-align: center;"><br>
+            <button class="aboutus-button" id="aboutus-login" onclick="location.href='login.html';" style="width: auto;">로그인하러 가기</button>&nbsp;
         </div>
     </div>
     <div class="column side"></div>
 </div>
-<script src="path/to/main.js"></script>
 {% endblock section %}
 {% block footer %}
 {% endblock footer %}

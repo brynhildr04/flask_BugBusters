@@ -2,40 +2,39 @@
 
 {% block section %}
 <div class="all-products-container">
-    <h1 class="page-title">{{ query }}</h1> 
-    
+    <h1 class="page-title">"{{ query }}" 검색 결과</h1>
+
     <!-- 검색 결과 요약 -->
     {% if total > 0 %}
     <br>
-    <p> 상품 검색 결과 <strong>{{ total }}</strong></p>
-    
-
-        <!-- 상품 목록 -->
-        <div class="products-grid">
-            {% for product in products %}
-            <a href="#" class="product-card">
-                <div class="product-image">
-                    <img src="{{ url_for('static', filename='images/' ~ product.img_path) }}" alt="{{ product.name }}">
-                </div>
-                <div class="product-info">
-                    <h3>{{ product.name }}</h3>
-                </div>
-            </a>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p>등록된 상품이 없습니다</p>
-    {% endif %}
-    <div class="pagination">
-        <a href="#" class="prev">Previous</a>
-        <a href="#" class="active">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a href="#" class="next">Next</a>
+    <p><strong>{{ total }}</strong>개의 상품이 검색됨</p>
+    <!-- 상품 목록 -->
+    <div class="products-grid">
+        {% for key, value in products %}
+        <button onclick="location.href='/view_detail/{{key}}';" class="product-card" style="cursor:pointer">
+            <div class="product-image"><img src="../static/images/{{value.img_path}}"></div>
+            <div class="product-info">
+                <h3># {{value.category}}</h3>
+                <p class="product-name">{{key}}</p>
+                <p class="product-price">{{value.price}}원</p>
+            </div>
+        </button>
+        {% endfor %}
     </div>
+    <!--페이지네이션-->
+    <div class="pagination">
+        <div class="page-nation">
+            <ul>
+                <li>
+                    {% for i in range(page_count)%}
+                    <a href="{{url_for('view_list', page=i)}}" color="black">{{i+1}}</a>
+                    {% endfor %}
+                </li>
+            </ul>
+        </div>
+    </div>
+    {% else %}
+    <p><b>검색 결과가 없습니다</b></p>
+    {% endif %}
 </div>
-
-
 {% endblock section %}
