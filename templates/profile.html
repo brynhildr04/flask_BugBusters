@@ -87,4 +87,46 @@
     </div>
     <div class="column side"></div>
 </div>
+
+<!-- 내가 작성한 게시물 -->
+<div class="row">
+    <div class="column side"></div>
+    <div class="column middle">
+        <h2>내가 작성한 게시물</h2>
+        <hr width=100%><br>
+        {% if posts %}
+            {% for post in posts %}
+                <div class="post-item">
+                    <button onclick="location.href='/post_detail/{{ post.item_name }}/{{ post.post_key }}';" class="btn">
+                        {{ post.title }}
+                    </button>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>작성한 게시물이 없습니다.</p>
+        {% endif %}
+    </div>
+    <div class="column side"></div>
+</div>
+
+<!-- 내가 작성한 댓글 -->
+<div class="row">
+    <div class="column side"></div>
+    <div class="column middle">
+        <h2>내가 작성한 댓글</h2>
+        <hr width=100%><br>
+        {% if comments %}
+            {% for comment in comments %}
+                <div class="comment-item">
+                    <button onclick="location.href='/post_detail/{{ comment.item_name }}/{{ comment.post_key }}';" class="btn">
+                        {{ comment.content }}
+                    </button>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>작성한 댓글이 없습니다.</p>
+        {% endif %}
+    </div>
+    <div class="column side"></div>
+</div>
 {% endblock section %}

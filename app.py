@@ -25,7 +25,12 @@ def view_profile():
     if(data==None):
         return render_template("login.html")
     heart=DB.get_heart_byId(session['id'])
-    return render_template("profile.html", data=data, heart=heart)
+    user_posts = DB.get_posts_by_user(session['id'])
+    user_comments = DB.get_comments_by_user(session['id'])
+    return render_template("profile.html", data=data, posts=user_posts, 
+        comments=user_comments,heart=heart)
+
+
 
 #로그인
 @application.route("/login.html")
