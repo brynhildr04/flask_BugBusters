@@ -22,15 +22,19 @@
                     이화인들의 마켓 서비스입니다.
                 </p>
                 {% if session['id'] %}
-                <div style="text-align: center;"> <!--css 적용 필요!--><br>
-                    <button class="aboutus-button" id="aboutus-gotomain" onclick="location.href='main.html';">메인 화면으로</button>
+                <div style="text-align: center;"><br>
+                    <button class="aboutus-button" id="aboutus-gotomain" 
+                            onclick="location.href='main.html';" 
+                            style="width: 300px;">메인 화면으로</button>
                 </div>
                 {% else %}
-                <div style="text-align: center;"> <!--css 적용 필요!--><br>
-                    <button class="aboutus-button" id="aboutus-login" onclick="location.href='login.html';">로그인</button>&nbsp;
-                    <button class="aboutus-button" id="aboutus-signup" onclick="location.href='signup.html';">회원가입</button>
-                </div>
+                    <div style="text-align: center; margin-top: 50px;">
+    
+                        <button class="aboutus-button" id="aboutus-login" onclick="location.href='login.html';">로그인</button>&nbsp;
+                        <button class="aboutus-button" id="aboutus-signup" onclick="location.href='signup.html';">회원가입</button>
+                    </div>
                 {% endif %}
+
             </div>
         </div>
     </section>

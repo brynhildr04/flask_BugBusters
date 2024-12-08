@@ -15,7 +15,7 @@ DB=DBhandler()
 @application.route("/")
 def hello():
     session['status']="product"
-    return render_template("aboutus.html")
+    return render_template("firstpage.html")
 
 
 #마이페이지

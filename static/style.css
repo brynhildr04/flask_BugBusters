@@ -2622,3 +2622,36 @@ swiper-container::part(pagination-bullet-active) {
         display: none;
     }
 }
+
+/*페이지 첫화면 로그인과 회원가입 버튼 css 인데 밑에 흰선 없애는 중입니다... */
+
+.auth-buttons {
+    position: absolute; 
+    bottom: 25%; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    display: flex;
+    gap: 20px; 
+    margin: 0; 
+    padding: 0; 
+    border: none; 
+}
+
+.auth-buttons .login-btn,
+.auth-buttons .signup-btn {
+    padding: 10px 20px;
+    background-color: #00462A; 
+    color: white; 
+    border: none; 
+    border-radius: 18px; 
+    cursor: pointer;
+    font-size: 1rem; 
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 0; 
+}
+
+.auth-buttons .login-btn:hover,
+.auth-buttons .signup-btn:hover {
+    background-color: #A4C1AE; 
+    transform: translateY(-2px); 
+}
