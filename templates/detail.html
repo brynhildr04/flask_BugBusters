@@ -75,15 +75,7 @@
 
 <div class="product-detail-container">
     <!-- 상품 이미지 섹션 -->
-    <div class="product-images">
-        <div id="slider" class="slider-container">
-            <button class="slider-button prev" id="prev">&lt;</button>
-            <div class="slider-content">
-                <img src="../../static/images/{{data.img_path}}" alt="이미지 1" class="slide active">
-            </div>
-            <button class="slider-button next" id="next">&gt;</button>
-        </div>
-    </div>
+     <img class="product-detailimage" src="../../static/images/{{data.img_path}}" alt="이미지 1">
 
     <!-- 상품 정보 섹션 -->
     <div class="product-info-section">
@@ -109,7 +101,7 @@
         </div>
 
         <div class="product-price">
-            <span class="price">{{data.price}}</span> <!--상품 등록 화면에서 가격 입력받아야 함...-->
+            <span class="price">{{data.price}}원</span> <!--상품 등록 화면에서 가격 입력받아야 함...-->
         </div>
         <form action="/add_to_cart/{{name}}" method="POST" enctype="multipart/form-data">
             <div class="quantity-selector">
@@ -133,6 +125,7 @@
         </form>
     </div>
 </div>
+
 <!-- 상품 탭 섹션 -->
 <div class="product-tabs">
     <div class="tab-buttons">
