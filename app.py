@@ -121,9 +121,11 @@ def view_board_view():
 #게시글 지우기
 @application.route("/delete_post/<item_name>/<post_key>", methods=["DELETE"])
 def delete_post(item_name, post_key):
-    password = request.args.get('password')
+    postpassword = request.args.get('password')
     post = DB.get_post_by_key(item_name, post_key)
-    if post and str(post["psw"]) == str(password):
+    print(f"Fetched post: {post}")  # 게시글 데이터를 출력하여 비밀번호 포함 여부 확인
+    print(f"Deleting post - Input Password: {postpassword}, Stored Password: {post['psw'] if post else 'No Post Found'}")  # 디버깅 추가
+    if post and str(post["psw"]) == str(postpassword):
         DB.delete_post(item_name, post_key)
         return '', 200
     else:
@@ -133,9 +135,11 @@ def delete_post(item_name, post_key):
 @application.route("/board_modify/<item_name>/<post_key>", methods=["GET", "POST"])
 def modify_post(item_name, post_key):
     if request.method == "POST":
-        password = request.form.get("psw")
+        postpassword = request.form.get("psw")
         post = DB.get_post_by_key(item_name, post_key)
-        if post and str(post["psw"]) == str(password):
+        # 디버깅 추가
+        print(f"Database Password: '{post['psw']}', Input Password: '{postpassword}'")
+        if post and str(post["psw"]) == str(postpassword):
             new_data = {
                 "title": request.form.get("postTitle"),
                 "content": request.form.get("postContent"),
@@ -150,6 +154,7 @@ def modify_post(item_name, post_key):
     post = DB.get_post_by_key(item_name, post_key)
     return render_template("board_modify.html", post=post, item_name=item_name, post_key=post_key)
 
+#댓글 작성
 @application.route('/comment_write/<item_name>/<post_key>/', methods=["POST"])
 def write_comment(item_name, post_key):
     user_id = session.get('id', 'unknown_user')  # 세션에서 사용자 ID 가져오기

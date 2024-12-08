@@ -291,6 +291,7 @@ class DBhandler:
         self.db.child("post").child(item_name).child(key).update({"views": updated_views})
         return updated_views
 
+    #게시글 수정    
     def update_post(self, item_name, key, new_data): 
         try: 
             self.db.child("post").child(item_name).child(key).update(new_data) 
@@ -299,6 +300,7 @@ class DBhandler:
             print(f"Error updating post: {e}") 
             return False
         
+    #게시글 삭제
     def delete_post(self, item_name, key):
         try:
             self.db.child("post").child(item_name).child(key).remove()

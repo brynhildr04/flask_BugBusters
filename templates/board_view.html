@@ -66,21 +66,21 @@
 //게시물 파트 
 const modifyBtn = document.querySelector("#modify"); 
 modifyBtn.addEventListener("click", () => { 
-    const password = prompt("비밀번호를 입력하세요:"); 
-    if (password) { 
+    const postpassword = prompt("비밀번호를 입력하세요:"); 
+    if (postpassword) { 
         const item_name = "{{ item_name }}"; 
-        const post_key = "{{ key }}"; // 게시글의 고유 ID 
-        location.href = `/board_modify/${item_name}/${post_key}?password=${password}`; } 
+        const post_key = "{{ post_key }}"; // 게시글의 고유 ID 
+        location.href = `/board_modify/${item_name}/${post_key}?password=${postpassword}`; } 
     }
 );
 
 const deleteBtn = document.querySelector("#delete"); 
 deleteBtn.addEventListener("click", async () => { 
-    const password = prompt("비밀번호를 입력하세요:"); 
-    if (password) { 
+    const postpassword = prompt("비밀번호를 입력하세요:"); 
+    if (postpassword) { 
         const item_name = "{{ item_name }}"; 
-        const post_key = "{{ key }}"; // 게시글의 고유 ID 
-        const response = await fetch(`/delete_post/${item_name}/${post_key}?password=${password}`, { 
+        const post_key = "{{ post_key }}"; // 게시글의 고유 ID 
+        const response = await fetch(`/delete_post/${item_name}/${post_key}?password=${postpassword}`, { 
             method: 'DELETE' 
         }); 
         if (response.ok) { 
@@ -91,6 +91,9 @@ deleteBtn.addEventListener("click", async () => {
             } 
     } 
 });
+
+const post_key = "{{ post_key }}";
+console.log(`Post Key: ${post_key}`);
 
 //댓글 파트
     // 댓글 작성
