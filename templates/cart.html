@@ -74,6 +74,16 @@
             clearCart();
         });
     });
+
+    function checkout() {
+    if (confirm('구매하시겠습니까?')) {
+        alert('구매중...');
+        setTimeout(() => {
+            alert('구매 완료!');
+            window.location.href = '/main.html';
+        }, 2000);
+    }
+}
 </script>
 <section id="cart_r">
     <div id="cartbody">

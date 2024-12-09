@@ -634,7 +634,6 @@ def clear_cart():
     DB.clear_cart(session['id'])
     return jsonify({"message": "장바구니가 비워졌습니다."})
 
-
 # main.html 과 DB연결해보기
 @application.route("/main.html")
 def view_main():
