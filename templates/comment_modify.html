@@ -11,6 +11,8 @@
 
 <h2>댓글 수정</h2>
 <form method="POST" action="{{ url_for('modify_comment', item_name=item_name, post_key=post_key, comment_key=comment_key) }}">
+    <label for="password">비밀번호:</label>
+    <input type="password" id="password" name="password" required>
     <label for="newContent">수정할 내용:</label>
     <textarea id="newContent" name="newContent" rows="5" cols="40">{{ comment['content'] }}</textarea>
     <button type="submit">수정 완료</button>

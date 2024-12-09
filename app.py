@@ -205,23 +205,41 @@ def delete_post(item_name, post_key):
 def modify_post(item_name, post_key):
     if request.method == "POST":
         postpassword = request.form.get("psw")
-        post = DB.get_post_by_key(item_name, post_key)
-        # 디버깅 추가
-        print(f"Database Password: '{post['psw']}', Input Password: '{postpassword}'")
-        if post and str(post["psw"]) == str(postpassword):
-            new_data = {
-                "title": request.form.get("postTitle"),
-                "content": request.form.get("postContent"),
-            }
+        print(f"Received Password: {postpassword}")  # 디버깅 로그 추가
+        if not postpassword:
+            return "비밀번호가 입력되지 않았습니다.", 400
 
-            if DB.update_post(item_name, post_key, new_data):
-                return redirect(url_for("view_board_list", name=item_name))  # 리스트 페이지로 리디렉션
-            return "게시글 업데이트에 실패했습니다.", 500
-    
-        return "비밀번호가 일치하지 않습니다.", 401
-    
+        post = DB.get_post_by_key(item_name, post_key)
+
+        if not post:
+            return "게시글을 찾을 수 없습니다.", 404
+        if not post.get("psw"):
+            return "게시글에 저장된 비밀번호가 없습니다.", 500
+        print(f"Database Password: '{post['psw']}', Input Password: '{postpassword}'")
+        if post["psw"] != postpassword:
+            return jsonify({"error": "비밀번호가 일치하지 않습니다."}), 401
+
+        new_data = {
+            "title": request.form.get("postTitle"),
+            "content": request.form.get("postContent"),
+        }
+
+        if DB.update_post(item_name, post_key, new_data):
+            # 게시글 수정 성공 시 수정된 게시글 상세 페이지로 렌더링
+            updated_post = DB.get_post_by_key(item_name, post_key)
+            comments = DB.get_comments_by_post(item_name, post_key)
+            return render_template(
+                "board_view.html",
+                post=updated_post,
+                item_name=item_name,
+                post_key=post_key,
+                comments=comments,
+            )
+
+        return jsonify({"error": "게시글 업데이트에 실패했습니다."}), 500
+
     post = DB.get_post_by_key(item_name, post_key)
-    return render_template("board_modify.html", post=post, item_name=item_name, post_key=post_key)
+    return render_template("board_modify.html", post=post, item_name=item_name, post_key=post_key) 
 
 #댓글 작성
 @application.route('/comment_write/<item_name>/<post_key>/', methods=["POST"])
@@ -251,33 +269,45 @@ def write_comment(item_name, post_key):
 # 댓글 수정
 @application.route("/comment_modify/<item_name>/<post_key>/<comment_key>", methods=["GET", "POST"])
 def modify_comment(item_name, post_key, comment_key):
-    # 비밀번호 확인
-    if request.method == "GET":
-        password = request.args.get("password")
+        password = request.form.get("commentPassword")
+        new_content = request.form.get("newContent")
+
+        if not password:
+            return "비밀번호가 입력되지 않았습니다.", 400
+        if not new_content:
+            return "수정할 내용이 입력되지 않았습니다.", 400
+
         comment = DB.get_comment_by_key(item_name, post_key, comment_key)
-        if not comment or comment["password"] != password:
+        if not comment:
+            return "댓글을 찾을 수 없습니다.", 404
+        
+        hashed_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
+        print(f"Stored password: {comment['password']}")
+        print(f"Hashed input password: {hashed_password}")
+
+        if comment["password"] != hashed_password:
             return "비밀번호가 일치하지 않습니다.", 401
 
-        # 비밀번호가 맞으면 수정 페이지 렌더링
-        return render_template("comment_modify.html", comment=comment, item_name=item_name, post_key=post_key, comment_key=comment_key)
+        if DB.update_comment(item_name, post_key, comment_key, new_content):
+            return '', 200
 
-    # POST 요청: 댓글 수정
-    new_content = request.form.get("newContent")
-    if DB.update_comment(item_name, post_key, comment_key, new_content):
-        return '', 200
-    return "댓글 수정에 실패했습니다.", 500
+        return "댓글 수정에 실패했습니다.", 500
+
 
 # 댓글 삭제
 @application.route("/comment_delete/<item_name>/<post_key>/<comment_key>", methods=["DELETE"])
 def delete_comment(item_name, post_key, comment_key):
-    comment = DB.get_comment_by_key(item_name, post_key, comment_key)
     comment_password = request.args.get("password")
+    comment = DB.get_comment_by_key(item_name, post_key, comment_key)
+    hashed_password = hashlib.sha256(comment_password.encode('utf-8')).hexdigest()
 
-    if comment and comment["password"] == comment_password:  # 비밀번호 확인
-        if DB.delete_comment(item_name, post_key, comment_key):
-            return '', 200
-        return '', 500
-    return '', 401
+    if not comment or comment["password"] != hashed_password:
+        return "비밀번호가 일치하지 않습니다.", 401
+
+    if DB.delete_comment(item_name, post_key, comment_key):
+        return '', 200
+    
+    return "댓글 삭제에 실패했습니다.", 500
 
 @application.route('/purchase.html')
 def view_purchase_product():
