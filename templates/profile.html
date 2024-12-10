@@ -1,5 +1,121 @@
 {% extends "header.html" %}
 {% block section %}
+<style>
+    /* 공통 스타일 */
+    /* 부모 컨테이너를 중앙 정렬 */
+    .row {
+        display: flex;
+        justify-content: center; /* 가로 중앙 정렬 */
+        flex-wrap: wrap; /* 반응형: 화면 크기가 작으면 세로로 배치 */
+        margin: 20px auto; /* 화면에서 중앙 배치 */
+        width: 100%;
+        max-width: 1200px; /* 최대 가로 크기 제한 */
+    }
+    
+    .column {
+        flex: 1;
+    }
+    
+    /* 마이페이지 박스 */
+    .column.middle {
+        flex: 1;
+        max-width: 800px; /* 최대 크기 제한 */
+        width: 100%; /* 화면 크기와 유연하게 반응 */
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        margin: 20px;
+    }
+    
+    /* 제목 스타일 */
+    h2 {
+        font-size: 24px;
+        font-weight: 600;
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    /* 좋아요, 내가 쓴 글, 내가 쓴 댓글 - 한 줄에 3개 배치 */
+    .features-container {
+        display: flex;
+        justify-content: space-between; /* 박스 간격 균등 배치 */
+        gap: 20px; /* 박스 사이의 간격 */
+        margin-top: 20px;
+    }
+    
+    .feature-box {
+        flex: 1;
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* 박스 그림자 */
+        text-align: center;
+        min-width: 250px; /* 최소 박스 크기 */
+        max-width: 30%; /* 각 박스의 최대 너비를 제한 */
+        box-sizing: border-box; /* 패딩 포함 크기 계산 */
+    }
+    
+    /* 게시물 이동 버튼 스타일 */
+    .board-btn,
+    .btn {
+        background-color: #006633;
+        color: white;
+        border: 2px solid #006633;
+        padding: 14px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        width: 40%; /* 버튼 너비를 줄임 */
+        cursor: pointer;
+        transition: all 0.3s;
+        margin: 10px auto; /* 가운데 정렬 */
+        text-align: center;
+        display: block;
+    }
+    
+    .board-btn:hover,
+    .btn:hover {
+        background-color: white;
+        color: #006633;
+        border-color: #006633;
+    }
+    
+    /* 반응형 디자인 */
+    @media (max-width: 768px) {
+        .row {
+            flex-direction: column; /* 화면이 작아지면 세로 배치 */
+            align-items: center; /* 중앙 정렬 */
+        }
+        
+        .features-container {
+            flex-direction: column; /* 세로로 쌓이도록 변경 */
+            gap: 10px;
+        }
+    
+        .feature-box {
+            max-width: 90%; /* 모바일에서는 박스를 넓게 */
+        }
+    
+        .board-btn,
+        .btn {
+            font-size: 14px;
+            padding: 12px;
+        }
+    
+        h2 {
+            font-size: 20px;
+        }
+    
+        .column.middle {
+            max-width: 90%; /* 화면 크기가 작아지면 폭 줄임 */
+            padding: 20px; /* 내부 여백 감소 */
+        }
+    }
+    </style>
+    
+<body>
 <div class="row">
     <div class="column side"></div>
     <div class="column middle">
@@ -76,7 +192,7 @@
         {% if heart %}
             {% for key in heart %}
             <div class="register-board-btn">
-                <button onclick="location.href='/view_detail/{{key}}';" class="board-btn" style="width:100%; margin-bottom: 10px;">
+                <button onclick="location.href='/view_detail/{{key}}';" class="board-btn" style="width:40%; margin-bottom: 10px;">
                     {{key}}
                 </button>
             </div>
@@ -129,4 +245,5 @@
     </div>
     <div class="column side"></div>
 </div>
+</body>
 {% endblock section %}
