@@ -13,7 +13,7 @@
     align-items: center;
     padding: 1rem 2rem;
     background: white;
- /*position: fixed 삭제. 얘가 자꾸 아래 애들을 잡아먹음*/
+    position: sticky; /*fixed로 하면 아래 애들을 잡아먹힘*/
     width: 100%;
     top: 0;
     z-index: 1000;
@@ -285,7 +285,7 @@
 /* 카테고리 */
 .nav-categories {
     position: sticky;
-    top: 64px;
+    top: 104px; /*여기 top 설정하는게 카테고리가 최대 올라가는 위치 설정하는 거*/
     z-index: 999;
     background: white;
     display: flex;
