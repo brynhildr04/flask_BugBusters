@@ -246,6 +246,9 @@ class DBhandler:
     
     #인기도 업데이트
     def update_popularity(self, name, weight):
+        item=self.db.child("item").child(name).get().val()
+        if("popularity" not in item):
+            self.db.child("item").child(name).child("popularity").set(0)
         item=self.db.child("item").child(name).child("popularity").get().val()
         changed=int(item)+weight
         if(changed<0):
@@ -448,6 +451,25 @@ class DBhandler:
                         })
 
         return user_comments
+    
+    #데이터베이스 초기화
+    def init(self):
+        items=self.db.child("item").get()
+        for res in items.each():
+            value=res.val()
+            item_key=res.key()
+            if("popularity" not in value):
+                self.db.child("item").child(item_key).child("popularity").set(0)
+        users=self.db.child("user").get()
+        for res in users.each():
+            value=res.val()
+            user_key=res.key()
+            if("email" not in value):
+                email=value['email_id']+"@"+value['email_domain']
+                self.db.child("user").child(user_key).set("email").set(email)
+                self.db.child("user").child(user_key).child("email_id").remove()
+                self.db.child("user").child(user_key).child("email_domain").remove()
+
 
     
 

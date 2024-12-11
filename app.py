@@ -15,18 +15,11 @@ application.config["SECRET_KEY"]="sosohanewhamarket"
 application.config['UPLOAD_FOLDER'] = 'static/images'
 DB=DBhandler()
 
-#파이썬으로 이메일을 보내기 위한 코드
-    #587포트 및 465포트 존재
-smtp = smtplib.SMTP('smtp.gmail.com', 587)
-smtp.ehlo()
-smtp.starttls()
-    #로그인을 통해 지메일 접속
-smtp.login('park.sumin2004@gmail.com', 'kdew xhur tlrn hhlg')
-
 #첫화면
 @application.route("/")
 def hello():
     session['status']="product"
+    #DB.init()
     return render_template("firstpage.html")
 
 
@@ -71,6 +64,13 @@ def sendId():
     uid=user['id']
     print(uid)
     try: 
+        #파이썬으로 이메일을 보내기 위한 코드
+            #587포트 및 465포트 존재
+        smtp = smtplib.SMTP('smtp.gmail.com', 587)
+        smtp.ehlo()
+        smtp.starttls()
+            #로그인을 통해 지메일 접속
+        smtp.login('park.sumin2004@gmail.com', 'kdew xhur tlrn hhlg')
         #내용을 입력하는 MIMEText => 다른 라이브러리 사용 가능
         msg = MIMEText(('가입하신 아이디는 %s 입니다.'%uid), "plain")
         msg['Subject'] = '소소한 이화: 아이디 전송 메일입니다'
@@ -98,6 +98,13 @@ def sendingPW():
     pw_hash = hashlib.sha256(temp_pw.encode('utf-8')).hexdigest()
     DB.change_pw(user_key, pw_hash)
     try:  
+        #파이썬으로 이메일을 보내기 위한 코드
+            #587포트 및 465포트 존재
+        smtp = smtplib.SMTP('smtp.gmail.com', 587)
+        smtp.ehlo()
+        smtp.starttls()
+            #로그인을 통해 지메일 접속
+        smtp.login('park.sumin2004@gmail.com', 'kdew xhur tlrn hhlg')
         #내용을 입력하는 MIMEText
         msg = MIMEText(('새 비밀번호는 %s 입니다.'%temp_pw), "plain")
         msg['Subject'] = '소소한 이화: 임시 비밀번호 전송 메일입니다'
