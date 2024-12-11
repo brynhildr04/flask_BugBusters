@@ -2574,25 +2574,38 @@ swiper-container::part(pagination-bullet-active) {
 }
 
 .qna-form-label {
-    display: block;
-    margin: 16px 0 8px;
+    font-size: 16px;
+    font-weight: 700;
+    font-size: 15px;
     color: #333;
-    font-weight: 500;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: left;
+    height: 40px;
+    
+    font-weight: 500;;
 }
 
 .qna-form-input {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
+    height: 48px;
+    padding: 0 16px;
+    border: 1px solid #e1e1e1;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 16px;
+    background-color: #f8f8f8;
+    transition: border-color 0.3s, background-color 0.3s;
     margin-bottom: 16px;
-    transition: border-color 0.3s;
+    font-size: 15px;
+    color: #333;
+    background-color: #fff;
+    transition: all 0.2s ease;
 }
 
 .qna-form-input:focus {
+    border-color: #00462A;
+    background-color: white;
     outline: none;
-    border-color: #006633;
 }
 
 .qna-form-textarea {
