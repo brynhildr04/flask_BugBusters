@@ -178,7 +178,7 @@
     min-width: 250px; /* 로고 섹션과 동일한 최소 너비로 설정 */
     justify-content: flex-end;
     cursor: pointer; 
-    transform: scale(1.2);
+    transform: scale(1.1);
 }
 
 /* 반응형 디자인 */
