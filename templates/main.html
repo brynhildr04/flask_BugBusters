@@ -1,16 +1,21 @@
 {% extends 'header.html' %}
 {% block section %}
+<div class="slider-container">
 <div class="slider">
     <div class="slides">
+        <!--마지막 슬라이드-->
+        <div class="slide"><img src="/static/images/mainimage5.jpg" alt="Slide 5"></div>
+        <!--원본 슬라이드-->
         <div class="slide"><img src="/static/images/mainimage1.jpg" alt="Slide 1"></div>
         <div class="slide"><img src="/static/images/mainimage2.jpg" alt="Slide 2"></div>
         <div class="slide"><img src="/static/images/mainimage3.jpg" alt="Slide 3"></div>
         <div class="slide"><img src="/static/images/mainimage4.jpg" alt="Slide 4"></div>
         <div class="slide"><img src="/static/images/mainimage5.jpg" alt="Slide 5"></div>
+        <!--처음이미지로-->
+        <div class="slide"><img src="/static/images/mainimage1.jpg" alt="Slide 1"></div>
     </div>
 </div>
-
-
+</div>
 {% if session['status']=="product" %}
 {% set info="상품" %}
 {% include 'nav_product.html' %}
@@ -42,6 +47,41 @@
     <p class="no-items">등록된 {{ info }}이/가 없습니다.</p>
     {% endif %}
 </section>
+<script>
+    const slides = document.querySelectorAll('.slide');
+    const slidesContainer = document.querySelector('.slides');
+    let currentSlide = 1; // 첫 번째 실제 슬라이드로 시작
+
+    function showSlide(index, instant = false) {
+        if (instant) {
+            slidesContainer.style.transition = "none";
+        } else {
+            slidesContainer.style.transition = "transform 0.5s ease-in-out";
+        }
+        slidesContainer.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    function autoSlide() {
+        setInterval(() => {
+            currentSlide++;
+            showSlide(currentSlide);
+
+            // 무한 루프 처리
+            if (currentSlide === slides.length - 1) {
+                setTimeout(() => {
+                    currentSlide = 1; // 첫 번째 실제 슬라이드로 이동
+                    showSlide(currentSlide, true); // 즉시 전환
+                }, 500); // 슬라이드 전환 시간과 동일하게 설정
+            }
+        }, 3000); // 3초마다 전환
+    }
+
+    // 초기화
+    document.addEventListener('DOMContentLoaded', () => {
+        slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
+        autoSlide();
+    });
+</script>
 
 <!--<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>-->
 
