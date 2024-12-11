@@ -1,7 +1,8 @@
 {% extends "header.html" %}
-{% block check %}
-<input type="checkbox" id="switch" class="switch-input" onclick="location.href='main_service.html'">
-{% endblock check %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='qna.css') }}">
+{% endblock %}
+
 {% block section %}
 {% if session['status']=="product" %}
 {% include 'nav_product.html' %}
@@ -9,78 +10,77 @@
 {% include 'nav_service.html' %}
 {% endif %}
 
-<section id="board_view">
-    <h2>{{ post['item_name'] }}에 대한 게시글</h2>
-    {% if post %}
-        <h2>{{ post['title'] }}</h2>
-        <p>작성자: {{ post['name'] }}</p>
-        <p>작성 날짜: {{ post.date }}</p>
-        <div>
+<section class="qna-container">
+    <div class="qna-detail-container">
+        <div class="qna-detail-header">
+            <h2 class="qna-title">{{ post['item_name'] }}에 대한 게시글</h2>
+            {% if post %}
+                <h3>{{ post['title'] }}</h3>
+                <p>작성자: {{ post['name'] }}</p>
+                <p>작성 날짜: {{ post.date }}</p>
+            {% endif %}
+        </div>
+
+        <div class="qna-detail-content">
             {{ post['content'] }}
         </div>
-    {% else %}
-        <p>게시글 데이터를 불러올 수 없습니다.</p>
-    {% endif %}
 
-    <!-- 수정 버튼 -->
-    <button id="modify">수정하기</button>
+        <div style="margin-top: 20px;">
+            <button id="modify" class="qna-btn">수정하기</button>
+            <button id="delete" class="qna-btn">삭제하기</button>
+            <button type="button" onclick="location.href='/board_list/{{ item_name }}/'" class="qna-btn">뒤로가기</button>
+        </div>
 
-    <!-- 삭제 버튼 -->
-    <button id="delete">삭제하기</button>
-        
-    <button type="button" onclick="location.href='/board_list/{{ item_name }}/'">뒤로가기</button>
+        <!-- 댓글 섹션 -->
+        <div class="qna-comments">
+            <form id="commentForm" class="qna-comment-form" method="POST" action="{{ url_for('write_comment', item_name=item_name, post_key=post_key) }}">
+                <textarea name="commentContent" class="qna-form-input qna-form-textarea" rows="3" placeholder="댓글을 입력하세요"></textarea>
+                <input type="password" name="commentPassword" class="qna-form-input" placeholder="댓글 비밀번호를 입력하세요">
+                <button type="submit" class="qna-btn">댓글 작성</button>
+            </form>
 
-    <script src="path/to/main.js"></script>
-
-<!-- 댓글 작성 섹션 -->
-    <form id="commentForm" method="POST" action="{{ url_for('write_comment', item_name=item_name, post_key=post_key) }}">
-        <textarea name="commentContent" class="form-control" rows="3" placeholder="댓글을 입력하세요"></textarea>
-        <input type="password" name="commentPassword" class="form-control mt-2" placeholder="댓글 비밀번호를 입력하세요">
-        <button type="submit" class="btn btn-primary mt-2">댓글 작성</button>
-    </form>
-
-    <div class="container mt-5 mb-2" style="font-size: 0.9em;">
-        <table id="comments">
-            <tr>
-                <th style="font-weight: normal; width: 100px">작성자</th>
-                <th style="font-weight: normal; width: 100px">내용</th>
-                <th style="font-weight: normal; width: 100px">작성일</th>
-                <th style="font-weight: normal; width: 100px">수정/삭제</th>
-            </tr>
-            {% for comment in comments %}
+            <table class="qna-table" id="comments">
                 <tr>
-                    <td>{{ comment['id'] }}</td>
-                    <td>{{ comment['content'] }}</td>
-                    <td>{{ comment['date'] }}</td>
-                    <td>
-                        <button class="editCommentBtn" data-comment-id="{{ comment['comment_key'] }}">수정</button>
-                        <button class="deleteCommentBtn" data-comment-id="{{ comment['comment_key'] }}">삭제</button>
-                    </td>
+                    <th>작성자</th>
+                    <th>내용</th>
+                    <th>작성일</th>
+                    <th>수정/삭제</th>
                 </tr>
-            {% endfor %}
-        </table>
+                {% for comment in comments %}
+                    <tr>
+                        <td>{{ comment['id'] }}</td>
+                        <td>{{ comment['content'] }}</td>
+                        <td>{{ comment['date'] }}</td>
+                        <td>
+                            <button class="qna-btn editCommentBtn" data-comment-id="{{ comment['comment_key'] }}">수정</button>
+                            <button class="qna-btn deleteCommentBtn" data-comment-id="{{ comment['comment_key'] }}">삭제</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
     </div>
 </section>
-    
+
 <script>
 //게시물 파트 
 const modifyBtn = document.querySelector("#modify"); 
 modifyBtn.addEventListener("click", () => { 
-    const password = prompt("비밀번호를 입력하세요:"); 
-    if (password) { 
+    const postpassword = prompt("비밀번호를 입력하세요:"); 
+    if (postpassword) { 
         const item_name = "{{ item_name }}"; 
-        const post_key = "{{ key }}"; // 게시글의 고유 ID 
-        location.href = `/board_modify/${item_name}/${post_key}?password=${password}`; } 
+        const post_key = "{{ post_key }}"; // 게시글의 고유 ID 
+        location.href = `/board_modify/${item_name}/${post_key}?password=${postpassword}`; } 
     }
 );
 
 const deleteBtn = document.querySelector("#delete"); 
 deleteBtn.addEventListener("click", async () => { 
-    const password = prompt("비밀번호를 입력하세요:"); 
-    if (password) { 
+    const postpassword = prompt("비밀번호를 입력하세요:"); 
+    if (postpassword) { 
         const item_name = "{{ item_name }}"; 
-        const post_key = "{{ key }}"; // 게시글의 고유 ID 
-        const response = await fetch(`/delete_post/${item_name}/${post_key}?password=${password}`, { 
+        const post_key = "{{ post_key }}"; // 게시글의 고유 ID 
+        const response = await fetch(`/delete_post/${item_name}/${post_key}?password=${postpassword}`, { 
             method: 'DELETE' 
         }); 
         if (response.ok) { 
@@ -91,6 +91,9 @@ deleteBtn.addEventListener("click", async () => {
             } 
     } 
 });
+
+const post_key = "{{ post_key }}";
+console.log(`Post Key: ${post_key}`);
 
 //댓글 파트
     // 댓글 작성
@@ -187,6 +190,5 @@ deleteBtn.addEventListener("click", async () => {
             }
         }
     });
-
 </script>
 {% endblock section %}

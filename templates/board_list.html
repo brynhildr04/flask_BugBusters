@@ -1,7 +1,8 @@
 {% extends "header.html" %}
-{% block check %}
-<input type="checkbox" id="switch" class="switch-input" onclick="location.href='main_service.html'">
-{% endblock check %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+{% endblock %}
+
 {% block section %}
 {% if session['status']=="product" %}
 {% include 'nav_product.html' %}
@@ -9,13 +10,15 @@
 {% include 'nav_service.html' %}
 {% endif %}
 
-<section id="board_list">
-    <h2>{{ name }} Q&A 게시판</h2>
+<section class="qna-container">
+    <h2 class="qna-title">{{ name }} Q&A 게시판</h2>
     <div>
-        <a href="/board_write/{{ name }}/"><button>작성하기</button></a>
+        <a href="/board_write/{{ name }}/">
+            <button class="qna-btn">작성하기</button>
+        </a>
     </div>
     <div>
-        <table>
+        <table class="qna-table">
             <colgroup>
                 <col class="number" />
                 <col class="postTitle" />
@@ -37,8 +40,10 @@
                     {% for key, value in posts.items() %}
                         <tr>
                             <td>{{ loop.index }}</td>
-                            <td class="title">
-                                <a href="/post_detail/{{ name }}/{{ key }}">{{ value['title'] }}</a>
+                            <td>
+                                <a href="/post_detail/{{ name }}/{{ key }}" class="qna-link">
+                                    {{ value['title'] }}
+                                </a>
                             </td>
                             <td>{{ value['name'] }}</td>
                             <td>{{ value['date'] }}</td>
@@ -47,13 +52,11 @@
                     {% endfor %}
                 {% else %}
                     <tr>
-                        <td colspan="5">게시글이 없습니다.</td>
+                        <td colspan="5" style="text-align: center;">게시글이 없습니다.</td>
                     </tr>
                 {% endif %}
             </tbody>
-            
         </table>
     </div>
 </section>
-
 {% endblock section %}

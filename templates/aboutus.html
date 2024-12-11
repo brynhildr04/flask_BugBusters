@@ -16,20 +16,25 @@
                 </div>
                 
                 <p class="description">
-                    '소소(小小)한 이화'는<br>
+                    '소소(小昭)한 이화'는<br>
                     학생들이 학생 신분으로서 작고 소소한 물품 판매를 할 수 있도록 해(小)<br>
                     학생들의 밝은 미래를 향한 커리어를 시작할 수 있도록 하는(昭)<br>
                     이화인들의 마켓 서비스입니다.
                 </p>
-
-                <div class="button-container">
-                    {% if session['id'] %}
-                        <a href="main.html" class="action-button primary-button">메인 화면으로</a>
-                    {% else %}
-                        <a href="login.html" class="action-button primary-button">로그인</a>
-                        <a href="signup.html" class="action-button secondary-button">회원가입</a>
-                    {% endif %}
+                {% if session['id'] %}
+                <div style="text-align: center;"><br>
+                    <button class="aboutus-button" id="aboutus-gotomain" 
+                            onclick="location.href='main.html';" 
+                            style="width: 300px;">메인 화면으로</button>
                 </div>
+                {% else %}
+                    <div style="text-align: center; margin-top: 50px;">
+    
+                        <button class="aboutus-button" id="aboutus-login" onclick="location.href='login.html';">로그인</button>&nbsp;
+                        <button class="aboutus-button" id="aboutus-signup" onclick="location.href='signup.html';">회원가입</button>
+                    </div>
+                {% endif %}
+
             </div>
         </div>
     </section>

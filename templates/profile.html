@@ -1,108 +1,132 @@
 {% extends "header.html" %}
 {% block section %}
 <div class="row">
+    <div class="column side"></div>
     <div class="column middle">
-        <h2 id="login" style="text-align: center;">마이페이지</h2>
+        <h2 id="login">마이페이지</h2>
         <hr width=100%><br>
-        <table width=100% style="text-align: left;">
+        <table id="login_table">
             <tr>
                 <th>
-                    <p class="data_name">아이디</p>
+                    <label class="data_name">아이디</label><br><br>
                 </th>
                 <td>
-                    <p class="data_print">{{data.id}}</p>
+                    <p class="data_print">{{data.id}}</p><br><br>
                 </td>
             </tr>
             <tr>
                 <th>
-                    <p class="data_name">이름</p>
+                    <label class="data_name">이름</label><br><br>
                 </th>
                 <td>
-                    <p class="data_print">{{data.name}}</p>
+                    <p class="data_print">{{data.name}}</p><br><br>
                 </td>
             </tr>
             <tr>
                 <th>
-                    <p class="data_name">학번</p>
+                    <label class="data_name">학번</label><br><br>
                 </th>
                 <td>
-                    <p class="data_print">{{data.stdNum}}</p>
+                    <p class="data_print">{{data.stdNum}}</p><br><br>
                 </td>
             </tr>
             <tr>
                 <th>
-                    <p class="data_name">학교 이메일</p>
+                    <label class="data_name">학교 이메일</label><br><br>
                 </th>
-                <td colspan="2">
-                    <p class="data_print">{{data.email_id}}@{{data.email_domain}}</p>
+                <td>
+                    <p class="data_print">{{data.email_id}}@{{data.email_domain}}</p><br><br>
                 </td>
             </tr>
             <tr>
                 <th>
-                    <p class="data_name">생년월일</p>
+                    <label class="data_name">생년월일</label><br><br>
                 </th>
                 <td>
-                    <p class="data_print">{{data.byear}}년 {{data.bmonth}}월 {{data.bday}}일</p>
-                </td>
-            </tr>
-            <!--<form>나중에 데이터베이스랑 연결해야 함 차라리 비밀번호 변경을 빼고  heart 모아보기 하는게 나을 거 같아
-                <tr>
-                    <th>
-                        <p class="data_name">변경할 비밀번호</p>
-                    </th>
-                    <td>
-                        <input class="data_input" type="password" name="pw_changed" id="pw_changed">
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <p class="data_name">변경된 비밀번호 확인</p><br>
-                    </th>
-                    <td>
-                        <input class="data_input" type="password" name="pw_changed" id="pw_ckeck">
-                        <input class="submit_btn" type="button" value="비밀번호 확인" id="check_btn"
-                            onclick='document.getElementById("check_pw_msg").innerHTML="*비밀번호가 변경되었습니다"; document.getElementById("check_pw_msg").style.visibility="visible"'>
-                        <br>
-                        <p id="check_pw_msg"
-                            style="color: red; font-size: 10px; text-align: right; visibility: hidden;">여기보세요</p>
-                    </td>
-                </tr>
-            </form>-->
-            <tr>
-                <th>
-                    <p class="data_name">전화번호</p>
-                </th>
-                <td>
-                    <p class="data_print">{{data.phoneNum}}</p>
+                    <p class="data_print">{{data.byear}}년 {{data.bmonth}}월 {{data.bday}}일</p><br><br>
                 </td>
             </tr>
             <tr>
                 <th>
-                    <p class="data_name">주소</p>
+                    <label class="data_name">전화번호</label><br><br>
                 </th>
                 <td>
-                    <p class="data_print">{{data.address}}</p>
+                    <p class="data_print">{{data.phoneNum}}</p><br><br>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label class="data_name">주소</label><br><br>
+                </th>
+                <td>
+                    <p class="data_print">{{data.address}}</p><br><br>
                 </td>
             </tr>
         </table>
     </div>
+    <div class="column side"></div>
 </div>
+
+<!-- 좋아요 섹션 -->
 <div class="row">
+    <div class="column side"></div>
     <div class="column middle">
-        <h2 style="text-align: center;">좋아요</h2>
+        <h2 id="login">좋아요</h2>
+        <hr width=100%><br>
         {% if heart %}
-        {% for key in heart %}
-        <div>
-        <button onclick="location.href='/view_detail/{{key}}';" class="product-card" style="cursor:pointer">
-            <div class="product-info">
-                <p class="product-name">{{key}}</p>
+            {% for key in heart %}
+            <div class="register-board-btn">
+                <button onclick="location.href='/view_detail/{{key}}';" class="board-btn" style="width:100%; margin-bottom: 10px;">
+                    {{key}}
+                </button>
             </div>
-        </button>
-        </div>
-        {% endfor %}
+            {% endfor %}
         {% else %}
-        <p>좋아요가 없습니다!</p>
+            <p style="text-align: center; color: #666;">좋아요가 없습니다!</p>
         {% endif %}
     </div>
+    <div class="column side"></div>
+</div>
+
+<!-- 내가 작성한 게시물 -->
+<div class="row">
+    <div class="column side"></div>
+    <div class="column middle">
+        <h2>내가 작성한 게시물</h2>
+        <hr width=100%><br>
+        {% if posts %}
+            {% for post in posts %}
+                <div class="post-item">
+                    <button onclick="location.href='/post_detail/{{ post.item_name }}/{{ post.post_key }}';" class="btn">
+                        {{ post.title }}
+                    </button>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>작성한 게시물이 없습니다.</p>
+        {% endif %}
+    </div>
+    <div class="column side"></div>
+</div>
+
+<!-- 내가 작성한 댓글 -->
+<div class="row">
+    <div class="column side"></div>
+    <div class="column middle">
+        <h2>내가 작성한 댓글</h2>
+        <hr width=100%><br>
+        {% if comments %}
+            {% for comment in comments %}
+                <div class="comment-item">
+                    <button onclick="location.href='/post_detail/{{ comment.item_name }}/{{ comment.post_key }}';" class="btn">
+                        {{ comment.content }}
+                    </button>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>작성한 댓글이 없습니다.</p>
+        {% endif %}
+    </div>
+    <div class="column side"></div>
 </div>
 {% endblock section %}

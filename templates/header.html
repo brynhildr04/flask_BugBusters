@@ -33,16 +33,14 @@
                 </label>
             </div>
         </div>
-    
-        <div class="search-bar" style="max-width: 1000px; width: 100%; margin: 0 auto;">
-            <form action="{{ url_for('search') }}" method="GET">
-                <input type="text" name="query" placeholder="검색" required style="width: 100%;">
+        <div class="search-bar">
+            <form action="{{ url_for('search') }}" method="GET" style="width: 100%; max-width: 800px; margin: 0 auto; padding: 16px; box-sizing: border-box;">
+                <input type="text" name="query" placeholder="검색" required>
                 <button class="search-button" type="submit">
                     <img src="/static/images/search.svg" alt="search icon">
                 </button>
             </form>
         </div>
-        
 
         <div class="header-icons">
             <a class="register-btn" onclick="location.href='/상품등록하기.html'">제품 등록하기</a>
@@ -54,7 +52,7 @@
             <a onclick="location.href='/profile.html'">
                 <img src="/static/images/profile.svg" alt="Profile">
             </a>
-            <b>{{session['id']}}님</b>
+            <b style="white-space: nowrap;">{{session['id']}}님</b>
             <a onclick="location.href='/logout'">logout</a>
             {% else %}
             <a class="icon-btn" onclick="location.href='/login.html'">
