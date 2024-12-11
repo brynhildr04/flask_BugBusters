@@ -138,13 +138,8 @@ class DBhandler:
     
     #상품 이름으로 item 테이블에서 정보 가져오기
     def get_item_byname(self, name):
-        items = self.db.child("item").get()
-        target_value=""
-        for res in items.each():
-            key_value = res.key()
-            if key_value == name:
-                target_value=res.val()
-        return target_value
+        item = self.db.child("item").child(name).get().val()
+        return item
     
     #키워드로 item에서 정보 가져오기
     def get_items_byKeyWord(self, keyword):
@@ -161,6 +156,17 @@ class DBhandler:
         for k, v in zip(target_key, target_value):
             new_dict[k]=v
         return new_dict
+    
+    #사용자가 등록한 제품 가져오기
+    def get_item_byuid(self, uid):
+        items=self.db.child("item").get()
+        target_key=[]
+        for res in items.each():
+            value=res.val()
+            key_value=res.key()
+            if(value['seller']==uid):
+                target_key.append(key_value)
+        return target_key
     
     #리뷰작성 화면
     def reg_review(self, data, img_path, user_id, date):
@@ -227,8 +233,12 @@ class DBhandler:
     
     #좋아요 목록 가져오기
     def get_heart_byId(self, uid):
-        hearts=self.db.child("heart").child(uid).get().val()
-        return hearts
+        hearts=self.db.child("heart").child(uid).get()
+        target_key=[]
+        for res in hearts.each():
+            if res.val()['interested']=='Y':
+                target_key.append(res.key())
+        return target_key
     
     #제품 평점 업데이트 #이제 리뷰가 등록되면 평점 가져오는 코드 추가해야 함
     def update_rate(self, name):

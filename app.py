@@ -32,10 +32,9 @@ def view_profile():
     heart=DB.get_heart_byId(session['id'])
     user_posts = DB.get_posts_by_user(session['id'])
     user_comments = DB.get_comments_by_user(session['id'])
+    user_items=DB.get_item_byuid(session['id'])
     return render_template("profile.html", data=data, posts=user_posts, 
-        comments=user_comments,heart=heart)
-
-
+        comments=user_comments,heart=heart, uitems=user_items)
 
 #로그인
 @application.route("/login.html")
@@ -412,8 +411,10 @@ def reg_item_submit_post():
             img_path = url_for('static', filename='images/' + image.filename)
             
             DB.insert_item(data['title'], data, image.filename)
-            return render_template("상품등록결과.html", data=data, img_path=img_path)
-    
+        else:
+            img_path="logo.png"
+            DB.insert_item(data['title'], data, img_path)
+        return render_template("상품등록결과.html", data=data, img_path=img_path)
     return render_template("상품등록결과.html", data=data, img_path=None)
 
 #데이터베이스에서 등록된 상품 정보 가져오기 (전체)
