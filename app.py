@@ -15,18 +15,11 @@ application.config["SECRET_KEY"]="sosohanewhamarket"
 application.config['UPLOAD_FOLDER'] = 'static/images'
 DB=DBhandler()
 
-#파이썬으로 이메일을 보내기 위한 코드
-    #587포트 및 465포트 존재
-smtp = smtplib.SMTP('smtp.gmail.com', 587)
-smtp.ehlo()
-smtp.starttls()
-    #로그인을 통해 지메일 접속
-smtp.login('park.sumin2004@gmail.com', 'kdew xhur tlrn hhlg')
-
 #첫화면
 @application.route("/")
 def hello():
     session['status']="product"
+    #DB.init()
     return render_template("firstpage.html")
 
 
@@ -39,10 +32,9 @@ def view_profile():
     heart=DB.get_heart_byId(session['id'])
     user_posts = DB.get_posts_by_user(session['id'])
     user_comments = DB.get_comments_by_user(session['id'])
+    user_items=DB.get_item_byuid(session['id'])
     return render_template("profile.html", data=data, posts=user_posts, 
-        comments=user_comments,heart=heart)
-
-
+        comments=user_comments,heart=heart, uitems=user_items)
 
 #로그인
 @application.route("/login.html")
@@ -71,6 +63,13 @@ def sendId():
     uid=user['id']
     print(uid)
     try: 
+        #파이썬으로 이메일을 보내기 위한 코드
+            #587포트 및 465포트 존재
+        smtp = smtplib.SMTP('smtp.gmail.com', 587)
+        smtp.ehlo()
+        smtp.starttls()
+            #로그인을 통해 지메일 접속
+        smtp.login('park.sumin2004@gmail.com', 'kdew xhur tlrn hhlg')
         #내용을 입력하는 MIMEText => 다른 라이브러리 사용 가능
         msg = MIMEText(('가입하신 아이디는 %s 입니다.'%uid), "plain")
         msg['Subject'] = '소소한 이화: 아이디 전송 메일입니다'
@@ -98,6 +97,13 @@ def sendingPW():
     pw_hash = hashlib.sha256(temp_pw.encode('utf-8')).hexdigest()
     DB.change_pw(user_key, pw_hash)
     try:  
+        #파이썬으로 이메일을 보내기 위한 코드
+            #587포트 및 465포트 존재
+        smtp = smtplib.SMTP('smtp.gmail.com', 587)
+        smtp.ehlo()
+        smtp.starttls()
+            #로그인을 통해 지메일 접속
+        smtp.login('park.sumin2004@gmail.com', 'kdew xhur tlrn hhlg')
         #내용을 입력하는 MIMEText
         msg = MIMEText(('새 비밀번호는 %s 입니다.'%temp_pw), "plain")
         msg['Subject'] = '소소한 이화: 임시 비밀번호 전송 메일입니다'
@@ -205,7 +211,6 @@ def delete_post(item_name, post_key):
 def modify_post(item_name, post_key):
     if request.method == "POST":
         postpassword = request.form.get("psw")
-        print(f"Received Password: {postpassword}")  # 디버깅 로그 추가
         if not postpassword:
             return "비밀번호가 입력되지 않았습니다.", 400
 
@@ -215,7 +220,6 @@ def modify_post(item_name, post_key):
             return "게시글을 찾을 수 없습니다.", 404
         if not post.get("psw"):
             return "게시글에 저장된 비밀번호가 없습니다.", 500
-        print(f"Database Password: '{post['psw']}', Input Password: '{postpassword}'")
         if post["psw"] != postpassword:
             return jsonify({"error": "비밀번호가 일치하지 않습니다."}), 401
 
@@ -282,8 +286,6 @@ def modify_comment(item_name, post_key, comment_key):
             return "댓글을 찾을 수 없습니다.", 404
         
         hashed_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
-        print(f"Stored password: {comment['password']}")
-        print(f"Hashed input password: {hashed_password}")
 
         if comment["password"] != hashed_password:
             return "비밀번호가 일치하지 않습니다.", 401
@@ -330,10 +332,17 @@ def reg_review_init(name):
 def reg_review():
     data=request.form
     image_file=request.files["file"]
-    image_file.save("static/images/{}".format(image_file.filename))
     user_id=session.get('id')
+
+    image_filename = "logo.png"
+
+    # 사용자가 이미지를 업로드한 경우 저장
+    if image_file and image_file.filename:
+        image_filename = image_file.filename
+        image_file.save(f"static/images/{image_filename}")
+
     date=str(datetime.today().year)+"."+str(datetime.today().month)+"."+str(datetime.today().day)+"."
-    DB.reg_review(data, image_file.filename, user_id, date)
+    DB.reg_review(data, image_filename, user_id, date)
     DB.update_rate(data['name'])
     return redirect(url_for('view_review'))
 
@@ -382,7 +391,7 @@ def login_user():
 def logout_user():
     session.clear()
     session['status']="product"
-    return redirect("aboutus.html") #교수님 수업 파일은 상품 리스트가 home 인데 우리는 홈화면이 따로 있으니까... hello()로 고쳐야 할 수도
+    return redirect(url_for('hello')) #교수님 수업 파일은 상품 리스트가 home 인데 우리는 홈화면이 따로 있으니까... hello()로 고쳐야 할 수도
 
 #제품등록 백엔드 연결 #지금 누가 등록했는지에 대한 게 없는데, 만약 추가해야 한다면 로그인이 반드시 필요하다는 것
 @application.route("/submit_item_post", methods=['POST'])
@@ -405,7 +414,7 @@ def reg_item_submit_post():
             image.save(os.path.join(application.config['UPLOAD_FOLDER'], image.filename))
             img_path = url_for('static', filename='images/' + image.filename)
             
-            DB.insert_item(data['title'], data, img_path)
+            DB.insert_item(data['title'], data, image.filename)
             return render_template("상품등록결과.html", data=data, img_path=img_path)
     
     return render_template("상품등록결과.html", data=data, img_path=None)

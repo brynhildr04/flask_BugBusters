@@ -13,7 +13,7 @@
     align-items: center;
     padding: 1rem 2rem;
     background: white;
- /*position: fixed 삭제. 얘가 자꾸 아래 애들을 잡아먹음*/
+    position: sticky; /*fixed로 하면 아래 애들을 잡아먹힘*/
     width: 100%;
     top: 0;
     z-index: 1000;
@@ -154,6 +154,22 @@
     box-shadow: 0 0 0 3px rgba(0, 102, 51, 0.1);
 }
 
+.search-button {
+    border: none;       /* 테두리 제거 */
+    background: none;   /* 배경 제거 */
+    padding: 0;
+    margin-right: 0;
+    outline: none;
+    cursor: pointer;    
+    transform: translateX(-34px) !important; /* 추가 이동 */
+}
+
+.search-button svg {
+    width: 20px;     
+    height: 20px;
+    fill: #000;      
+}
+
 /* 헤더 아이콘 */
 .header-icons {
     display: flex;
@@ -161,6 +177,8 @@
     gap: 1.5rem;
     min-width: 250px; /* 로고 섹션과 동일한 최소 너비로 설정 */
     justify-content: flex-end;
+    cursor: pointer; 
+    transform: scale(1.1);
 }
 
 /* 반응형 디자인 */
@@ -285,7 +303,7 @@
 /* 카테고리 */
 .nav-categories {
     position: sticky;
-    top: 64px;
+    top: 104px; /*여기 top 설정하는게 카테고리가 최대 올라가는 위치 설정하는 거*/
     z-index: 999;
     background: white;
     display: flex;

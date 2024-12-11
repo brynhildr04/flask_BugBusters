@@ -1,21 +1,81 @@
 {% extends "header.html" %}
 {% block section %}
-<section id="upload_result">
-    <h1>상품 등록 완료</h1>
-    <div class="product-info-container">
-    <div class="product-info">
-        <p><strong>판매자 아이디:</strong> {{ data.seller }}</p>
-        <p><strong>제목:</strong> {{ data.title }}</p>
-        <p><strong>가격(원):</strong>{{data.price}}</p>
-        <p><strong>제품 유형:</strong> {{ data.product_type }}</p>
-        <p><strong>카테고리:</strong> {{ data.category }}</p>
-        <p><strong>내용:</strong> {{ data.description }}</p>
-        <p><strong>평점:</strong> {{ data.rate }}</p>
-
-        {% if img_path %}
-        <p><strong>첨부된 이미지:</strong></p>
-        <img src="{{ img_path }}" alt="상품 이미지">
-    {% endif %}
+<br><br><br><br><br>
+<div class="row">
+    <div class="column side"></div>
+    <div class="column middle">
+        <h2 id="login" style="text-align: center;">상품 등록 완료</h2>
+        <hr width=100%><br>
+        <table id="signup_table">
+            <tr>
+                <th>
+                    <label class="data_name">판매자 아이디</label>
+                </th>
+                <td>
+                    <div class="data_input signup" style="background: #f8f8f8;">{{ data.seller }}</div>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label class="data_name">제목</label>
+                </th>
+                <td>
+                    <div class="data_input signup" style="background: #f8f8f8;">{{ data.title }}</div>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label class="data_name">가격(원)</label>
+                </th>
+                <td>
+                    <div class="data_input signup" style="background: #f8f8f8;">{{ data.price }}</div>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label class="data_name">제품 유형</label>
+                </th>
+                <td>
+                    <div class="data_input signup" style="background: #f8f8f8;">{{ data.product_type }}</div>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label class="data_name">카테고리</label>
+                </th>
+                <td>
+                    <div class="data_input signup" style="background: #f8f8f8;">{{ data.category }}</div>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label class="data_name">내용</label>
+                </th>
+                <td>
+                    <div class="data_input signup" style="background: #f8f8f8; min-height: 100px;">{{ data.description }}</div>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label class="data_name">평점</label>
+                </th>
+                <td>
+                    <div class="data_input signup" style="background: #f8f8f8;">{{ data.rate }}</div>
+                </td>
+            </tr>
+            {% if img_path %}
+            <tr>
+                <th>
+                    <label class="data_name">첨부된 이미지</label>
+                </th>
+                <td>
+                    <div class="image-container" style="text-align: center; padding: 20px;">
+                        <img src="{{ img_path }}" alt="상품 이미지" style="max-width: 100%; height: auto; border-radius: 8px;">
+                    </div>
+                </td>
+            </tr>
+            {% endif %}
+        </table>
     </div>
     <div class="column side"></div>
 </div>
