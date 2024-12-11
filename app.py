@@ -332,10 +332,17 @@ def reg_review_init(name):
 def reg_review():
     data=request.form
     image_file=request.files["file"]
-    image_file.save("static/images/{}".format(image_file.filename))
     user_id=session.get('id')
+
+    image_filename = "logo.png"
+
+    # 사용자가 이미지를 업로드한 경우 저장
+    if image_file and image_file.filename:
+        image_filename = image_file.filename
+        image_file.save(f"static/images/{image_filename}")
+
     date=str(datetime.today().year)+"."+str(datetime.today().month)+"."+str(datetime.today().day)+"."
-    DB.reg_review(data, image_file.filename, user_id, date)
+    DB.reg_review(data, image_filename, user_id, date)
     DB.update_rate(data['name'])
     return redirect(url_for('view_review'))
 
