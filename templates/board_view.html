@@ -1,5 +1,11 @@
 {% extends "header.html" %}
 {% block head %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Review Detail Page</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='eunyoung_style.css') }}">
+<script src="{{ url_for('static', filename='main.js') }}" defer></script>
 <link rel="stylesheet" href="{{ url_for('static', filename='qna.css') }}">
 {% endblock %}
 
@@ -13,7 +19,7 @@
 <section class="qna-container">
     <div class="qna-detail-container">
         <div class="qna-detail-header">
-            <h2 class="qna-title">{{ post['item_name'] }}에 대한 게시글</h2>
+            <h2 class="qna-title">{{ item_name }}에 대한 게시글</h2>
             {% if post %}
                 <h3>{{ post['title'] }}</h3>
                 <p>작성자: {{ post['name'] }}</p>
@@ -66,13 +72,10 @@
 //게시물 파트 
 const modifyBtn = document.querySelector("#modify"); 
 modifyBtn.addEventListener("click", () => { 
-    const postpassword = prompt("비밀번호를 입력하세요:"); 
-    if (postpassword) { 
-        const item_name = "{{ item_name }}"; 
-        const post_key = "{{ post_key }}"; // 게시글의 고유 ID 
-        location.href = `/board_modify/${item_name}/${post_key}?password=${postpassword}`; } 
-    }
-);
+    const item_name = "{{ item_name }}"; 
+    const post_key = "{{ post_key }}"; 
+    location.href = `/board_modify/${item_name}/${post_key}`;
+});
 
 const deleteBtn = document.querySelector("#delete"); 
 deleteBtn.addEventListener("click", async () => { 
@@ -164,31 +167,31 @@ console.log(`Post Key: ${post_key}`);
 
     // 댓글 수정 버튼
     document.getElementById("comments").addEventListener("click", async (e) => {
-        if (e.target.classList.contains("editCommentBtn")) {
-            const commentKey = e.target.getAttribute("data-comment-id");
-            const password = prompt("댓글 수정 비밀번호를 입력하세요:");
-            if (password) {
-                const newContent = prompt("수정할 댓글 내용을 입력하세요:");
-                if (newContent) {
-                    const response = await fetch(`/comment_modify/{{ item_name }}/{{ post_key }}/${commentKey}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: new URLSearchParams({
-                            "commentPassword": password,
-                            "newContent": newContent
-                        })
-                    });
-                    if (response.ok) {
-                        alert("댓글이 수정되었습니다.");
-                        location.reload();
-                    } else {
-                        alert("비밀번호가 일치하지 않거나 수정에 실패했습니다.");
+            if (e.target.classList.contains("editCommentBtn")) {
+                const commentKey = e.target.getAttribute("data-comment-id");
+                const password = prompt("댓글 수정 비밀번호를 입력하세요:");
+                if (password) {
+                    const newContent = prompt("수정할 댓글 내용을 입력하세요:");
+                    if (newContent) {
+                        const response = await fetch(`/comment_modify/{{ item_name }}/{{ post_key }}/${commentKey}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams({
+                                "commentPassword": password,
+                                "newContent": newContent
+                            })
+                        });
+                        if (response.ok) {
+                            alert("댓글이 수정되었습니다.");
+                            location.reload();
+                        } else {
+                            alert("비밀번호가 일치하지 않거나 수정에 실패했습니다.");
+                        }
                     }
                 }
             }
-        }
-    });
+        });
 </script>
 {% endblock section %}

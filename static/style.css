@@ -337,6 +337,7 @@
 /* 241108v1. 신우림이 주석달고 추가하였음. (제거, 너비설정, 좌우여백추가) */
 .row {
     display: flex;
+    justify-content: center;
     align-items: center; /* 세로 가운데 정렬 */
     flex-direction: column; /* 자식 요소를 세로 정렬 */
     max-width: 1200px;
@@ -539,6 +540,10 @@ hr {
     height: 100vh;
     margin: 0 auto;
     padding-top: 20px;
+    padding-right: 24px;
+    /*width: 120px;*/
+    vertical-align: top;
+    padding-top: 14px;
 }
 
 /* 라벨 스타일 */
@@ -1187,7 +1192,7 @@ footer {
 
 #ps_upload #product_type,
 #ps_upload #category {
-    width: 523px;
+    width: 252px;
     height: 80px;
     padding: 10px;
 }
@@ -2655,4 +2660,55 @@ swiper-container::part(pagination-bullet-active) {
 .auth-buttons .signup-btn:hover {
     background-color: #A4C1AE; 
     transform: translateY(-2px); 
+}
+
+/*241211*/
+/* 슬라이더 컨테이너 */
+.slider {
+    width: 80%;
+    height: 300px;
+    overflow: hidden; /* 슬라이더 영역 밖의 내용 숨김 */
+    margin: 0 auto;
+    position: relative;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 슬라이드 전체 */
+.slides {
+    display: flex;
+    width: 500%; /* 슬라이드 개수에 따라 100%씩 증가 */
+    animation: slideAnimation 20s infinite; /* 25초 동안 슬라이드 5개 전환 */
+}
+
+/* 각 슬라이드 */
+.slide {
+    flex: 0 0 100%; /* 각 슬라이드가 화면 전체를 차지 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+}
+
+/* 슬라이드 이미지 */
+.slide img {
+    max-height: 70%;
+    max-width: 47%;
+    object-fit: contain;
+    display: block;
+}
+
+/* 애니메이션 정의 */
+@keyframes slideAnimation {
+    0% { transform: translateX(0); }       /* 첫 번째 슬라이드 */
+    20% { transform: translateX(0); }      /* 첫 번째 슬라이드 멈춤 */
+    25% { transform: translateX(-100%); }  /* 두 번째 슬라이드 */
+    45% { transform: translateX(-100%); }  /* 두 번째 슬라이드 멈춤 */
+    50% { transform: translateX(-200%); }  /* 세 번째 슬라이드 */
+    70% { transform: translateX(-200%); }  /* 세 번째 슬라이드 멈춤 */
+    75% { transform: translateX(-300%); }  /* 네 번째 슬라이드 */
+    95% { transform: translateX(-300%); }  /* 네 번째 슬라이드 멈춤 */
+    100% { transform: translateX(-400%); } /* 다섯 번째 슬라이드 */
 }
