@@ -211,7 +211,6 @@ def delete_post(item_name, post_key):
 def modify_post(item_name, post_key):
     if request.method == "POST":
         postpassword = request.form.get("psw")
-        print(f"Received Password: {postpassword}")  # 디버깅 로그 추가
         if not postpassword:
             return "비밀번호가 입력되지 않았습니다.", 400
 
@@ -221,7 +220,6 @@ def modify_post(item_name, post_key):
             return "게시글을 찾을 수 없습니다.", 404
         if not post.get("psw"):
             return "게시글에 저장된 비밀번호가 없습니다.", 500
-        print(f"Database Password: '{post['psw']}', Input Password: '{postpassword}'")
         if post["psw"] != postpassword:
             return jsonify({"error": "비밀번호가 일치하지 않습니다."}), 401
 
@@ -288,8 +286,6 @@ def modify_comment(item_name, post_key, comment_key):
             return "댓글을 찾을 수 없습니다.", 404
         
         hashed_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
-        print(f"Stored password: {comment['password']}")
-        print(f"Hashed input password: {hashed_password}")
 
         if comment["password"] != hashed_password:
             return "비밀번호가 일치하지 않습니다.", 401
