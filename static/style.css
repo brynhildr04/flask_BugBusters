@@ -781,33 +781,36 @@ input[type="number"]::-webkit-outer-spin-button {
 /* All Product 영역 */
 .all-products-container {
     max-width: 1158px;
-    margin: 40px auto 0;
-    padding: 0 20px;
+    margin: 0 auto; /* 상단 여백 줄임 */
+    padding: 20px;
 }
 
-.page-title {
-    position: relative;
-    width: 100%;
-    height: auto; 
-    overflow: hidden; 
-    text-align: center;
+.all-page-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin: 0 0 20px 0; /* 상단 마진 제거하고 하단만 유지 */
+    padding: 0;
+    height: auto;
+    line-height: 1.5;
 }
 
-.page-title .main-image {
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-    display: block; 
-}
 
 .products-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 24px;
-    margin: 30px 0;
+    margin: 20px 0; /* 여백 줄임 */
 }
 
-/* 상품 카드 스타일 - 기존 스타일 확장 */
+/* 상품 개수 표시 스타일 추가 */
+.products-grid + p {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 10px 0;
+}
+
+/* 나머지 상품 카드 관련 스타일은 유지 */
 .products-grid .product-card {
     background: white;
     border-radius: 8px;
@@ -816,41 +819,24 @@ input[type="number"]::-webkit-outer-spin-button {
     transition: transform 0.3s;
     text-decoration: none;
     color: inherit;
-}
-
-.products-grid .product-card:hover {
-    transform: translateY(-5px);
+    border: none; /* 버튼 기본 스타일 제거 */
+    width: 100%;
+    padding: 0;
+    cursor: pointer;
 }
 
 .products-grid .product-image {
     width: 100%;
     height: 200px;
     background: #f5f5f5;
+    overflow: hidden; /* 이미지 넘침 방지 */
 }
 
-.products-grid .product-info {
-    padding: 1rem;
+.products-grid .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 이미지 비율 유지 */
 }
-
-.products-grid .product-info h3 {
-    font-size: 0.9rem;
-    color: #666;
-    margin-bottom: 8px;
-}
-
-.product-name {
-    font-size: 1rem;
-    font-weight: 500;
-    margin-bottom: 8px;
-    color: #333;
-}
-
-.product-price {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #00462A;
-}
-
 
 
 
@@ -2983,13 +2969,33 @@ header .search-bar input {
     position: relative;
     z-index: 2;
     text-align: center;
-    padding: 20vh 20px;
+    padding: 30vh 20px;
     color: white;
+    align-items: center;
     max-width: 1000px;
     margin: 0 auto;
     min-height: 100vh;
 }
 
+.content-box {
+    background: rgba(0,0,0,0.3); 
+    padding: 40px 60px; 
+    border-radius: 15px; 
+    width: 2000px;
+    max-width: 100%;
+    margin: 0 auto; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
+} 
+
+.project-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    text-align: center;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1rem; 
+}
 .main-title {
     font-size: 5rem; /* 텍스트 크기 증가 */
     font-weight: 700;
@@ -3033,6 +3039,7 @@ header .search-bar input {
 }
 
 .auth-title {
+    height: 50px;
     color: white;
     font-size: 2.5rem;
     margin-bottom: 2rem;
