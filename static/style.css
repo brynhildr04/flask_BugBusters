@@ -291,7 +291,7 @@
 /* 카테고리 */
 .nav-categories {
     position: sticky;
-    top: 104px; /*여기 top 설정하는게 카테고리가 최대 올라가는 위치 설정하는 거*/
+    top: 70px; /*여기 top 설정하는게 카테고리가 최대 올라가는 위치 설정하는 거*/
     z-index: 999;
     background: white;
     display: flex;
@@ -790,6 +790,7 @@ input[type="number"]::-webkit-outer-spin-button {
     width: 100%;
     height: auto; 
     overflow: hidden; 
+    text-align: center;
 }
 
 .page-title .main-image {
@@ -2960,7 +2961,7 @@ header .search-bar input {
 
 /* 우림 firstpage html 관련된거 수정함(241212)  */
 
-.page-title {
+.page-title-first {
     position: relative;
     min-height: 200vh; /* 스크롤을 위해 높이 증가 */
     width: 100%;
