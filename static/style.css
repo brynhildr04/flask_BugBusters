@@ -2982,13 +2982,33 @@ header .search-bar input {
     position: relative;
     z-index: 2;
     text-align: center;
-    padding: 20vh 20px;
+    padding: 30vh 20px;
     color: white;
+    align-items: center;
     max-width: 1000px;
     margin: 0 auto;
     min-height: 100vh;
 }
 
+.content-box {
+    background: rgba(0,0,0,0.3); 
+    padding: 40px 60px; 
+    border-radius: 15px; 
+    width: 2000px;
+    max-width: 100%;
+    margin: 0 auto; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
+} 
+
+.project-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    text-align: center;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1rem; 
+}
 .main-title {
     font-size: 5rem; /* 텍스트 크기 증가 */
     font-weight: 700;
@@ -3032,6 +3052,7 @@ header .search-bar input {
 }
 
 .auth-title {
+    height: 50px;
     color: white;
     font-size: 2.5rem;
     margin-bottom: 2rem;
