@@ -235,6 +235,8 @@ class DBhandler:
     def get_heart_byId(self, uid):
         hearts=self.db.child("heart").child(uid).get()
         target_key=[]
+        if hearts.val()==None:
+            return ""
         for res in hearts.each():
             if res.val()['interested']=='Y':
                 target_key.append(res.key())
