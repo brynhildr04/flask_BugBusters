@@ -788,6 +788,7 @@ input[type="number"]::-webkit-outer-spin-button {
 .all-page-title {
     font-size: 24px;
     font-weight: bold;
+    text-align: center;
     color: #333;
     margin: 0 0 20px 0; /* 상단 마진 제거하고 하단만 유지 */
     padding: 0;
