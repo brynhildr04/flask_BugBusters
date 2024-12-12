@@ -798,11 +798,17 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .page-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    text-align: center;
+    position: relative;
+    width: 100%;
+    height: 100vh; 
+    overflow: hidden; 
+}
+
+.page-title .main-image {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    display: block; 
 }
 
 .products-grid {
@@ -2568,9 +2574,16 @@ swiper-container::part(pagination-bullet-active) {
 }
 
 .qna-form-label {
-    display: block;
-    margin: 16px 0 8px;
+    font-size: 16px;
+    font-weight: 700;
+    font-size: 15px;
     color: #333;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: left;
+    height: 40px;
+    
+    font-weight: 500;;
     font-weight: 500;
     border-radius: 8px;
 }
@@ -2601,17 +2614,24 @@ swiper-container::part(pagination-bullet-active) {
 .qna-form-input[name="postTitle"] {
     text-align: left; /* 왼쪽 정렬 */
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
+    height: 48px;
+    padding: 0 16px;
+    border: 1px solid #e1e1e1;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 16px;
+    background-color: #f8f8f8;
+    transition: border-color 0.3s, background-color 0.3s;
     margin-bottom: 16px;
-    transition: border-color 0.3s;
+    font-size: 15px;
+    color: #333;
+    background-color: #fff;
+    transition: all 0.2s ease;
 }
 
 .qna-form-input:focus {
+    border-color: #00462A;
+    background-color: white;
     outline: none;
-    border-color: #006633;
 }
 
 .qna-form-textarea {
@@ -2676,7 +2696,7 @@ swiper-container::part(pagination-bullet-active) {
 
 .auth-buttons {
     position: absolute; 
-    bottom: 25%; 
+    bottom: 18%; /* 여기 값을 줄이면 버튼이 아래로 이동 */
     left: 50%; 
     transform: translateX(-50%); 
     display: flex;
@@ -2705,53 +2725,67 @@ swiper-container::part(pagination-bullet-active) {
     transform: translateY(-2px); 
 }
 
+
 /*241211*/
 /* 슬라이더 컨테이너 */
 .slider {
-    width: 80%;
-    height: 300px;
-    overflow: hidden; /* 슬라이더 영역 밖의 내용 숨김 */
-    margin: 0 auto;
+    width: 90%; 
+    max-width: 800px; 
+    aspect-ratio: 16 / 9; 
+    overflow: hidden; 
+    margin: 10px auto; 
     position: relative;
-    background-color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #fff; 
 }
 
 /* 슬라이드 전체 */
 .slides {
     display: flex;
-    width: 500%; /* 슬라이드 개수에 따라 100%씩 증가 */
-    animation: slideAnimation 20s infinite; /* 25초 동안 슬라이드 5개 전환 */
+    transition: transform 0.5s ease-in-out;
+    width: calc(100% * 5); /* 슬라이드 개수에 따라 너비 설정 */
 }
 
 /* 각 슬라이드 */
 .slide {
-    flex: 0 0 100%; /* 각 슬라이드가 화면 전체를 차지 */
+    flex: 0 0 100%; /* 슬라이드 크기를 컨테이너와 동일하게 */
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #fff;
 }
 
 /* 슬라이드 이미지 */
 .slide img {
-    max-height: 70%;
-    max-width: 47%;
-    object-fit: contain;
+    max-width: 90%; 
+    max-height: 80%; 
+    object-fit: contain; /* 이미지 비율 유지하며 여백을 방지 */
     display: block;
 }
 
-/* 애니메이션 정의 */
-@keyframes slideAnimation {
-    0% { transform: translateX(0); }       /* 첫 번째 슬라이드 */
-    20% { transform: translateX(0); }      /* 첫 번째 슬라이드 멈춤 */
-    25% { transform: translateX(-100%); }  /* 두 번째 슬라이드 */
-    45% { transform: translateX(-100%); }  /* 두 번째 슬라이드 멈춤 */
-    50% { transform: translateX(-200%); }  /* 세 번째 슬라이드 */
-    70% { transform: translateX(-200%); }  /* 세 번째 슬라이드 멈춤 */
-    75% { transform: translateX(-300%); }  /* 네 번째 슬라이드 */
-    95% { transform: translateX(-300%); }  /* 네 번째 슬라이드 멈춤 */
-    100% { transform: translateX(-400%); } /* 다섯 번째 슬라이드 */
+/* 반응형 디자인 */
+@media screen and (max-width: 768px) {
+    .slider {
+        width: 95%; 
+        max-width: 600px;
+    }
+
+    .slide img {
+        max-width: 85%; 
+        max-height: 85%;
+    }
 }
+
+@media screen and (max-width: 480px) {
+    .slider {
+        width: 100%; 
+        max-width: 400px;
+    }
+
+    .slide img {
+        max-width: 80%; 
+        max-height: 80%;
+    }
+}
+
