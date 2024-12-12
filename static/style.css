@@ -785,7 +785,7 @@ input[type="number"]::-webkit-outer-spin-button {
     padding: 20px;
 }
 
-.all-page-title {
+.page-title {
     font-size: 24px;
     font-weight: bold;
     color: #333;
@@ -2947,7 +2947,7 @@ header .search-bar input {
 
 /* 우림 firstpage html 관련된거 수정함(241212)  */
 
-.page-title {
+.first-page-title {
     position: relative;
     min-height: 200vh; /* 스크롤을 위해 높이 증가 */
     width: 100%;
