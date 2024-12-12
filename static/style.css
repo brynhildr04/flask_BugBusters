@@ -2573,7 +2573,7 @@ swiper-container::part(pagination-bullet-active) {
     margin: 0 auto;
 }
 
-.qna-form-label {
+.qna-container .qna-form-label {
     margin-left: 0; /* 왼쪽 여백 제거 */
     margin-right: auto; /* 오른쪽 여백 자동 설정 */
     margin-bottom: 16px;
@@ -2584,7 +2584,7 @@ swiper-container::part(pagination-bullet-active) {
     border-radius: 8px;
 }
 
-.qna-form-input {
+.qna-container .qna-form-input {
     text-align: left;
     width: 100%;
     padding: 12px;
@@ -2596,7 +2596,7 @@ swiper-container::part(pagination-bullet-active) {
     background-color: #e6e6e6;
 }
 
-.qna-form-input[readonly] {
+.qna-container .qna-form-input[readonly] {
     text-align: left; /* 왼쪽 정렬 */
     width: 100%;
     padding: 12px;
@@ -2607,7 +2607,7 @@ swiper-container::part(pagination-bullet-active) {
     transition: border-color 0.3s;
 }
 
-.qna-form-input[name="postTitle"] {
+.qna-container .qna-form-input[name="postTitle"] {
     text-align: left; /* 왼쪽 정렬 */
     width: 100%;
     height: 48px;
@@ -2622,7 +2622,7 @@ swiper-container::part(pagination-bullet-active) {
     /*transition: all 0.2s ease;*/
 }
 
-.qna-form-input:focus {
+.qna-container .qna-form-input:focus {
     border-color: #00462A;
     background-color: white;
     outline: none;
@@ -2632,6 +2632,19 @@ swiper-container::part(pagination-bullet-active) {
     min-height: 200px;
     resize: vertical;
 }
+
+header .search-bar input {
+    display: block;
+    width: 100%;
+    height: 40px;
+    padding: 0.5rem 1rem;
+    border: 1px solid #e1e1e1;
+    border-radius: 20px;
+    background-color: #f8f8f8;
+    font-size: 14px;
+}
+
+
 
 /* 게시물 상세보기 스타일 */
 .qna-detail-container {
