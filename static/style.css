@@ -6,44 +6,64 @@
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
-/* Header 기본 스타일 */
+/* Header 기본 스타일 (241212 수정)*/
+
+.header {
+    /* 이 부분을 찾아서 */
+    padding: 0.8rem 2rem;  /* 0.5rem 2rem 으로 변경 */
+    height: 70px;         /* 60px로 변경 */
+}
+
+/* Main Header Container */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
     background: white;
-    position: sticky; /*fixed로 하면 아래 애들을 잡아먹힘*/
+    position: sticky;
     width: 100%;
     top: 0;
     z-index: 1000;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    gap: 2rem; /* 요소들 사이의 간격 */
+    gap: 2rem;
 }
 
-.logo {
+/* Logo Section */
+.header .logo-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-width: 250px;
+}
+
+.header .logo {
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
 
-.logo-section {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+.header .logo img {
+    height: 32px;
 }
 
-/* 제품 <-> 서비스 토글 */
-.toggle-switch {
+.header .logo-text {
+    font-weight: 600;
+    font-size: 1.2rem;
+    white-space: nowrap;
+}
+
+/* Toggle Switch */
+.header .toggle-switch {
     position: relative;
     margin-left: 1rem;
 }
 
-.switch-input {
+.header .switch-input {
     display: none;
 }
 
-.switch-label {
+.header .switch-label {
     display: flex;
     width: 120px;
     height: 36px;
@@ -54,7 +74,7 @@
     overflow: hidden;
 }
 
-.switch-option {
+.header .switch-option {
     flex: 1;
     display: flex;
     align-items: center;
@@ -67,11 +87,11 @@
     transition: color 0.3s ease;
 }
 
-.switch-option.right {
+.header .switch-option.right {
     padding-right: 7px;
 }
 
-.switch-label::after {
+.header .switch-label::after {
     content: '';
     position: absolute;
     width: 54px;
@@ -83,111 +103,122 @@
     transition: transform 0.3s ease, width 0.3s ease;
 }
 
-.switch-input:checked+.switch-label::after {
+.header .switch-input:checked + .switch-label::after {
     transform: translateX(50px);
     width: 64px;
 }
 
-.switch-input:checked+.switch-label .switch-option.left {
+.header .switch-input:checked + .switch-label .switch-option.left {
     color: #6c6c6c;
 }
 
-.switch-input:checked+.switch-label .switch-option.right {
+.header .switch-input:checked + .switch-label .switch-option.right {
     color: white;
 }
 
-.switch-input:not(:checked)+.switch-label .switch-option.left {
+.header .switch-input:not(:checked) + .switch-label .switch-option.left {
     color: white;
 }
 
-.switch-input:not(:checked)+.switch-label .switch-option.right {
+.header .switch-input:not(:checked) + .switch-label .switch-option.right {
     color: #6c6c6c;
 }
 
-.logo img {
-    height: 32px;
-}
+/* 서치 바 (241212 우림 수정)*/
 
-.logo-text {
-    font-weight: 600;
-    font-size: 1.2rem;
-    white-space: nowrap;
-}
-
-/* 로고 섹션 */
-.logo-section {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    min-width: 250px; /* 로고 섹션의 최소 너비 설정 */
-}
-
-/* 검색바 컨테이너 */
-.search-bar {
+.header .search-bar {
     flex: 1;
-    max-width: 600px; /* 검색바 최대 너비 */
-    margin: 0 auto; /* 중앙 정렬을 위한 마진 */
-    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative; /* position: relative; 추가 */
 }
 
-.search-bar form {
+.header .search-bar form {
     width: 100%;
     display: flex;
     align-items: center;
+    position: relative; /* 폼에 position: relative; 적용 */
+    margin: 0;
+    padding: 0;
 }
 
-.search-bar input {
+.header .search-bar input {
     width: 100%;
-    height: 40px;
-    padding: 0.5rem 40px 0.5rem 1rem;
-    border: 1px solid #e1e1e1;
-    border-radius: 20px;
+    height: 36px;
+    padding: 0 40px 0 16px;  /* 오른쪽 패딩 40px 확보하여 아이콘 공간 확보 */
+    border: 1.5px solid #e1e1e1;
+    border-radius: 18px;
     background: #f8f8f8;
     font-size: 0.9rem;
     transition: all 0.2s ease;
 }
 
-.search-bar input:focus {
+.header .search-bar input:focus {
     outline: none;
     border-color: #006633;
     background-color: white;
     box-shadow: 0 0 0 3px rgba(0, 102, 51, 0.1);
 }
 
-.search-button {
-    border: none;       /* 테두리 제거 */
-    background: none;   /* 배경 제거 */
-    padding: 0;
-    margin-right: 0;
-    outline: none;
-    cursor: pointer;    
-    transform: translateX(-34px) !important; /* 추가 이동 */
+/* 검색 버튼(아이콘) 부분 */
+.header .search-button {
+    position: absolute;
+    right: 30px;  /* input의 오른쪽 내부에 위치 */
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;  /* 별도 패딩 필요 없음 */
 }
 
-.search-button svg {
-    width: 20px;     
-    height: 20px;
-    fill: #000;      
+.header .search-button img {
+    width: 16px;
+    height: 16px;
+    opacity: 0.6;
 }
 
-/* 헤더 아이콘 */
-.header-icons {
+.header .search-button:hover img {
+    opacity: 1;
+}
+/* Header Icons */
+.header .header-icons {
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    min-width: 250px; /* 로고 섹션과 동일한 최소 너비로 설정 */
+    min-width: 250px;
     justify-content: flex-end;
-    cursor: pointer; 
-    transform: scale(1.1);
 }
 
-/* 반응형 디자인 */
+.header .icon-btn img {
+    height: 24px;
+    width: 24px;
+}
+
+.header .register-btn {
+    padding: 0.5rem 1rem;
+    background: #A4C1AE;
+    color: black;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.header .register-btn:hover {
+    color: white;
+    background-color: #00462A;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Responsive Design */
 @media (max-width: 1024px) {
-    .search-bar {
+    .header .search-bar {
         max-width: 400px;
     }
     
-    .register-btn {
+    .header .register-btn {
         display: none;
     }
 }
@@ -199,84 +230,41 @@
         gap: 1rem;
     }
 
-    .logo-section {
+    .header .logo-section {
         min-width: auto;
         flex: 1;
     }
 
-    .search-bar {
+    .header .search-bar {
         order: 3;
         flex: 0 0 100%;
         max-width: none;
         margin: 0.5rem 0;
     }
 
-    .header-icons {
+    .header .header-icons {
         min-width: auto;
         gap: 1rem;
     }
 
-    .toggle-switch {
+    .header .toggle-switch {
         display: none;
     }
 }
 
 @media (max-width: 480px) {
-    .logo-text {
+    .header .logo-text {
         display: none;
     }
 
-    .header-icons {
+    .header .header-icons {
         gap: 0.8rem;
     }
 
-    .header-icons img {
+    .header .header-icons img {
         width: 20px;
         height: 20px;
     }
-}
-
-@media (max-width: 480px) {
-    .logo-text {
-        display: none; /* 매우 작은 화면에서 로고 텍스트 숨김 */
-    }
-
-    .header-icons {
-        gap: 0.8rem;
-    }
-
-    .header-icons img {
-        width: 20px;
-        height: 20px;
-    }
-}
-
-.header-icons {
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-}
-
-.register-board-btn {
-    display: flex;
-    flex-direction: column; /* 세로 정렬 */
-    gap: 1rem; /* 버튼 간 간격 */
-}
-
-.register-btn {
-    padding: 0.5rem 1rem;
-    background: #A4C1AE;
-    color: black;
-    text-decoration: none;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    white-space: nowrap;
-}
-
-.register-btn:hover {
-    color: white;
-    background-color: #00462A;
-    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .board-btn {
@@ -2796,3 +2784,342 @@ header .search-bar input {
     }
 }
 
+
+
+
+/* 리뷰등록 css 수정 (1212) 삭제한다면 이 아래부터 보세요 */
+
+.review_body {
+    background-color: #f9f9f9;
+    padding: 80px 20px;
+    min-height: calc(100vh - 160px);
+}
+
+.review_body .container {
+    width: 100%;
+    max-width: 600px;
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin: 0 auto;
+}
+
+#review_h2 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Rating container styles */
+.rating-container {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.rating-container p {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Star rating styles */
+#myform fieldset {
+    display: inline-flex;
+    direction: rtl;
+    border: 0;
+    margin: 20px 0;
+}
+
+#myform input[type=radio] {
+    display: none;
+}
+
+#myform label {
+    font-size: 3em;
+    color: transparent;
+    text-shadow: 0 0 0 #f0f0f0;
+    cursor: pointer;
+}
+
+#myform label:hover {
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+
+#myform label:hover ~ label {
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+
+#myform input[type=radio]:checked ~ label {
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+
+/* Image upload styles */
+.image-upload-container {
+    margin: 20px 0;
+    text-align: center;
+}
+
+#imagePreview {
+    max-width: 200px;
+    max-height: 200px;
+    margin: 10px auto;
+    display: none;
+}
+
+.file-button {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+}
+
+/* Input fields */
+#name, #title {
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #f8f8f8;
+    margin-bottom: 16px;
+}
+
+#name {
+    background-color: #e6e6e6;
+    cursor: not-allowed;
+}
+
+#content {
+    width: 100%;
+    height: 200px;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #f8f8f8;
+    resize: vertical;
+    min-height: 120px;
+    margin-bottom: 20px;
+}
+
+/* Submit button */
+#submit_div {
+    text-align: center;
+}
+
+.submit-button {
+    width: 100%;
+    max-width: 450px;
+    height: 48px;
+    background-color: #00462A;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #004d26;
+}
+
+/* Focus states */
+#title:focus,
+#content:focus {
+    border-color: #00462A;
+    background-color: white;
+    outline: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .review_body .container {
+        padding: 30px 20px;
+    }
+    
+    #review_h2 {
+        font-size: 28px;
+    }
+    
+    .submit-button {
+        width: 100%;
+    }
+}
+
+/* 리뷰 등록 css 수정 완료 (1212) */
+
+
+/* 우림 firstpage html 관련된거 수정함(241212)  */
+
+.page-title {
+    position: relative;
+    min-height: 200vh; /* 스크롤을 위해 높이 증가 */
+    width: 100%;
+    overflow: hidden;
+}
+
+.main-image {
+    position: fixed; /* 스크롤 시 고정 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    filter: brightness(0.7);
+    transition: filter 0.5s ease;
+}
+
+.content-overlay {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 20vh 20px;
+    color: white;
+    max-width: 1000px;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+.main-title {
+    font-size: 5rem; /* 텍스트 크기 증가 */
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.sub-title {
+    font-size: 2.5rem; /* 텍스트 크기 증가 */
+    font-weight: 500;
+    margin: 2rem 0;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+
+.description {
+    font-size: 1.4rem; /* 텍스트 크기 증가 */
+    line-height: 1.8;
+    margin: 2.5rem 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+/* 스크롤 시 보여질 두 번째 섹션 */
+.auth-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.7); /* 어두운 오버레이 */
+    z-index: 3;
+}
+
+.auth-container {
+    text-align: center;
+    padding: 3rem;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    max-width: 600px;
+    width: 90%;
+}
+
+.auth-title {
+    color: white;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.auth-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.auth-buttons a {
+    padding: 1.2rem 3rem;
+    border-radius: 30px;
+    font-size: 1.3rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.login-btn {
+    background-color: #00462A;
+    color: white;
+    border: 2px solid transparent;
+}
+
+.login-btn:hover {
+    background-color: #003621;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.signup-btn {
+    background-color: white;
+    color: #00462A;
+    border: 2px solid #00462A;
+}
+
+.signup-btn:hover {
+    background-color: #00462A;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 1.1rem;
+    opacity: 0.8;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+    40% { transform: translate(-50%, -10px); }
+    60% { transform: translate(-50%, -5px); }
+}
+
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 3.5rem;
+    }
+    
+    .sub-title {
+        font-size: 2rem;
+    }
+    
+    .description {
+        font-size: 1.2rem;
+    }
+    
+    .auth-buttons {
+        width: 90%;
+    }
+    
+    .auth-buttons a {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+    }
+}
+
+/*firstpage html 수정 끝 (241212) */

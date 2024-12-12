@@ -2,14 +2,34 @@
 {% block header %}
 {% endblock header %}
 {% block section %}
-<section class="page-title" style="position: relative; text-align: center;">
-    <img src="/static/images/mainimage.jpg" alt="Ewha Market Project" class="main-image">
-    <div class="auth-buttons">
-        <a href="login.html" class="login-btn">로그인</a>
-        <a href="signup.html" class="signup-btn">회원가입</a>
-    </div> 
+<section class="page-title">
+    <img src="/static/images/ewhacampus.jpg" alt="Ewha Market Project" class="main-image">
+    
+    <!-- 첫 번째 섹션: 메인 콘텐츠 -->
+    <div class="content-overlay">
+        <h1 class="main-title">소소한 이화</h1>
+        <h2 class="sub-title">학생 주도 프로젝트형 마켓</h2>
+        <p class="description">
+            학생들이 학생 신분으로서 작고 소소한 물품 판매를 할 수 있도록 해 (小)<br>
+            학생들의 밝은 미래를 향한 커리어를 시작할 수 있도록 하는 (昭)<br>
+            이화인들의 마켓 서비스입니다
+        </p>
+        <div class="scroll-hint">
+            <span>아래로 스크롤하세요</span>
+        </div>
+    </div>
+
+    <!-- 두 번째 섹션: 로그인/회원가입 -->
+    <div class="auth-section">
+        <div class="auth-container">
+            <h2 class="auth-title">시작하기</h2>
+            <div class="auth-buttons">
+                <a href="login.html" class="login-btn">로그인</a>
+                <a href="signup.html" class="signup-btn">회원가입</a>
+            </div>
+        </div>
+    </div>
 </section>
 {% endblock section %}
 {% block footer %}
 {% endblock footer %}
-
