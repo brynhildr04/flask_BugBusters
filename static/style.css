@@ -291,7 +291,7 @@
 /* 카테고리 */
 .nav-categories {
     position: sticky;
-    top: 104px; /*여기 top 설정하는게 카테고리가 최대 올라가는 위치 설정하는 거*/
+    top: 70px; /*여기 top 설정하는게 카테고리가 최대 올라가는 위치 설정하는 거*/
     z-index: 999;
     background: white;
     display: flex;
@@ -788,6 +788,7 @@ input[type="number"]::-webkit-outer-spin-button {
 .page-title {
     font-size: 24px;
     font-weight: bold;
+    text-align: center;
     color: #333;
     margin: 0 0 20px 0; /* 상단 마진 제거하고 하단만 유지 */
     padding: 0;
