@@ -446,10 +446,10 @@ class DBhandler:
 
         # 데이터 순회
         for item_name, posts in user_all_comments.val().items():
-            if not posts:  # posts가 None일 경우 무시
+            if not posts:  
                 continue
             for post_key, comments in posts.items():
-                if not comments:  # comments가 None일 경우 무시
+                if not comments:  
                     continue
                 for comment_key, comment_data in comments.items():
                     if comment_data.get("id") == user_id:  # 작성자 ID 확인
@@ -461,6 +461,28 @@ class DBhandler:
                         })
 
         return user_comments
+    
+    def get_reviews_by_user(self, user_id):
+        user_reviews = []
+
+        # 모든 리뷰 데이터 가져오기 (item > [name] > review 구조 순회)
+        user_all_items = self.db.child("item").get()
+        if not user_all_items.val():
+            return user_reviews
+
+        for item_name, item_data in user_all_items.val().items():
+            if 'review' not in item_data:
+                continue
+
+            for review_key, review_data in item_data['review'].items():
+                if review_data.get("user_id") == user_id:  # 작성자 ID 확인
+                    user_reviews.append({
+                        "item_name": item_name,
+                        "review_key": review_key,
+                        **review_data
+                    })
+
+        return user_reviews
     
     #데이터베이스 초기화
     def init(self):

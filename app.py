@@ -29,12 +29,14 @@ def view_profile():
     data=DB.get_user(session['id'])
     if(data==None):
         return render_template("login.html")
+    
     heart=DB.get_heart_byId(session['id'])
     user_posts = DB.get_posts_by_user(session['id'])
     user_comments = DB.get_comments_by_user(session['id'])
     user_items=DB.get_item_byuid(session['id'])
+    user_reviews = DB.get_reviews_by_user(session['id'])
     return render_template("profile.html", data=data, posts=user_posts, 
-        comments=user_comments,heart=heart, uitems=user_items)
+        comments=user_comments,reviews=user_reviews, heart=heart, uitems=user_items)
 
 #로그인
 @application.route("/login.html")
