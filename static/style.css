@@ -2572,9 +2572,34 @@ swiper-container::part(pagination-bullet-active) {
     margin: 16px 0 8px;
     color: #333;
     font-weight: 500;
+    border-radius: 8px;
 }
 
 .qna-form-input {
+    text-align: left;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 16px;
+    transition: border-color 0.3s;
+    background-color: #e6e6e6;
+}
+
+.qna-form-input[readonly] {
+    text-align: left; /* 왼쪽 정렬 */
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 16px;
+    transition: border-color 0.3s;
+}
+
+.qna-form-input[name="postTitle"] {
+    text-align: left; /* 왼쪽 정렬 */
     width: 100%;
     padding: 12px;
     border: 1px solid #ddd;
